@@ -10,7 +10,7 @@ export default class role extends Model {
       allowNull: false,
       primaryKey: true
     },
-    roleName: {
+    Rname: {
       type: DataTypes.STRING(255),
       allowNull: true
     }

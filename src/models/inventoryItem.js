@@ -1,7 +1,7 @@
 import _sequelize from 'sequelize';
 const { Model, Sequelize } = _sequelize;
 
-export default class inventoryItem extends Model {
+export default class inventoryitem extends Model {
   static init(sequelize, DataTypes) {
   return super.init({
     farmerID: {
@@ -30,7 +30,7 @@ export default class inventoryItem extends Model {
     }
   }, {
     sequelize,
-    tableName: 'inventoryItem',
+    tableName: 'inventoryitem',
     timestamps: false,
     indexes: [
       {
