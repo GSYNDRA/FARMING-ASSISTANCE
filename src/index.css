@@ -6,6 +6,6 @@ body {
 @tailwind components;
 @tailwind utilities;
 
-code {
+body {
   font-family: "Montserrat", sans-serif;
 }
