@@ -4,8 +4,8 @@ import _account from  "./account.js";
 import _admin from  "./admin.js";
 import _complaints from  "./complaints.js";
 import _farmer from  "./farmer.js";
-import _farmingTips from  "./farmingTips.js";
-import _inventoryItem from  "./inventoryItem.js";
+import _farmingtips from  "./farmingtips.js";
+import _inventoryitem from  "./inventoryitem.js";
 import _order from  "./order.js";
 import _product from  "./product.js";
 import _role from  "./role.js";
@@ -17,8 +17,8 @@ export default function initModels(sequelize) {
   const admin = _admin.init(sequelize, DataTypes);
   const complaints = _complaints.init(sequelize, DataTypes);
   const farmer = _farmer.init(sequelize, DataTypes);
-  const farmingTips = _farmingTips.init(sequelize, DataTypes);
-  const inventoryItem = _inventoryItem.init(sequelize, DataTypes);
+  const farmingtips = _farmingtips.init(sequelize, DataTypes);
+  const inventoryitem = _inventoryitem.init(sequelize, DataTypes);
   const order = _order.init(sequelize, DataTypes);
   const product = _product.init(sequelize, DataTypes);
   const role = _role.init(sequelize, DataTypes);
@@ -33,14 +33,14 @@ export default function initModels(sequelize) {
   account.hasMany(farmer, { as: "farmers", foreignKey: "userID"});
   supplier.belongsTo(account, { as: "user", foreignKey: "userID"});
   account.hasMany(supplier, { as: "suppliers", foreignKey: "userID"});
-  farmingTips.belongsTo(admin, { as: "admin", foreignKey: "adminID"});
-  admin.hasMany(farmingTips, { as: "farmingTips", foreignKey: "adminID"});
-  inventoryItem.belongsTo(farmer, { as: "farmer", foreignKey: "farmerID"});
-  farmer.hasMany(inventoryItem, { as: "inventoryItems", foreignKey: "farmerID"});
+  farmingtips.belongsTo(admin, { as: "Admin", foreignKey: "AdminID"});
+  admin.hasMany(farmingtips, { as: "farmingtips", foreignKey: "AdminID"});
+  inventoryitem.belongsTo(farmer, { as: "farmer", foreignKey: "farmerID"});
+  farmer.hasMany(inventoryitem, { as: "inventoryitems", foreignKey: "farmerID"});
   transaction.belongsTo(farmer, { as: "farmer", foreignKey: "farmerID"});
   farmer.hasMany(transaction, { as: "transactions", foreignKey: "farmerID"});
-  inventoryItem.belongsTo(product, { as: "product", foreignKey: "productID"});
-  product.hasMany(inventoryItem, { as: "inventoryItems", foreignKey: "productID"});
+  inventoryitem.belongsTo(product, { as: "product", foreignKey: "productID"});
+  product.hasMany(inventoryitem, { as: "inventoryitems", foreignKey: "productID"});
   order.belongsTo(product, { as: "product", foreignKey: "productID"});
   product.hasMany(order, { as: "orders", foreignKey: "productID"});
   account.belongsTo(role, { as: "role", foreignKey: "roleID"});
@@ -55,8 +55,8 @@ export default function initModels(sequelize) {
     admin,
     complaints,
     farmer,
-    farmingTips,
-    inventoryItem,
+    farmingtips,
+    inventoryitem,
     order,
     product,
     role,

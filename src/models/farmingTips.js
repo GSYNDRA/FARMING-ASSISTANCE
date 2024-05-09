@@ -1,7 +1,7 @@
 import _sequelize from 'sequelize';
 const { Model, Sequelize } = _sequelize;
 
-export default class farmingTips extends Model {
+export default class farmingtips extends Model {
   static init(sequelize, DataTypes) {
   return super.init({
     tipID: {
@@ -14,7 +14,7 @@ export default class farmingTips extends Model {
       type: DataTypes.STRING(255),
       allowNull: true
     },
-    adminID: {
+    AdminID: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
@@ -24,7 +24,7 @@ export default class farmingTips extends Model {
     }
   }, {
     sequelize,
-    tableName: 'farmingTips',
+    tableName: 'farmingtips',
     timestamps: false,
     indexes: [
       {
@@ -36,10 +36,10 @@ export default class farmingTips extends Model {
         ]
       },
       {
-        name: "adminID",
+        name: "AdminID",
         using: "BTREE",
         fields: [
-          { name: "adminID" },
+          { name: "AdminID" },
         ]
       },
     ]
