@@ -5,9 +5,10 @@ function Layout({ children }) {
   const location = useLocation();
 
   const isAboutUsPage = location.pathname === "/about-us";
-  const renderMenu = !isAboutUsPage;
+  const isLoginPage = location.pathname === "/auth/login";
+  const renderLayout = !isAboutUsPage && !isLoginPage;
 
-  const renderFlexDiv = !isAboutUsPage ? (
+  return renderLayout ? (
     <div className="flex flex-row items-center justify-center">
       {/* {renderMenu && <Menu />} */}
       {children}
@@ -15,8 +16,6 @@ function Layout({ children }) {
   ) : (
     children
   );
-
-  return renderFlexDiv;
 }
 
 export default Layout;
