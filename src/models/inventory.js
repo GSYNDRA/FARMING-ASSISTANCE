@@ -1,26 +1,14 @@
 import _sequelize from 'sequelize';
 const { Model, Sequelize } = _sequelize;
 
-export default class complaints extends Model {
+export default class inventory extends Model {
   static init(sequelize, DataTypes) {
   return super.init({
-    complaintID: {
+    inventoryID: {
       autoIncrement: true,
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true
-    },
-    content: {
-      type: DataTypes.STRING(255),
-      allowNull: true
-    },
-    supplierID: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: 'supplier',
-        key: 'supplierID'
-      }
     },
     farmerID: {
       type: DataTypes.INTEGER,
@@ -32,7 +20,7 @@ export default class complaints extends Model {
     }
   }, {
     sequelize,
-    tableName: 'complaints',
+    tableName: 'inventory',
     timestamps: false,
     indexes: [
       {
@@ -40,14 +28,7 @@ export default class complaints extends Model {
         unique: true,
         using: "BTREE",
         fields: [
-          { name: "complaintID" },
-        ]
-      },
-      {
-        name: "supplierID",
-        using: "BTREE",
-        fields: [
-          { name: "supplierID" },
+          { name: "inventoryID" },
         ]
       },
       {

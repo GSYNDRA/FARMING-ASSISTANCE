@@ -14,13 +14,9 @@ export default class farmingtips extends Model {
       type: DataTypes.STRING(255),
       allowNull: true
     },
-    AdminID: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: 'admin',
-        key: 'adminID'
-      }
+    title: {
+      type: DataTypes.STRING(255),
+      allowNull: true
     }
   }, {
     sequelize,
@@ -33,13 +29,6 @@ export default class farmingtips extends Model {
         using: "BTREE",
         fields: [
           { name: "tipID" },
-        ]
-      },
-      {
-        name: "AdminID",
-        using: "BTREE",
-        fields: [
-          { name: "AdminID" },
         ]
       },
     ]

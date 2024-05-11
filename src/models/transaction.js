@@ -18,14 +18,6 @@ export default class transaction extends Model {
         key: 'supplierID'
       }
     },
-    farmerID: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: 'farmer',
-        key: 'farmerID'
-      }
-    },
     totalPrice: {
       type: DataTypes.FLOAT,
       allowNull: true
@@ -48,13 +40,6 @@ export default class transaction extends Model {
         using: "BTREE",
         fields: [
           { name: "supplierID" },
-        ]
-      },
-      {
-        name: "farmerID",
-        using: "BTREE",
-        fields: [
-          { name: "farmerID" },
         ]
       },
     ]

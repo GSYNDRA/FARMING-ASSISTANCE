@@ -27,12 +27,27 @@ export default class order extends Model {
     quantity: {
       type: DataTypes.FLOAT,
       allowNull: true
+    },
+    farmerID: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'farmer',
+        key: 'farmerID'
+      }
     }
   }, {
     sequelize,
     tableName: 'order',
     timestamps: false,
     indexes: [
+      {
+        name: "farmerID",
+        using: "BTREE",
+        fields: [
+          { name: "farmerID" },
+        ]
+      },
       {
         name: "orderID",
         using: "BTREE",
