@@ -1,9 +1,13 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { NavLink, useNavigate } from "react-router-dom";
+import { setRole } from "../../redux/userReducer/userReducer";
 
 const Login = () => {
   const [selectedRole, setSelectedRole] = useState("admin");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const dispatch = useDispatch();
 
   const handleRoleChange = (role) => {
     setSelectedRole(role);
@@ -14,6 +18,7 @@ const Login = () => {
     console.log("Role:", selectedRole);
     console.log("Username:", username);
     console.log("Password:", password);
+    dispatch(setRole(selectedRole));
   };
 
   return (
@@ -163,12 +168,13 @@ const Login = () => {
 
         {/* Submit Button */}
         <div className="mt-8">
-          <button
+          <NavLink
+            to={`/${selectedRole}/profile`}
             className="text-[#204E51] bg-white font-semibold px-8 py-3 rounded-lg"
             onClick={handleLogin}
           >
             Log in
-          </button>
+          </NavLink>
         </div>
       </div>
     </div>

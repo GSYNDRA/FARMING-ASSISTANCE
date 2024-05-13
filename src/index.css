@@ -1,5 +1,6 @@
 body {
   margin: 0;
+  
 }
 
 @tailwind base;
@@ -8,4 +9,8 @@ body {
 
 body {
   font-family: "Montserrat", sans-serif;
+  background-color: white
+}
+root {
+  background-color: white;
 }
