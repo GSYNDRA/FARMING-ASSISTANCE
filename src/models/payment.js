@@ -1,26 +1,30 @@
 import _sequelize from 'sequelize';
 const { Model, Sequelize } = _sequelize;
 
-export default class inventory extends Model {
+export default class payment extends Model {
   static init(sequelize, DataTypes) {
   return super.init({
-    inventoryID: {
+    paymentID: {
       autoIncrement: true,
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true
     },
-    farmerID: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: 'farmer',
-        key: 'farmerID'
-      }
+    bankAccount: {
+      type: DataTypes.STRING(255),
+      allowNull: true
+    },
+    bankName: {
+      type: DataTypes.STRING(255),
+      allowNull: true
+    },
+    balance: {
+      type: DataTypes.FLOAT,
+      allowNull: false
     }
   }, {
     sequelize,
-    tableName: 'inventory',
+    tableName: 'payment',
     timestamps: false,
     indexes: [
       {
@@ -28,14 +32,7 @@ export default class inventory extends Model {
         unique: true,
         using: "BTREE",
         fields: [
-          { name: "inventoryID" },
-        ]
-      },
-      {
-        name: "farmerID",
-        using: "BTREE",
-        fields: [
-          { name: "farmerID" },
+          { name: "paymentID" },
         ]
       },
     ]

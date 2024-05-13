@@ -4,21 +4,23 @@ const { Model, Sequelize } = _sequelize;
 export default class inventoryproduct extends Model {
   static init(sequelize, DataTypes) {
   return super.init({
-    inventoryID: {
+    inventoryProductID: {
+      autoIncrement: true,
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      primaryKey: true
+    },
+    farmerID: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model: 'inventory',
-        key: 'inventoryID'
+        model: 'farmer',
+        key: 'farmerID'
       }
     },
-    productID: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: 'product',
-        key: 'productID'
-      }
+    productName: {
+      type: DataTypes.STRING(255),
+      allowNull: true
     },
     quantity: {
       type: DataTypes.FLOAT,
@@ -42,17 +44,18 @@ export default class inventoryproduct extends Model {
     timestamps: false,
     indexes: [
       {
-        name: "inventoryID",
+        name: "PRIMARY",
+        unique: true,
         using: "BTREE",
         fields: [
-          { name: "inventoryID" },
+          { name: "inventoryProductID" },
         ]
       },
       {
-        name: "productID",
+        name: "farmerID",
         using: "BTREE",
         fields: [
-          { name: "productID" },
+          { name: "farmerID" },
         ]
       },
     ]

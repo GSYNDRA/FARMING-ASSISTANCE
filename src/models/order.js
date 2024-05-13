@@ -5,19 +5,25 @@ export default class order extends Model {
   static init(sequelize, DataTypes) {
   return super.init({
     orderID: {
+      autoIncrement: true,
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      primaryKey: true
+    },
+    inventoryProductID: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'inventoryproduct',
+        key: 'inventoryProductID'
+      }
+    },
+    transactionID: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
         model: 'transaction',
-        key: 'orderID'
-      }
-    },
-    productID: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: 'product',
-        key: 'productID'
+        key: 'transactionID'
       }
     },
     price: {
@@ -42,6 +48,14 @@ export default class order extends Model {
     timestamps: false,
     indexes: [
       {
+        name: "PRIMARY",
+        unique: true,
+        using: "BTREE",
+        fields: [
+          { name: "orderID" },
+        ]
+      },
+      {
         name: "farmerID",
         using: "BTREE",
         fields: [
@@ -49,17 +63,17 @@ export default class order extends Model {
         ]
       },
       {
-        name: "orderID",
+        name: "inventoryProductID",
         using: "BTREE",
         fields: [
-          { name: "orderID" },
+          { name: "inventoryProductID" },
         ]
       },
       {
-        name: "productID",
+        name: "transactionID",
         using: "BTREE",
         fields: [
-          { name: "productID" },
+          { name: "transactionID" },
         ]
       },
     ]
