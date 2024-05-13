@@ -17,6 +17,30 @@ export default class supplier extends Model {
         model: 'account',
         key: 'userID'
       }
+    },
+    supplierName: {
+      type: DataTypes.STRING(255),
+      allowNull: true
+    },
+    paymentID: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'payment',
+        key: 'paymentID'
+      }
+    },
+    phone: {
+      type: DataTypes.STRING(255),
+      allowNull: true
+    },
+    email: {
+      type: DataTypes.STRING(255),
+      allowNull: true
+    },
+    address: {
+      type: DataTypes.STRING(255),
+      allowNull: true
     }
   }, {
     sequelize,
@@ -36,6 +60,13 @@ export default class supplier extends Model {
         using: "BTREE",
         fields: [
           { name: "userID" },
+        ]
+      },
+      {
+        name: "paymentID",
+        using: "BTREE",
+        fields: [
+          { name: "paymentID" },
         ]
       },
     ]

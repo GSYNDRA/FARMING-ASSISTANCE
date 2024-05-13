@@ -17,6 +17,22 @@ export default class admin extends Model {
         model: 'account',
         key: 'userID'
       }
+    },
+    adminName: {
+      type: DataTypes.STRING(255),
+      allowNull: true
+    },
+    phone: {
+      type: DataTypes.STRING(255),
+      allowNull: true
+    },
+    email: {
+      type: DataTypes.STRING(255),
+      allowNull: true
+    },
+    address: {
+      type: DataTypes.STRING(255),
+      allowNull: true
     }
   }, {
     sequelize,

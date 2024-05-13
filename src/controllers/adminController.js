@@ -1,38 +1,53 @@
 import { responseData } from "../config/response.js";
 import initModels from "../models/init-models.js";
 import sequelize from "../models/connect.js";
-import bcrypt from "bcrypt";
-import { decodeToken } from "../config/jwt.js";
-import farmingtips from "../models/farmingtips.js";
-import complaints from "../models/complaints.js";
-import account from "../models/account.js";
-import supplier from "../models/supplier.js";
-import role from "../models/role.js";
-import farmer from "../models/farmer.js";
-import transaction from "../models/transaction.js";
 
 let model = initModels(sequelize);
 
-// SELECT * FROM account WHERE roleID = 3, wait for auth to get the userID
+// Get the admin information for the profile page, Can FE give the userID through the req.parms?
 export const getAdmin = async (req, res) => {
-  try {
-    const { userID } = req;
-    let data = await model.account.findOne({
-      where: {
-        userID: userID,
-      },
-    });
-    responseData(res, "Success", data, 200);
-  } catch {
-    responseData(res, "Error ...", "", 500);
-  }
+  // try {
+  let { userID } = req.params;
+  let data = await model.admin.findOne({
+    where: {
+      userID: userID,
+    },
+    include: ["user"],
+  });
+  responseData(res, "Success", data, 200);
+  // } catch {
+  //   responseData(res, "Error ...", "", 500);
+  // }
 };
 
+// update admin info, pending
+// export const updateInfo = async (req, res) => {
+//   try {
+//     let { full_name, pass_word } = req.body;
+//     let { userID } = req.params;
+//     let getUser = await model.account.findOne({
+//       where: {
+//         userID,
+//       },
+//       include: []
+//     });
+
+//     await model.account.update(getUser.dataValues, {
+//       where: {
+//         userID,
+//       },
+//     });
+//     responseData(res, "Update info success", "", 200);
+//   } catch {
+//     responseData(res, "Lỗi ...", "", 500);
+//   }
+// };
+
 // Get all the tips, done
-export const getAllTips = async (req, res) => {
+export const getTips = async (req, res) => {
   try {
     // Fetch all tips from the database
-    let data = await farmingtips.findAll();
+    let data = await model.farmingtips.findAll();
 
     // Sending a success response with the tips
     responseData(res, "Success", data, 200);
@@ -45,7 +60,7 @@ export const getAllTips = async (req, res) => {
 export const addTip = async (req, res) => {
   try {
     let { title, content } = req.body;
-    let data = await farmingtips.create({
+    let data = await model.farmingtips.create({
       title: title,
       content: content,
     });
@@ -56,11 +71,11 @@ export const addTip = async (req, res) => {
   }
 };
 
-// API get all the complaint, pending to have name included
-export const getAllComplaints = async (req, res) => {
+// API get all the complaint, done
+export const getComplaints = async (req, res) => {
   try {
-    let data = await complaints.findAll({
-      // include: [],
+    let data = await model.complaints.findAll({
+      include: ["supplier", "farmer"],
     });
     // Sending a success response
     responseData(res, "Success", data, 200);
@@ -69,11 +84,28 @@ export const getAllComplaints = async (req, res) => {
   }
 };
 
-// API get all the complaint, pending to have order and product included
-export const getAllTransactions = async (req, res) => {
+// API get all the transactions, done
+export const getTransactions = async (req, res) => {
   try {
-    let data = await transaction.findAll({
-      // include: [],
+    let data = await model.transaction.findAll({
+      include: ["supplier"],
+    });
+    // Sending a success response
+    responseData(res, "Success", data, 200);
+  } catch {
+    responseData(res, "Error ...", "", 500);
+  }
+};
+
+// Get all the orders of given transactionID receive using params, can FE give the transactionID through params?
+export const getOrder = async (req, res) => {
+  try {
+    let { transactionID } = req.params;
+    let data = await model.order.findAll({
+      where: {
+        transactionID,
+      },
+      include: ["inventoryProduct", "farmer"],
     });
     // Sending a success response
     responseData(res, "Success", data, 200);

@@ -18,10 +18,6 @@ export default class account extends Model {
       type: DataTypes.STRING(255),
       allowNull: true
     },
-    name: {
-      type: DataTypes.STRING(255),
-      allowNull: true
-    },
     roleID: {
       type: DataTypes.INTEGER,
       allowNull: false,

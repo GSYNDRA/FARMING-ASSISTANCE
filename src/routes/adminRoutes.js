@@ -2,29 +2,34 @@ import express from "express";
 import {
   addTip,
   getAdmin,
-  getAllComplaints,
-  getAllTips,
-  getAllTransactions,
+  getComplaints,
+  getOrder,
+  getTips,
+  getTransactions,
+  // updateInfo,
 } from "../controllers/adminController.js";
 
 const adminRoute = express.Router();
 
 // API get admin info
-adminRoute.get("/get-admin", getAdmin);
+adminRoute.get("/get-admin/:userID", getAdmin);
+
+// API to update info admin
+// adminRoute.put("/update-info", updateInfo);
 
 // API get all the tips
-adminRoute.get("/tip", getAllTips);
+adminRoute.get("/tip", getTips);
 
 // API post new tips
 adminRoute.post("/add-tip", addTip);
 
 // API get all complaints
-adminRoute.get("/complaint", getAllComplaints);
+adminRoute.get("/complaint", getComplaints);
 
 // API get all complaints
-adminRoute.get("/transaction", getAllTransactions);
+adminRoute.get("/transaction", getTransactions);
 
-// // API get admin's information
-// adminRoute.get("/get-info-admin", getInfoAdmin);
+// API get all order
+adminRoute.get("/order/:transactionID", getOrder);
 
 export default adminRoute;

@@ -4,7 +4,7 @@ const { Model, Sequelize } = _sequelize;
 export default class transaction extends Model {
   static init(sequelize, DataTypes) {
   return super.init({
-    orderID: {
+    transactionID: {
       autoIncrement: true,
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -17,6 +17,10 @@ export default class transaction extends Model {
         model: 'supplier',
         key: 'supplierID'
       }
+    },
+    code: {
+      type: DataTypes.STRING(255),
+      allowNull: true
     },
     totalPrice: {
       type: DataTypes.FLOAT,
@@ -32,7 +36,7 @@ export default class transaction extends Model {
         unique: true,
         using: "BTREE",
         fields: [
-          { name: "orderID" },
+          { name: "transactionID" },
         ]
       },
       {
