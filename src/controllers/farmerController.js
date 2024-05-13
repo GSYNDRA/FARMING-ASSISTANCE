@@ -11,13 +11,13 @@ let Op = Sequelize.Op;
 // export const editProfile = async (req, res) => {};
 
 export const getTips = async (req, res) => {
-    try{
+     try{
         let data = await model.farmingtips.findAll({});
         responseData(res, "successfully", data, 200);
 
-    } catch (exception){
-        responseData(res, "Error...", "", 500);
-    }
+     } catch (exception){
+         responseData(res, "Error...", "", 500);
+     }
 };
 // export const editProduct = async (req, res) => {}; (have the idea for this one)
 // export const removeProduct = async (req, res) => {}; (have the idea for this one)
