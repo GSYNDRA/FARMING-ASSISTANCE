@@ -4,8 +4,8 @@ import{
     // editProfile,
     getTips,
     getProduct,
-    // editProduct,
-    // removeProduct,
+    editProduct,
+    removeProduct,
     addProduct
 } from "../controllers/farmerController.js";
 
@@ -19,9 +19,9 @@ farmerRoute.get("/tips", getTips);
 
 farmerRoute.get("/inventory/:farmerID", getProduct);
 
-// farmerRoute.put("/:farmerId/inventory/product/:productId", editProduct);
+farmerRoute.put("/inventory/:farmerID/:productName", editProduct);
 
-// farmerRoute.delete("/:farmerId/inventory/product/:productId", removeProduct);
+farmerRoute.delete("/inventory/:farmerID/:productName", removeProduct);
 
 farmerRoute.post("/inventory/:farmerID", addProduct);
 
