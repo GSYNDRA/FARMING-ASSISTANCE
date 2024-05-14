@@ -3,6 +3,7 @@ import sequelize from "../models/connect.js";
 import { Sequelize } from "sequelize";
 import { responseData } from "../config/response.js";
 import farmer from "../models/farmer.js";
+import complaints from "../models/complaints.js";
 
 let model = initModels(sequelize);
 let Op = Sequelize.Op;
@@ -23,9 +24,15 @@ export const getProfile = async (req, res) => {
 
 export const getDetailOfProduct = async (req, res) => {
   try {
+    const { inventoryProductID } = req.params;
     let data = await model.inventoryproduct.findAll({
+      where: { inventoryProductID: inventoryProductID },
       include: [
-        { model: model.farmer, as: "farmer", attributes: ["farmerName"] },
+        {
+          model: model.farmer,
+          as: "farmer",
+          attributes: ["farmerName", "phone", "email"],
+        },
       ],
     });
     responseData(res, "successfully", data, 200);
@@ -40,13 +47,13 @@ export const getDetailOfProduct = async (req, res) => {
 //   try {
 //     // Assuming req.body contains the transaction data, adapt this to your actual request body
 //     const { supplierID } = req.params;
-//     const { productID, quantity } = req.body;
+//     const { code, totalPrice } = req.body;
 
 //     // Create the transaction in your database
 //     const transaction = await model.transaction.create({
 //       supplierID,
-//       productID,
-//       quantity,
+//       code,
+//       totalPrice,
 //       // Add other transaction data here as needed
 //     });
 
@@ -64,12 +71,13 @@ export const postComplaint = async (req, res) => {
 
   try {
     // Assuming req.body contains the complaint data, adapt this to your actual request body
-    const { content } = req.body;
+    const { content, supplierID, farmerID } = req.body;
 
     // Create the complaint in your database
     const complaint = await model.complaints.create({
       content,
-      supplierId,
+      supplierID,
+      farmerID,
 
       // Add other complaint data here as needed
     });

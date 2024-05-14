@@ -12,10 +12,13 @@ const supplierRoute = express.Router();
 supplierRoute.get("/profile/:supplierID", getProfile);
 
 // // //API lấy thông tin sản phẩm
-supplierRoute.get("/store/detail", getDetailOfProduct);
+supplierRoute.get("/store/detail/:inventoryProductID", getDetailOfProduct);
 
 // // //API post complaint
 supplierRoute.post("/complaint", postComplaint);
+
+// // //API get product
+supplierRoute.get("/");
 
 // // //API put Inventory Product
 // //supplierRoute.put("/:supplier-id/cart", putInventoryProduct)
