@@ -26,10 +26,6 @@ export default class order extends Model {
         key: 'transactionID'
       }
     },
-    productID: {
-      type: DataTypes.INTEGER,
-      allowNull: false
-    },
     price: {
       type: DataTypes.FLOAT,
       allowNull: true

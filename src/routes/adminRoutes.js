@@ -6,6 +6,7 @@ import {
   getOrder,
   getTips,
   getTransactions,
+  uploadAvatar,
   // updateInfo,
 } from "../controllers/adminController.js";
 
@@ -31,5 +32,15 @@ adminRoute.get("/transaction", getTransactions);
 
 // API get all order
 adminRoute.get("/order/:transactionID", getOrder);
+
+// API upload avatar
+import upload from "../config/upload.js";
+
+// yarn add multer
+adminRoute.post(
+  "/upload-avatar/:userID",
+  upload.single("avatar"),
+  uploadAvatar
+);
 
 export default adminRoute;

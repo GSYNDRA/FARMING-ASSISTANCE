@@ -12,21 +12,21 @@ app.listen(8080);
 app.use(rootRoute);
 
 // yarn add  swagger-ui-express swagger-jsdoc
-import swaggerUi from "swagger-ui-express";
-import swaggerJsDoc from "swagger-jsdoc";
-import { Socket } from "dgram";
-import { log } from "console";
+// import swaggerUi from "swagger-ui-express";
+// import swaggerJsDoc from "swagger-jsdoc";
+// import { Socket } from "dgram";
+// import { log } from "console";
 
-const options = {
-  definition: {
-    info: {
-      title: "api node 37",
-      version: "1.0.0.0.0.0.0.0.0.0",
-    },
-  },
-  apis: ["src/swagger/index.js"],
-};
+// const options = {
+//   definition: {
+//     info: {
+//       title: "api node 37",
+//       version: "1.0.0.0.0.0.0.0.0.0",
+//     },
+//   },
+//   apis: ["src/swagger/index.js"],
+// };
 
-const specs = swaggerJsDoc(options);
+// const specs = swaggerJsDoc(options);
 
-app.use("/swagger", swaggerUi.serve, swaggerUi.setup(specs));
+// app.use("/swagger", swaggerUi.serve, swaggerUi.setup(specs));
