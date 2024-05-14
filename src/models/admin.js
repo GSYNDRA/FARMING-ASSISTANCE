@@ -33,6 +33,10 @@ export default class admin extends Model {
     address: {
       type: DataTypes.STRING(255),
       allowNull: true
+    },
+    avatarImg: {
+      type: DataTypes.TEXT,
+      allowNull: true
     }
   }, {
     sequelize,

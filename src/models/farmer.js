@@ -41,6 +41,10 @@ export default class farmer extends Model {
     address: {
       type: DataTypes.STRING(255),
       allowNull: true
+    },
+    avatarImg: {
+      type: DataTypes.TEXT,
+      allowNull: true
     }
   }, {
     sequelize,

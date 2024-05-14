@@ -18,10 +18,6 @@ export default class transaction extends Model {
         key: 'supplierID'
       }
     },
-    code: {
-      type: DataTypes.STRING(255),
-      allowNull: true
-    },
     totalPrice: {
       type: DataTypes.FLOAT,
       allowNull: true
