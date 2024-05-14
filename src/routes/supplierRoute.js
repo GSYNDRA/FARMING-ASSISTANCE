@@ -2,7 +2,8 @@ import express from "express";
 import {
   getProfile,
   getDetailOfProduct,
-  //postTransaction,
+  getTransaction,
+  // updateProductQuantity,
   postComplaint,
 } from "../controllers/supplierController.js";
 
@@ -18,12 +19,11 @@ supplierRoute.get("/store/detail/:inventoryProductID", getDetailOfProduct);
 supplierRoute.post("/complaint", postComplaint);
 
 // // //API get product
-supplierRoute.get("/");
 
 // // //API put Inventory Product
 // //supplierRoute.put("/:supplier-id/cart", putInventoryProduct)
 
 // // //API post Transaction
-//supplierRoute.post("/cart/:supplier-id", postTransaction);
+supplierRoute.get("/cart/:supplierID", getTransaction);
 
 export default supplierRoute;

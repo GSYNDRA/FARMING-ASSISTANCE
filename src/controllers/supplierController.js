@@ -41,30 +41,9 @@ export const getDetailOfProduct = async (req, res) => {
   }
 };
 
-// export const postTransaction = async (req, res) => {
-//   // Get supplier ID from URL params
+// Assuming your existing Sequelize models are properly defined
 
-//   try {
-//     // Assuming req.body contains the transaction data, adapt this to your actual request body
-//     const { supplierID } = req.params;
-//     const { code, totalPrice } = req.body;
-
-//     // Create the transaction in your database
-//     const transaction = await model.transaction.create({
-//       supplierID,
-//       code,
-//       totalPrice,
-//       // Add other transaction data here as needed
-//     });
-
-//     // Send a success response
-//     responseData(res, "Transaction created successfully", transaction, 201);
-//   } catch (error) {
-//     // Handle errors
-//     console.error("Error creating transaction:", error);
-//     responseData(res, "Error creating transaction", null, 500);
-//   }
-// };
+// Send a success response
 
 export const postComplaint = async (req, res) => {
   const { supplierId } = req.params; // Get supplier ID from URL params
@@ -88,5 +67,26 @@ export const postComplaint = async (req, res) => {
     // Handle errors
     console.error("Error creating complaint:", error);
     responseData(res, "Error creating complaint", null, 500);
+  }
+};
+///
+///
+///api for update product quantity
+export const getTransaction = async (req, res) => {
+  try {
+    const { supplierID } = req.params;
+    let data = await model.transaction.findAll({
+      where: { supplierID: supplierID },
+      include: [
+        {
+          model: model.supplier,
+          as: "supplier",
+          attributes: ["supplierName", "phone", "email"],
+        },
+      ],
+    });
+    responseData(res, "successfully", data, 200);
+  } catch (exception) {
+    responseData(res, "Error...", "", 500);
   }
 };
