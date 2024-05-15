@@ -22,23 +22,28 @@ export const getAdmin = async (req, res) => {
 // update admin info, pending
 export const updateInfo = async (req, res) => {
   // try {
-  let { userID } = req.body;
-  let getUser = await model.admin.findOne({
+  let { userID } = req.params;
+  let { adminName, phone, email, address } = req.body;
+  let getUser = await model.admin.findAll({
     where: {
       userID,
     },
-    include: ["user"],
   });
 
-  await model.account.update(getUser.dataValues, {
+  getUser.adminName = adminName;
+  getUser.phone = phone;
+  getUser.email = email;
+  getUser.address = address;
+
+  await model.admin.update(getUser.dataValues, {
     where: {
       userID,
     },
   });
-  responseData(res, "Update info success", getUser, 200);
-  //   } catch {
-  //     responseData(res, "Error ...", "", 500);
-  //   }
+  responseData(res, "successfully", getUser, 200);
+  // } catch (err) {
+  //   responseData(res, "Error", "", 500);
+  // }
 };
 
 // Get all the tips, done

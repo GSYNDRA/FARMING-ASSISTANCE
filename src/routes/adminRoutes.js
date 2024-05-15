@@ -16,7 +16,7 @@ const adminRoute = express.Router();
 adminRoute.get("/get-admin/:userID", getAdmin);
 
 // API to update info admin
-adminRoute.put("/update-info", updateInfo);
+adminRoute.put("/update-info/:userID", updateInfo);
 
 // API get all the tips
 adminRoute.get("/tip", getTips);
