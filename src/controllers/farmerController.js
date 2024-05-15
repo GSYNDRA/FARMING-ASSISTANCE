@@ -139,7 +139,7 @@ export const getOrder = async(req, res) => {
       where:{
         farmerID: farmerID,
       },
-      include:["supplier", "inventoryProduct"]
+      include:["supplier", ]
     })
     responseData(res, "successfully", data, 200);
 
