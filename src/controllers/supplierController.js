@@ -225,9 +225,9 @@ export const getDetailOfProduct = async (req, res) => {
 // Send a success response
 
 export const postComplaint = async (req, res) => {
-  try {
+  // try {
     // Assuming req.body contains the complaint data, adapt this to your actual request body
-    const { content, supplierID, farmerID } = req.body;
+    const { content, supplierID, farmerID} = req.body;
 
     // Create the complaint in your database
     const complaint = await model.complaints.create({
@@ -239,11 +239,11 @@ export const postComplaint = async (req, res) => {
 
     // Send a success response
     responseData(res, "Complaint created successfully", complaint, 201);
-  } catch (error) {
-    // Handle errors
-    console.error("Error creating complaint:", error);
-    responseData(res, "Error creating complaint", null, 500);
-  }
+  // } catch (error) {
+  //   // Handle errors
+  //   console.error("Error creating complaint:", error);
+  //   responseData(res, "Error creating complaint", null, 500);
+  // }
 };
 
 // API upload images, done

@@ -21,7 +21,7 @@ supplierRoute.get("/search/:productName", searchProducts);
 supplierRoute.get("/get-page/:page", getProductPage);
 supplierRoute.get("/transaction/:supplierID", getTransaction);
 supplierRoute.get("/product-detail/:inventoryProductID", getDetailOfProduct);
-supplierRoute.get("/order/:transactionID", getDetailOfTransaction);
+supplierRoute.get("/order-of-transaction/:transactionID", getDetailOfTransaction);
 supplierRoute.post("/complaint", postComplaint);
 
 // API upload avatar
