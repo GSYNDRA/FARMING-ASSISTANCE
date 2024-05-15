@@ -122,32 +122,32 @@ export const getOrder = async (req, res) => {
 import fs from "fs";
 
 export const uploadAvatar = async (req, res) => {
-  try {
-    // Read the image file from the file system
-    let { file } = req;
-    let { userID } = req.body;
-    let imageData = fs.readFileSync(
-      process.cwd() + "/public/imgs/" + file.filename
-    );
+  // try {
+  // Read the image file from the file system
+  let { file } = req;
+  let { userID } = req.body;
+  let imageData = fs.readFileSync(
+    process.cwd() + "/public/imgs/" + file.filename
+  );
 
-    // Convert image data to base64 encoding
-    let base64Image = `data:${file.mimetype}; base64, ${Buffer.from(
-      imageData
-    ).toString("base64")}`;
+  // Convert image data to base64 encoding
+  let base64Image = `data:${file.mimetype}; base64, ${Buffer.from(
+    imageData
+  ).toString("base64")}`;
 
-    // Update the admin table with the image data
-    let admin = await model.admin.findOne({
-      where: { userID },
-    });
-    if (!admin) {
-      responseData(res, "Admin not found", "", 404);
-    }
-
-    // Update the avatarImg column with the base64 encoded image
-    admin.avatarImg = base64Image;
-    await admin.save();
-    responseData(res, "Success", admin, 200);
-  } catch (err) {
-    responseData(res, "Error ...", "", 500);
+  // Update the admin table with the image data
+  let admin = await model.admin.findOne({
+    where: { userID },
+  });
+  if (!admin) {
+    responseData(res, "Admin not found", "", 404);
   }
+
+  // Update the avatarImg column with the base64 encoded image
+  admin.avatarImg = base64Image;
+  await admin.save();
+  responseData(res, "Success", admin, 200);
+  // } catch (err) {
+  //   responseData(res, "Error ...", "", 500);
+  // }
 };
