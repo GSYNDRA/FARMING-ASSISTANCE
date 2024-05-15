@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 // eslint-disable-next-line no-unused-vars
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import { Link, useLocation, useParams } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 // NavItem
 const AdminItem = [

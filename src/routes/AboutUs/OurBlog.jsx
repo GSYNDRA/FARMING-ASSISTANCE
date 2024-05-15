@@ -2,7 +2,6 @@ import React from "react";
 
 import blog1 from "../../assets/Blog1.png";
 import blog2 from "../../assets/Blog2.png";
-import blog3 from "../../assets/Blog3.png";
 import { NavLink } from "react-router-dom";
 
 const OurBlog = () => {
