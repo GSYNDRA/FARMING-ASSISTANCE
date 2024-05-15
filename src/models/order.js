@@ -41,6 +41,14 @@ export default class order extends Model {
         model: 'farmer',
         key: 'farmerID'
       }
+    },
+    supplierID: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'supplier',
+        key: 'supplierID'
+      }
     }
   }, {
     sequelize,
@@ -60,6 +68,13 @@ export default class order extends Model {
         using: "BTREE",
         fields: [
           { name: "farmerID" },
+        ]
+      },
+      {
+        name: "supplierID",
+        using: "BTREE",
+        fields: [
+          { name: "supplierID" },
         ]
       },
       {

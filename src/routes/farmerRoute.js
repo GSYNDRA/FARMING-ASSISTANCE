@@ -1,19 +1,21 @@
 import express from 'express';
 import{
-    // getProfile,
-    // editProfile,
+    getProfile,
+    updateProfile,
     getTips,
     getProduct,
     editProduct,
     removeProduct,
-    addProduct
+    addProduct,
+    uploadAvatar,
+    getOrder,
 } from "../controllers/farmerController.js";
 
 const farmerRoute = express.Router();
 
-// farmerRoute.get("/:farmerId/profile", getProfile);
+farmerRoute.get("/get-farmer/:farmerID", getProfile);
 
-// farmerRoute.put("/:farmerId/profile/update", editProfile);
+farmerRoute.put("/update-info/:farmerID", updateProfile);
 
 farmerRoute.get("/tips", getTips);
 
@@ -24,6 +26,14 @@ farmerRoute.put("/inventory/:farmerID/:productName", editProduct);
 farmerRoute.delete("/inventory/:farmerID/:productName", removeProduct);
 
 farmerRoute.post("/inventory/:farmerID", addProduct);
+
+farmerRoute.get("/order/:farmerID",getOrder);
+
+// API upload avatar
+import upload from "../config/upload.js";
+
+// yarn add multer
+farmerRoute.post("/upload-avatar", upload.single("avatarImg"), uploadAvatar);
 
 
 export default farmerRoute;

@@ -47,6 +47,8 @@ export default function initModels(sequelize) {
   role.hasMany(account, { as: "accounts", foreignKey: "roleID"});
   complaints.belongsTo(supplier, { as: "supplier", foreignKey: "supplierID"});
   supplier.hasMany(complaints, { as: "complaints", foreignKey: "supplierID"});
+  order.belongsTo(supplier, { as: "supplier", foreignKey: "supplierID"});
+  supplier.hasMany(order, { as: "orders", foreignKey: "supplierID"});
   transaction.belongsTo(supplier, { as: "supplier", foreignKey: "supplierID"});
   supplier.hasMany(transaction, { as: "transactions", foreignKey: "supplierID"});
   order.belongsTo(transaction, { as: "transaction", foreignKey: "transactionID"});
