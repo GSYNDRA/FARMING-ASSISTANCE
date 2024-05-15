@@ -1,7 +1,6 @@
 import { responseData } from "../config/response.js";
 import initModels from "../models/init-models.js";
 import sequelize from "../models/connect.js";
-
 let model = initModels(sequelize);
 
 // Get the admin information for the profile page, Can FE give the userID through the req.parms?
@@ -21,27 +20,26 @@ export const getAdmin = async (req, res) => {
 };
 
 // update admin info, pending
-// export const updateInfo = async (req, res) => {
-//   try {
-//     let { full_name, pass_word } = req.body;
-//     let { userID } = req.params;
-//     let getUser = await model.account.findOne({
-//       where: {
-//         userID,
-//       },
-//       include: []
-//     });
+export const updateInfo = async (req, res) => {
+  // try {
+  let { userID } = req.body;
+  let getUser = await model.admin.findOne({
+    where: {
+      userID,
+    },
+    include: ["user"],
+  });
 
-//     await model.account.update(getUser.dataValues, {
-//       where: {
-//         userID,
-//       },
-//     });
-//     responseData(res, "Update info success", "", 200);
-//   } catch {
-//     responseData(res, "Lỗi ...", "", 500);
-//   }
-// };
+  await model.account.update(getUser.dataValues, {
+    where: {
+      userID,
+    },
+  });
+  responseData(res, "Update info success", getUser, 200);
+  //   } catch {
+  //     responseData(res, "Error ...", "", 500);
+  //   }
+};
 
 // Get all the tips, done
 export const getTips = async (req, res) => {
@@ -113,66 +111,38 @@ export const getOrder = async (req, res) => {
     responseData(res, "Error ...", "", 500);
   }
 };
-// ----------------------------------------------------------
-// API upload images, not done yet
+
+// API upload images, done
 // yarn add gifsicle@5.2.1 pngquant-bin@6.0.1
-import compress_images from "compress-images";
+import fs from "fs";
 
 export const uploadAvatar = async (req, res) => {
-  //form-data
-  let { file } = req;
+  try {
+    // Read the image file from the file system
+    let { file } = req;
+    let { userID } = req.body;
+    let imageData = fs.readFileSync(
+      process.cwd() + "/public/imgs/" + file.filename
+    );
 
-  // Tối ưu hình, > 500KB mới nên tối ưu
-  compress_images(
-    process.cwd() + "/public/imgs/" + file.filename,
-    { compress_force: false, statistic: true, autoupdate: true },
-    false,
-    { jpg: { engine: "mozjpeg", command: ["-quality", "25"] } },
-    { png: { engine: "pngquant", command: ["--quality=20-50", "-o"] } },
-    { svg: { engine: "svgo", command: "--multipass" } },
-    {
-      gif: { engine: "gifsicle", command: ["--colors", "64", "--use-col=web"] },
-    },
-    function (error, completed, statistic) {
-      // xóa tấm hình chưa tối ưu
+    // Convert image data to base64 encoding
+    let base64Image = `data:${file.mimetype}; base64, ${Buffer.from(
+      imageData
+    ).toString("base64")}`;
+
+    // Update the admin table with the image data
+    let admin = await model.admin.findOne({
+      where: { userID },
+    });
+    if (!admin) {
+      responseData(res, "Admin not found", "", 404);
     }
-  );
 
-  //
-  let { user_id } = req.params;
-
-  let getUser = await model.admin.findOne({
-    where: {
-      user_id,
-    },
-  });
-
-  getUser.avatar = file.filename;
-  await model.admin.update(getUser.dataValues, {
-    where: {
-      user_id,
-    },
-  });
-
-  res.send(file.filename);
-
-  //tạo file -> data.txt: node 37
-  // fs.readFile(process.cwd() + "/public/imgs/" + file.filename, (err, data) => {
-  //   //
-  //   // let newName =
-  //   //   "data:image/jpeg;base64," + Buffer.from(data).toString("base64");
-  //   let newName = `data:${file.mimetype}; base64, ${Buffer.from(data).toString(
-  //     "base64"
-  //   )}`;
-  //   res.send(newName);
-  //   return;
-  // });
-
-  // fs.writeFile(process.cwd() + "/public/file/data.txt", "node37", () => {});
-  // fs.rename();
-  // fs.copyFile();
-  // fs.unlink();
-
-  //  /public/img/${file.filename}
-  // res.send(file);
+    // Update the avatarImg column with the base64 encoded image
+    admin.avatarImg = base64Image;
+    await admin.save();
+    responseData(res, "Success", admin, 200);
+  } catch (err) {
+    responseData(res, "Error ...", "", 500);
+  }
 };

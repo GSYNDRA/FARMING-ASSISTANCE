@@ -10,6 +10,7 @@
     "start": "nodemon src/server.js"
   },
   "dependencies": {
+    "@google-cloud/storage": "^7.11.0",
     "bcrypt": "^5.1.1",
     "compress-images": "^2.0.5",
     "cors": "^2.8.5",
@@ -24,6 +25,7 @@
     "sequelize": "^6.37.3",
     "sequelize-auto": "^0.8.8",
     "sequelize-cli": "^6.6.2",
+    "sharp": "^0.33.3",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.0"
   }

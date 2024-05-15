@@ -43,7 +43,7 @@ export default class supplier extends Model {
       allowNull: true
     },
     avatarImg: {
-      type: DataTypes.STRING(255),
+      type: DataTypes.TEXT,
       allowNull: true
     }
   }, {

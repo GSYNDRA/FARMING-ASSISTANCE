@@ -7,7 +7,7 @@ import {
   getTips,
   getTransactions,
   uploadAvatar,
-  // updateInfo,
+  updateInfo,
 } from "../controllers/adminController.js";
 
 const adminRoute = express.Router();
@@ -16,7 +16,7 @@ const adminRoute = express.Router();
 adminRoute.get("/get-admin/:userID", getAdmin);
 
 // API to update info admin
-// adminRoute.put("/update-info", updateInfo);
+adminRoute.put("/update-info", updateInfo);
 
 // API get all the tips
 adminRoute.get("/tip", getTips);
@@ -37,10 +37,6 @@ adminRoute.get("/order/:transactionID", getOrder);
 import upload from "../config/upload.js";
 
 // yarn add multer
-adminRoute.post(
-  "/upload-avatar/:userID",
-  upload.single("avatar"),
-  uploadAvatar
-);
+adminRoute.post("/upload-avatar", upload.single("avatarImg"), uploadAvatar);
 
 export default adminRoute;
