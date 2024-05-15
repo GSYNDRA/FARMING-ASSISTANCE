@@ -101,6 +101,7 @@ export const orderProducts = async (req, res) => {
         price: getProduct.price * quantity,
         quantity: quantity,
         farmerID: farmerID,
+        supplierID: supplierID,
       });
       const data = await model.farmer.findOne({
         where: {
