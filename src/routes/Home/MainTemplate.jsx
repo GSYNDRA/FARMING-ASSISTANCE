@@ -3,7 +3,7 @@ import { Outlet } from "react-router-dom";
 
 const MainTemplate = () => {
   return (
-    <div className="bg-white">
+    <div className="">
       <Outlet />
     </div>
   );

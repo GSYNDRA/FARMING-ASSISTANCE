@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { setRole } from "../../redux/userReducer/userReducer";
+import { cartLocal } from "../../service/cartLocal";
 
 const Login = () => {
   const [selectedRole, setSelectedRole] = useState("admin");
@@ -19,6 +20,7 @@ const Login = () => {
     console.log("Username:", username);
     console.log("Password:", password);
     dispatch(setRole(selectedRole));
+    cartLocal.set();
   };
 
   return (
