@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { setRole } from "../../redux/userReducer/userReducer";
 import { cartLocal } from "../../service/cartLocal";
+import { userThunk } from "../../redux/userReducer/userThunk";
 
 const Login = () => {
   const [selectedRole, setSelectedRole] = useState("admin");
@@ -16,10 +17,28 @@ const Login = () => {
   };
 
   const handleLogin = () => {
-    console.log("Role:", selectedRole);
+    console.log("roleID: ", selectedRole);
     console.log("Username:", username);
     console.log("Password:", password);
+    let roleid;
+    switch (selectedRole) {
+      case "admin":
+        roleid = 3;
+        break;
+      case "supplier":
+        roleid = 2;
+        break;
+      default:
+        roleid = 1;
+        break;
+    }
+    let value = {
+      roleID: roleid,
+      username: username,
+      password: password,
+    };
     dispatch(setRole(selectedRole));
+    dispatch(userThunk(value));
     cartLocal.set();
   };
 
