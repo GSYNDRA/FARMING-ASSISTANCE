@@ -175,11 +175,11 @@ export const getTransaction = async (req, res) => {
     let data = await model.transaction.findAll({
       where: { supplierID: supplierID },
       include: ["supplier"],
-        // {
-        //   model: model.supplier,
-        //   as: "supplier",
-        //   attributes: ["supplierName", "phone", "email", "address", "avatarImg"],
-        // },
+      // {
+      //   model: model.supplier,
+      //   as: "supplier",
+      //   attributes: ["supplierName", "phone", "email", "address", "avatarImg"],
+      // },
     });
     responseData(res, "successfully", data, 200);
   } catch (exception) {
@@ -187,20 +187,20 @@ export const getTransaction = async (req, res) => {
   }
 };
 
-export const getDetailOfTransaction = async(req, res) => {
-  try{
-    const {transactionID} = req.params;
+export const getDetailOfTransaction = async (req, res) => {
+  try {
+    const { transactionID } = req.params;
     let data = await model.order.findAll({
       where: {
-        transactionID: transactionID
+        transactionID: transactionID,
       },
-      include: ["farmer", "inventoryProduct"]
-    })
+      include: ["farmer", "inventoryProduct"],
+    });
     responseData(res, "successfully", data, 200);
-  } catch(exception){
+  } catch (exception) {
     responseData(res, "Error...", "", 500);
   }
-}
+};
 
 export const getDetailOfProduct = async (req, res) => {
   try {
@@ -226,19 +226,19 @@ export const getDetailOfProduct = async (req, res) => {
 
 export const postComplaint = async (req, res) => {
   // try {
-    // Assuming req.body contains the complaint data, adapt this to your actual request body
-    const { content, supplierID, farmerID} = req.body;
+  // Assuming req.body contains the complaint data, adapt this to your actual request body
+  const { content, supplierID, farmerID } = req.body;
 
-    // Create the complaint in your database
-    const complaint = await model.complaints.create({
-      content,
-      supplierID,
-      farmerID,
-      // Add other complaint data here as needed
-    });
+  // Create the complaint in your database
+  const complaint = await model.complaints.create({
+    content,
+    supplierID,
+    farmerID,
+    // Add other complaint data here as needed
+  });
 
-    // Send a success response
-    responseData(res, "Complaint created successfully", complaint, 201);
+  // Send a success response
+  responseData(res, "Complaint created successfully", complaint, 201);
   // } catch (error) {
   //   // Handle errors
   //   console.error("Error creating complaint:", error);
