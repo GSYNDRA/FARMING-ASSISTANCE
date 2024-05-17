@@ -12,15 +12,16 @@ function Layout({ children }) {
   const renderLayout = !isAboutUsPage && !isLoginPage;
 
   return renderLayout ? (
-    <div className="h-screen bg-white">
+    <div className="h-screen bg-[#EEE]">
       <div className="fixed w-full h-[100px]">
         <Header />
       </div>
-      <div className="flex flex-row items-center bg-white">
+      <div className="flex flex-row items-center bg-[#EEE]">
         <div className="w-[20%]">
           <Menu />
         </div>
-        <div className="w-[80%] mt-[120px] mr-[2rem]">{children}</div>
+        <div className="w-[80%] mt-[120px] mr-[2rem] ">{children}</div>
+
       </div>
     </div>
   ) : (

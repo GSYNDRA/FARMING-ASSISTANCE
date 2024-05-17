@@ -3,7 +3,8 @@ import React, { useEffect } from "react";
 // eslint-disable-next-line no-unused-vars
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import { Link, useLocation, useParams } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+
 
 // NavItem
 const AdminItem = [
@@ -53,13 +54,19 @@ const SupplierItem = [
   },
   {
     name: "Store",
-    link: "/supplier/Store",
+    link: "/supplier/store",
+
   },
   {
     name: "Cart",
     link: "/supplier/cart",
   },
   {
+    name: "Transaction",
+    link: "/supplier/transaction",
+  },
+  {
+
     name: "Complaint",
     link: "/supplier/complaint",
   },
@@ -78,11 +85,9 @@ const Menu = () => {
       case "admin":
         setNavItem(AdminItem);
         break;
-
       case "farmer":
         setNavItem(FarmerItem);
         break;
-
       default:
         setNavItem(SupplierItem);
         break;
@@ -90,7 +95,8 @@ const Menu = () => {
   };
 
   return (
-    <div className=" h-[39rem] w-[18.75rem] p-4 fixed top-[100px]">
+    <div className=" h-screen w-[18.75rem] p-4 fixed top-[100px]">
+
       <div className="flex flex-col items-start justify-between bg-[#204E51] h-full rounded-md">
         <div className="w-full">
           {NavItem?.map((item, index) => (
