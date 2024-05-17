@@ -2,7 +2,6 @@ import Lottie from "lottie-react";
 import React from "react";
 import { Outlet } from "react-router-dom";
 
-import authImg from "../../assets/Auth.png";
 import authAnimation from "../../assets/Animation.json";
 
 const AuthTemplate = () => {
