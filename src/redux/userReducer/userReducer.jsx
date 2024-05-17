@@ -1,11 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { userInfor, userThunk, userTrans } from "./userThunk";
+import { userInfor, userStore, userThunk, userTrans } from "./userThunk";
 import { userLocal } from "../../service/userLocal";
+import { cartLocal } from "../../service/cartLocal";
 
 const initialState = {
   roleName: userLocal.getRoleName(),
   inforUser: userLocal.get(),
   userId: userLocal.getUserId(),
+  list: [],
+  cart: cartLocal.get(),
 };
 
 const userReducer = createSlice({
@@ -19,6 +22,7 @@ const userReducer = createSlice({
     logOutAction: (state, action) => {
       state.inforUser = null;
       userLocal.delete();
+      cartLocal.delete();
       window.location.href = "/";
     },
   },
@@ -34,9 +38,11 @@ const userReducer = createSlice({
       })
       .addCase(userTrans.fulfilled, (state, action) => {
         console.log("userTran success");
-
-        console.log(".addCase ~ action:", action.payload);
-        console.log("check");
+      })
+      .addCase(userStore.fulfilled, (state, action) => {
+        console.log(".addCase ~ action:", action.payload.data.content);
+        state.list = action.payload.data.content;
+        console.log("store success");
       });
   },
 });

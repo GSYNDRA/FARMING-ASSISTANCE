@@ -15,4 +15,9 @@ export const userService = {
     let url = `/${roleName}/transaction/${data}`;
     return http.get(url);
   },
+
+  getProduct: (roleName) => {
+    let url = `/${roleName}/store`;
+    return http.get(url);
+  },
 };

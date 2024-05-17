@@ -12,12 +12,18 @@ export const cartLocal = {
     }
   },
 
+  delete: () => {
+    localStorage.removeItem("cart");
+  },
+
   // Add an item to the cart in localStorage
   addToCart: (data) => {
     let json = localStorage.getItem("cart");
     let cart = json ? JSON.parse(json) : [];
 
-    const existingItemIndex = cart.findIndex((item) => item.id === data.id);
+    const existingItemIndex = cart.findIndex(
+      (item) => item.inventoryProductID === data.inventoryProductID
+    );
 
     if (existingItemIndex !== -1) {
       cart[existingItemIndex].quantity += data.quantity;
@@ -32,7 +38,7 @@ export const cartLocal = {
     let json = localStorage.getItem("cart");
     let cart = json ? JSON.parse(json) : [];
 
-    const itemIndex = cart.findIndex((item) => item.id === id);
+    const itemIndex = cart.findIndex((item) => item.inventoryProductID === id);
 
     if (itemIndex !== -1) {
       cart[itemIndex].quantity += change;

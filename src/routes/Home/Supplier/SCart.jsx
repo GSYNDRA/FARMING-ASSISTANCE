@@ -32,12 +32,12 @@ const SCart = () => {
   const fetchCartList = () => {
     return list.map((item) => {
       return (
-        <tr key={item.productId}>
+        <tr key={item.inventoryProductID}>
           <td className="flex items-center space-x-4">
-            <img className="w-12 h-12" src={img} alt="" />
-            <span>{item.name}</span>
+            <img className="w-12 h-12" src={item.image} alt="" />
+            <span>{item.productName}</span>
           </td>
-          <td>Farmer</td>
+          <td>{item.farmerName}</td>
           <td>
             {" "}
             <div className="flex space-x-4 text-black mb-2">
@@ -47,7 +47,7 @@ const SCart = () => {
                   lineHeight: "0.5rem",
                 }}
                 onClick={() => {
-                  handleChangeQuantity(item.id, -1);
+                  handleChangeQuantity(item.inventoryProductID, -1);
                 }}
               >
                 -
@@ -61,7 +61,7 @@ const SCart = () => {
                   lineHeight: "0.5rem",
                 }}
                 onClick={() => {
-                  handleChangeQuantity(item.id, 1);
+                  handleChangeQuantity(item.inventoryProductID, 1);
                 }}
               >
                 +
@@ -145,7 +145,6 @@ const SCart = () => {
       </div>
     </div>
   );
-
 };
 
 export default SCart;
