@@ -1,13 +1,13 @@
 import React from "react";
-import { Outlet, useParams } from "react-router-dom";
-import Menu from "../../components/Menu";
+import { Outlet } from "react-router-dom";
+import AuthWrapper from "../../components/AuthWrapper";
 
 const MainTemplate = () => {
-  let { roleId, roleName } = useParams();
   return (
-    <div className="bg-white">
-      <Outlet />
-    </div>
+    <AuthWrapper>
+      <div className="">
+        <Outlet />
+      </div>
   );
 };
 

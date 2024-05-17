@@ -1,13 +1,19 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { setRole } from "../../redux/userReducer/userReducer";
+import { cartLocal } from "../../service/cartLocal";
+import { userThunk } from "../../redux/userReducer/userThunk";
 
 const Login = () => {
   const [selectedRole, setSelectedRole] = useState("admin");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
+  useEffect(() => {
+    cartLocal.set();
+  });
+
 
   const handleRoleChange = (role) => {
     setSelectedRole(role);
@@ -15,10 +21,27 @@ const Login = () => {
   };
 
   const handleLogin = () => {
-    console.log("Role:", selectedRole);
-    console.log("Username:", username);
-    console.log("Password:", password);
+    let roleid;
+    switch (selectedRole) {
+      case "admin":
+        roleid = 3;
+        break;
+      case "supplier":
+        roleid = 2;
+        break;
+      default:
+        roleid = 1;
+        break;
+    }
+    let value = {
+      roleID: roleid,
+      userName: username,
+      password: password,
+    };
+    console.log("handleLogin ~ value:", value);
+
     dispatch(setRole(selectedRole));
+    dispatch(userThunk(value));
   };
 
   return (

@@ -1,5 +1,4 @@
 import React from "react";
-
 import avtImg from "../../../assets/Rectangle 39.jpg";
 
 const FProfile = () => {
