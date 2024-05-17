@@ -31,12 +31,16 @@ export default class inventoryproduct extends Model {
       allowNull: true
     },
     image: {
-      type: DataTypes.STRING(255),
+      type: DataTypes.TEXT,
       allowNull: true
     },
     description: {
       type: DataTypes.STRING(255),
       allowNull: true
+    },
+    status: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false
     }
   }, {
     sequelize,
