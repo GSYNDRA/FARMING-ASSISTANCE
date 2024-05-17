@@ -9,7 +9,6 @@ const MainTemplate = () => {
         <Outlet />
       </div>
     </AuthWrapper>
-
   );
 };
 
