@@ -1,7 +1,15 @@
 import React, { useState } from "react";
 import Modal from "./Modal";
+
 const AddButton = () => {
   const [showModal, setShowModal] = useState(false);
+  const [formData, setFormData] = useState({
+    name: '',
+    quantity: '',
+    price: '',
+    description: '',
+    imageLink: ''
+  });
 
   const handleAddClick = () => {
     setShowModal(true);
@@ -9,6 +17,33 @@ const AddButton = () => {
 
   const handleCloseModal = () => {
     setShowModal(false);
+  };
+
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setFormData({
+      ...formData,
+      [name]: value
+    });
+  };
+
+  const handleConfirm = async () => {
+    try {
+      const response = await fetch('http://localhost:8080/farmer/inventory/1', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      });
+      if (!response.ok) {
+        throw new Error('Failed to submit data');
+      }
+      alert('Đã gửi dữ liệu thành công!');
+      setShowModal(false);
+    } catch (error) {
+      alert('Đã xảy ra lỗi khi gửi dữ liệu: ' + error.message);
+    }
   };
 
   return (
@@ -38,8 +73,7 @@ const AddButton = () => {
           />
         </svg>
       </button>
-      <Modal show={showModal} onClose={handleCloseModal}>
-        {/* Modal content */}
+      <Modal show={showModal} onClose={handleCloseModal} onConfirm={handleConfirm}>
         <form>
           <div className="mb-4">
             <label className="block text-gray-700 text-sm font-bold mb-2">
@@ -47,7 +81,10 @@ const AddButton = () => {
             </label>
             <input
               type="text"
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-white" // Added bg-white class
+              name="name"
+              value={formData.name}
+              onChange={handleInputChange}
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-white"
             />
           </div>
           <div className="mb-4">
@@ -56,7 +93,10 @@ const AddButton = () => {
             </label>
             <input
               type="text"
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-white" // Added bg-white class
+              name="quantity"
+              value={formData.quantity}
+              onChange={handleInputChange}
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-white"
             />
           </div>
           <div className="mb-4">
@@ -65,7 +105,10 @@ const AddButton = () => {
             </label>
             <input
               type="text"
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-white" // Added bg-white class
+              name="price"
+              value={formData.price}
+              onChange={handleInputChange}
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-white"
             />
           </div>
           <div className="mb-4">
@@ -74,7 +117,22 @@ const AddButton = () => {
             </label>
             <input
               type="text"
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-white" // Added bg-white class
+              name="description"
+              value={formData.description}
+              onChange={handleInputChange}
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-white"
+            />
+          </div>
+          <div className="mb-4">
+            <label className="block text-gray-700 text-sm font-bold mb-2">
+              Image Link
+            </label>
+            <input
+              type="text"
+              name="imageLink"
+              value={formData.imageLink}
+              onChange={handleInputChange}
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-white"
             />
           </div>
         </form>
