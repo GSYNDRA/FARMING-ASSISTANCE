@@ -145,6 +145,7 @@ const SCart = () => {
       </div>
     </div>
   );
+
 };
 
 export default SCart;

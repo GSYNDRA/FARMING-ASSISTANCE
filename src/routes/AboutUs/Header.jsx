@@ -7,8 +7,6 @@ import userReducer, { logOutAction } from "../../redux/userReducer/userReducer";
 const Header = () => {
   const { inforUser } = useSelector((state) => state.userReducer);
   const dispatch = useDispatch();
-
-  console.log("Header ~ infoUser:", inforUser);
   const renderUserNav = () => {
     return inforUser ? (
       <div>

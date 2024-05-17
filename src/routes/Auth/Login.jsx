@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { setRole } from "../../redux/userReducer/userReducer";
 import { cartLocal } from "../../service/cartLocal";
 import { userThunk } from "../../redux/userReducer/userThunk";
+import { userLocal } from "../../service/userLocal";
 
 const Login = () => {
   const [selectedRole, setSelectedRole] = useState("admin");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   useEffect(() => {
     cartLocal.set();
   });
@@ -38,10 +40,17 @@ const Login = () => {
       userName: username,
       password: password,
     };
-    console.log("handleLogin ~ value:", value);
+    userLocal.setRole(selectedRole);
 
     dispatch(setRole(selectedRole));
     dispatch(userThunk(value));
+
+<<<<<<< HEAD
+    console.log("handleLogin ~ selectedRole:", selectedRole);
+
+    console.log("check nagvigate");
+=======
+>>>>>>> c7b3ee54559a819f9fc69684ab109335ab5342ec
   };
 
   return (
@@ -192,9 +201,13 @@ const Login = () => {
         {/* Submit Button */}
         <div className="mt-8">
           <NavLink
-            to={`/${selectedRole}/profile`}
             className="text-[#204E51] bg-white font-semibold px-8 py-3 rounded-lg"
-            onClick={handleLogin}
+            onClick={() => {
+              handleLogin();
+              setTimeout(() => {
+                navigate(`/${selectedRole}/profile`);
+              }, 2000); // 2000 milliseconds = 2 seconds
+            }}
           >
             Log in
           </NavLink>

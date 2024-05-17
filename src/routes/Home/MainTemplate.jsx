@@ -8,6 +8,7 @@ const MainTemplate = () => {
       <div className="">
         <Outlet />
       </div>
+    </AuthWrapper>
   );
 };
 
