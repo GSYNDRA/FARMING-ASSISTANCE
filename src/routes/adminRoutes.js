@@ -13,7 +13,7 @@ import {
 const adminRoute = express.Router();
 
 // API get admin info
-adminRoute.get("/get-admin/:adminID", getAdmin);
+adminRoute.get("/get-admin/:userID", getAdmin);
 
 // API to update info admin
 adminRoute.put("/update-info/:adminID", updateInfo);

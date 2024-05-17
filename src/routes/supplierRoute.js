@@ -14,7 +14,7 @@ import {
 
 const supplierRoute = express.Router();
 
-supplierRoute.get("/get-supplier/:supplierID", getProfile);
+supplierRoute.get("/get-supplier/:userID", getProfile);
 
 supplierRoute.put("/update-info/:supplierID", updateProfile);
 supplierRoute.put("/order/:supplierID", orderProducts);

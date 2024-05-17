@@ -14,7 +14,7 @@ import {
 
 const farmerRoute = express.Router();
 
-farmerRoute.get("/get-farmer/:farmerID", getProfile);
+farmerRoute.get("/get-farmer/:userID", getProfile);
 
 farmerRoute.put("/update-info/:farmerID", updateProfile);
 

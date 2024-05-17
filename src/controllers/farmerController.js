@@ -9,10 +9,10 @@ let model = initModels(sequelize);
 let Op = Sequelize.Op;
 
 export const getProfile = async (req, res) => {
-  let { farmerID } = req.params;
+  let { userID } = req.params;
   let data = await model.farmer.findOne({
     where: {
-      farmerID: farmerID,
+      userID: userID,
     },
     include: ["user", "payment"],
   });

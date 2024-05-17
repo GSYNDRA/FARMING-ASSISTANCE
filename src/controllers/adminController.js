@@ -6,10 +6,10 @@ let model = initModels(sequelize);
 // Get the admin information for the profile page, Can FE give the userID through the req.parms?
 export const getAdmin = async (req, res) => {
   try {
-    let { adminID } = req.params;
+    let { userID } = req.params;
     let data = await model.admin.findOne({
       where: {
-        adminID: adminID,
+        userID: userID,
       },
       include: ["user"],
     });

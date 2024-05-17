@@ -7,10 +7,10 @@ import { responseData } from "../config/response.js";
 let model = initModels(sequelize);
 let Op = Sequelize.Op;
 export const getProfile = async (req, res) => {
-  let { supplierID } = req.params;
+  let { userID } = req.params;
   let data = await model.supplier.findOne({
     where: {
-      supplierID: supplierID,
+      userID: userID,
     },
     include: ["user", "payment"],
   });
@@ -66,18 +66,18 @@ export const getAllProduct = async (req, res) => {
     // SELECT * FROM video LIMIT index , pageSize
     let data = await model.inventoryproduct.findAll({
       where: {
-      status: 1,
-      }
+        status: 1,
+      },
     });
 
-    responseData(res, "successfully", data , 200);
+    responseData(res, "successfully", data, 200);
   } catch {
     responseData(res, "Error...", "", 500);
   }
 };
 
-// SELECT * 
-// FROM inventoryproduct 
+// SELECT *
+// FROM inventoryproduct
 // WHERE productName LIKE '%{productName}%';
 
 export const searchProducts = async (req, res) => {
@@ -110,7 +110,7 @@ export const orderProducts = async (req, res) => {
 
       const getProduct = await model.inventoryproduct.findOne({
         where: {
-          inventoryProductID: inventoryProductID
+          inventoryProductID: inventoryProductID,
         },
       });
       await model.order.create({
@@ -193,11 +193,11 @@ export const getTransaction = async (req, res) => {
     let data = await model.transaction.findAll({
       where: { supplierID: supplierID },
       include: ["supplier"],
-        // {
-        //   model: model.supplier,
-        //   as: "supplier",
-        //   attributes: ["supplierName", "phone", "email", "address", "avatarImg"],
-        // },
+      // {
+      //   model: model.supplier,
+      //   as: "supplier",
+      //   attributes: ["supplierName", "phone", "email", "address", "avatarImg"],
+      // },
     });
     responseData(res, "successfully", data, 200);
   } catch (exception) {
@@ -205,27 +205,26 @@ export const getTransaction = async (req, res) => {
   }
 };
 
-
 // SELECT o.*, f.*, ip.*
 // FROM `order` o
 // LEFT JOIN farmer f ON o.farmerID = f.farmerID
 // LEFT JOIN inventoryproduct ip ON o.inventoryProductID = ip.inventoryProductID
 // WHERE o.transactionID = {transactionID};
 
-export const getDetailOfTransaction = async(req, res) => {
-  try{
-    const {transactionID} = req.params;
+export const getDetailOfTransaction = async (req, res) => {
+  try {
+    const { transactionID } = req.params;
     let data = await model.order.findAll({
       where: {
-        transactionID: transactionID
+        transactionID: transactionID,
       },
-      include: ["farmer", "inventoryProduct"]
-    })
+      include: ["farmer", "inventoryProduct"],
+    });
     responseData(res, "successfully", data, 200);
-  } catch(exception){
+  } catch (exception) {
     responseData(res, "Error...", "", 500);
   }
-}
+};
 
 export const getDetailOfProduct = async (req, res) => {
   try {
@@ -251,19 +250,19 @@ export const getDetailOfProduct = async (req, res) => {
 
 export const postComplaint = async (req, res) => {
   // try {
-    // Assuming req.body contains the complaint data, adapt this to your actual request body
-    const { content, supplierID, farmerID} = req.body;
+  // Assuming req.body contains the complaint data, adapt this to your actual request body
+  const { content, supplierID, farmerID } = req.body;
 
-    // Create the complaint in your database
-    const complaint = await model.complaints.create({
-      content,
-      supplierID,
-      farmerID,
-      // Add other complaint data here as needed
-    });
+  // Create the complaint in your database
+  const complaint = await model.complaints.create({
+    content,
+    supplierID,
+    farmerID,
+    // Add other complaint data here as needed
+  });
 
-    // Send a success response
-    responseData(res, "Complaint created successfully", complaint, 201);
+  // Send a success response
+  responseData(res, "Complaint created successfully", complaint, 201);
 
   // } catch (error) {
   //   // Handle errors
