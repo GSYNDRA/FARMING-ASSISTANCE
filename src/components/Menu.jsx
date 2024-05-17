@@ -64,10 +64,6 @@ const SupplierItem = [
     name: "Transaction",
     link: "/supplier/transaction",
   },
-  {
-    name: "Complaint",
-    link: "/supplier/complaint",
-  },
 ];
 
 const Menu = () => {

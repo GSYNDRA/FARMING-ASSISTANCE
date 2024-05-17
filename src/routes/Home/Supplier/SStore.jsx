@@ -3,6 +3,9 @@ import React, { useEffect } from "react";
 import Item from "./SupplierItem.jsx/Item";
 
 import img from "../../../assets/Rectangle 5.png";
+import { useDispatch, useSelector } from "react-redux";
+import { userLocal } from "../../../service/userLocal";
+import { userStore } from "../../../redux/userReducer/userThunk";
 
 const data = [
   {
@@ -48,8 +51,20 @@ const data = [
 ];
 
 const SStore = () => {
+  const dispatch = useDispatch();
+  const { list } = useSelector((state) => state.userReducer);
+  console.log("SStore ~ list:", list);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      dispatch(userStore(userLocal.getRoleName()));
+      fetchDataList();
+    };
+    fetchData();
+  }, []);
+
   const fetchDataList = () => {
-    return data.map((item) => {
+    return list.map((item) => {
       return <Item key={item.productId} data={item} />;
     });
   };
@@ -86,7 +101,6 @@ const SStore = () => {
       </div>
     </div>
   );
-
 };
 
 export default SStore;

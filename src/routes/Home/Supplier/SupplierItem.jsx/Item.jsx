@@ -16,16 +16,16 @@ const Item = ({ data }) => {
     if (quantity < data.quantity) setQuantity(quantity + 1);
   };
 
-  const moreDetail = () => {
-    console.log("Item ~ moreDetail");
-  };
+  const moreDetail = () => {};
 
   const addToCart = () => {
     let product = {
-      id: data.productId,
-      name: data.productName,
-      price: data.price,
+      inventoryProductID: data.inventoryProductID,
+      productName: data.productName,
+      farmerName: data.farmer.farmerName,
       quantity: quantity,
+      price: data.price,
+      image: data.image,
     };
     cartLocal.addToCart(product);
   };
@@ -44,12 +44,16 @@ const Item = ({ data }) => {
 
         <div className="space-y-2 text-center text-[#204E51]">
           <div
-            className="mx-auto border rounded-2xl w-[80%] py-4"
+            className="mx-auto border rounded-2xl w-[100%] py-4"
             style={{
               boxShadow: "5px 5px 4px 0px rgba(0, 0, 0, 0.25)",
             }}
           >
-            <img src={img} alt="" className="mx-auto" />
+            <img
+              src={`${data.image}`}
+              alt=""
+              className="mx-auto h-[20rem] w-[15rem] rounded-2xl"
+            />
           </div>
           <div>
             <span className="text-[1.5rem] font-semibold">
@@ -57,13 +61,15 @@ const Item = ({ data }) => {
             </span>
           </div>
 
-          <div className="text-left">{data.desc}</div>
+          <div className="text-left">
+            {data.description.substring(0, 30)} . . .
+          </div>
         </div>
 
         <div>
           <div className="flex justify-between items-center">
-            <div className="text-[#204E51] text-[1.25rem] font-semibold">
-              {data.farmerName}
+            <div className="text-[#204E51] text-[1rem] font-semibold">
+              {data.farmer.farmerName}
             </div>
 
             <div>
