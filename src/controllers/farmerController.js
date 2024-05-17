@@ -9,23 +9,15 @@ let model = initModels(sequelize);
 let Op = Sequelize.Op;
 
 export const getProfile = async (req, res) => {
-  try {
-    let { farmerID } = req.params;
-    let data = await model.farmer.findOne({
-      where: {
-        farmerID: farmerID,
-      },
-      include: ["user"],
-    });
+  let { farmerID } = req.params;
+  let data = await model.farmer.findOne({
+    where: {
+      farmerID: farmerID,
+    },
+    include: ["user", "payment"],
+  });
+  responseData(res, "Success", data, 200);
 
-    if (!data) {
-      return responseData(res, "Farmer not found", "", 404);
-    }
-
-    responseData(res, "Success", data, 200);
-  } catch (error) {
-    responseData(res, "Error", "", 500);
-  }
 };
 export const updateProfile = async (req, res) => {
   try {
@@ -50,8 +42,8 @@ export const updateProfile = async (req, res) => {
   } catch (exception) {
     responseData(res, "Error", "", 500);
   }
-};
 
+};
 export const getTips = async (req, res) => {
   try {
     let data = await model.farmingtips.findAll({});
@@ -62,13 +54,12 @@ export const getTips = async (req, res) => {
 };
 export const editProduct = async (req, res) => {
   try {
-    let { farmerID, productName } = req.params;
+    let { inventoryProductID } = req.params;
 
     let { quantity, price, image, description } = req.body;
     let getProduct = await model.inventoryproduct.findOne({
       where: {
-        farmerID: farmerID,
-        productName: productName,
+        inventoryProductID
       },
     });
 
@@ -87,28 +78,36 @@ export const editProduct = async (req, res) => {
     responseData(res, "Error...", "", 500);
   }
 };
+
+    // let getProductID = await model.inventoryproduct.findOne({
+    //   where: {
+    //     inventoryProductID,
+    //   },
+    // });
+
 export const removeProduct = async (req, res) => {
   try {
-    let { farmerID, productName } = req.params;
-
-    let getProductID = await model.inventoryproduct.findOne({
+    let { inventoryProductID } = req.params;
+    let getProduct = await model.inventoryproduct.findOne({
       where: {
-        farmerID: farmerID,
-        productName: productName,
+        inventoryProductID
       },
     });
-
-    await inventoryproduct.destroy({
+    getProduct.status = 0;
+    await model.inventoryproduct.update(getProduct.dataValues, {
       where: {
-        inventoryProductID: getProductID.inventoryProductID,
+        inventoryProductID: getProduct.inventoryProductID,
       },
     });
+    
 
     responseData(res, "successfully", "", 200);
   } catch (exception) {
     responseData(res, "Error...", "", 500);
   }
 };
+
+
 export const addProduct = async (req, res) => {
   try {
     let { farmerID } = req.params;
@@ -120,6 +119,7 @@ export const addProduct = async (req, res) => {
       price,
       image,
       description,
+      status: 1,
     });
     // Sending a success response
     responseData(res, "Successfully", data, 200);
@@ -134,6 +134,7 @@ export const getProduct = async (req, res) => {
     let data = await model.inventoryproduct.findAll({
       where: {
         farmerID: farmerID,
+        status: 1,
       },
     });
     responseData(res, "successfully", data, 200);
@@ -142,17 +143,18 @@ export const getProduct = async (req, res) => {
   }
 };
 
-export const getOrder = async (req, res) => {
-  try {
-    let { farmerID } = req.params;
+export const getOrder = async(req, res) => {
+  try{
+    let{ farmerID } = req.params;
     let data = await model.order.findAll({
-      where: {
+      where:{
         farmerID: farmerID,
       },
-      include: ["supplier"],
-    });
+      include:["supplier", ]
+    })
     responseData(res, "successfully", data, 200);
-  } catch (exception) {
+
+  }catch(exception){
     responseData(res, "Error...", "", 500);
   }
 };
@@ -182,12 +184,11 @@ export const uploadAvatar = async (req, res) => {
   if (!farmer) {
     responseData(res, "Farmer not found", "", 404);
   }
-
   // Update the avatarImg column with the base64 encoded image
   farmer.avatarImg = base64Image;
   await farmer.save();
   responseData(res, "Success", farmer, 200);
-  // } catch (err) {
-  //   responseData(res, "Error ...", "", 500);
-  // }
+  } catch (err) {
+    responseData(res, "Error ...", "", 500);
+  }
 };

@@ -3,7 +3,7 @@ import {
   orderProducts,
   searchProducts,
   updateProfile,
-  getProductPage,
+  getAllProduct,
   getProfile,
   getTransaction,
   getDetailOfProduct,
@@ -15,10 +15,11 @@ import {
 const supplierRoute = express.Router();
 
 supplierRoute.get("/get-supplier/:supplierID", getProfile);
+
 supplierRoute.put("/update-info/:supplierID", updateProfile);
 supplierRoute.put("/order/:supplierID", orderProducts);
 supplierRoute.get("/search/:productName", searchProducts);
-supplierRoute.get("/get-page/:page", getProductPage);
+supplierRoute.get("/get-all-product", getAllProduct);
 supplierRoute.get("/transaction/:supplierID", getTransaction);
 supplierRoute.get("/product-detail/:inventoryProductID", getDetailOfProduct);
 supplierRoute.get(
