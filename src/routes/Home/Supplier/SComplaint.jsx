@@ -40,6 +40,7 @@ const SComplaint = () => {
       </div>
     </div>
   );
+
 };
 
 export default SComplaint;

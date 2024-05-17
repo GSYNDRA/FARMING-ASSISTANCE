@@ -27,4 +27,11 @@ export const userService = {
     let url = `/${roleName}/get-${roleName}/${data}`;
     return http.get(url);
   },
+
+  getTrans: (data, roleName) => {
+    let url = `/${roleName}/transaction/${data}`;
+
+    console.log("url:", url);
+    return http.get(url);
+  },
 };
