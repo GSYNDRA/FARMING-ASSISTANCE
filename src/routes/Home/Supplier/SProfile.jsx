@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import avtImg from "../../../assets/GiangImg.png";
 import { userLocal } from "../../../service/userLocal";
 import { userInfor } from "../../../redux/userReducer/userThunk";
 
@@ -20,7 +19,6 @@ const SProfile = () => {
     if (inforUser) {
       setInformation(inforUser);
     }
-    console.log("useEffect ~ inforUser:", inforUser);
   }, [inforUser]);
 
   const showPage = () => {
@@ -111,7 +109,7 @@ const SProfile = () => {
                       </span>
                     </div>
 
-                    {/* <div>{information.user.password}</div> */}
+                    {information.user && <div>{information.user.password}</div>}
                   </div>
 
                   {/* Item 3 */}

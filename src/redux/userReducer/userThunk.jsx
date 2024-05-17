@@ -2,6 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { userLocal } from "../../service/userLocal";
 import { message } from "antd";
 import { userService } from "../../service/userService";
+import { useNavigate } from "react-router-dom";
 
 export const userThunk = createAsyncThunk(
   "userReducer/loginThunk",

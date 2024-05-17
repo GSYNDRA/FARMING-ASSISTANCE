@@ -18,7 +18,6 @@ const userReducer = createSlice({
     },
     logOutAction: (state, action) => {
       state.inforUser = null;
-      localStorage.removeItem("token");
       userLocal.delete();
       window.location.href = "/";
     },
@@ -29,10 +28,13 @@ const userReducer = createSlice({
         console.log("login success");
       })
       .addCase(userInfor.fulfilled, (state, action) => {
+        console.log("infor success");
         state.inforUser = action.payload;
         userLocal.setInfor(action.payload);
       })
       .addCase(userTrans.fulfilled, (state, action) => {
+        console.log("userTran success");
+
         console.log(".addCase ~ action:", action.payload);
         console.log("check");
       });

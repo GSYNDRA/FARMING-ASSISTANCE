@@ -42,5 +42,7 @@ export const userLocal = {
   //delete item in local storage
   delete: () => {
     localStorage.removeItem("inforUser");
+    localStorage.removeItem("userRole");
+    localStorage.removeItem("userId");
   },
 };
