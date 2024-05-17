@@ -4,6 +4,7 @@ import { NavLink } from "react-router-dom";
 import { setRole } from "../../redux/userReducer/userReducer";
 import { cartLocal } from "../../service/cartLocal";
 import { userThunk } from "../../redux/userReducer/userThunk";
+import { userLocal } from "../../service/userLocal";
 
 const Login = () => {
   const [selectedRole, setSelectedRole] = useState("admin");
@@ -38,7 +39,7 @@ const Login = () => {
       userName: username,
       password: password,
     };
-    console.log("handleLogin ~ value:", value);
+    userLocal.setRole(selectedRole);
 
     dispatch(setRole(selectedRole));
     dispatch(userThunk(value));
