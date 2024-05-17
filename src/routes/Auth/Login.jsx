@@ -42,6 +42,7 @@ const Login = () => {
 
     dispatch(setRole(selectedRole));
     dispatch(userThunk(value));
+
   };
 
   return (

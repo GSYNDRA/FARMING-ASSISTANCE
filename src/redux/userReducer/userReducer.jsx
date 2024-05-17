@@ -6,6 +6,7 @@ const initialState = {
   roleName: userLocal.getRoleName(),
   inforUser: userLocal.get(),
   userId: userLocal.getUserId(),
+
 };
 
 const userReducer = createSlice({
@@ -37,5 +38,6 @@ const userReducer = createSlice({
 });
 
 export const { setRole, logOutAction } = userReducer.actions;
+
 
 export default userReducer.reducer;

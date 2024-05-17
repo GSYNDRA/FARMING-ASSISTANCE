@@ -86,6 +86,7 @@ const SStore = () => {
       </div>
     </div>
   );
+
 };
 
 export default SStore;

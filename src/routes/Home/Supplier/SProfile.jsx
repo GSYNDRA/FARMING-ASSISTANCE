@@ -246,6 +246,7 @@ const SProfile = () => {
   };
 
   return <div>{loading ? <div>Loading...</div> : showPage()}</div>;
+
 };
 
 export default SProfile;

@@ -16,6 +16,7 @@ import SCart from "./routes/Home/Supplier/SCart";
 import SComplaint from "./routes/Home/Supplier/SComplaint";
 import Stransaction from "./routes/Home/Supplier/STransaction";
 
+
 import AProfile from "./routes/Home/Admin/AProfile";
 import ATip from "./routes/Home/Admin/ATip";
 import AAddTip from "./routes/Home/Admin/AAddTip";
@@ -51,6 +52,7 @@ function App() {
           <Route path="store" element={<SStore />} />
           <Route path="cart" element={<SCart />} />
           <Route path="transaction" element={<Stransaction />} />
+
           <Route path="complaint" element={<SComplaint />} />
         </Route>
 
