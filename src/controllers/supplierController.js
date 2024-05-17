@@ -16,7 +16,6 @@ export const getProfile = async (req, res) => {
   });
   responseData(res, "Success", data, 200);
 };
-
 export const updateProfile = async (req, res) => {
   try {
     let { supplierID } = req.params;
@@ -56,7 +55,6 @@ export const updateProfile = async (req, res) => {
 //       offset: index,
 //       limit: pageSize,
 //     });
-
 //     responseData(res, "successfully", { data, totalPage }, 200);
 //   } catch {
 //     responseData(res, "Error...", "", 500);
@@ -266,6 +264,7 @@ export const postComplaint = async (req, res) => {
 
     // Send a success response
     responseData(res, "Complaint created successfully", complaint, 201);
+
   // } catch (error) {
   //   // Handle errors
   //   console.error("Error creating complaint:", error);
@@ -278,32 +277,32 @@ export const postComplaint = async (req, res) => {
 import fs from "fs";
 
 export const uploadAvatar = async (req, res) => {
-  try {
-    // Read the image file from the file system
-    let { file } = req;
-    let { userID } = req.body;
-    let imageData = fs.readFileSync(
-      process.cwd() + "/public/imgs/" + file.filename
-    );
+  // try {
+  // Read the image file from the file system
+  let { file } = req;
+  let { supplierID } = req.body;
+  let imageData = fs.readFileSync(
+    process.cwd() + "/public/imgs/" + file.filename
+  );
 
-    // Convert image data to base64 encoding
-    let base64Image = `data:${file.mimetype}; base64, ${Buffer.from(
-      imageData
-    ).toString("base64")}`;
+  // Convert image data to base64 encoding
+  let base64Image = `data:${file.mimetype}; base64, ${Buffer.from(
+    imageData
+  ).toString("base64")}`;
 
-    // Update the admin table with the image data
-    let supplier = await model.supplier.findOne({
-      where: { userID },
-    });
-    if (!supplier) {
-      responseData(res, "Admin not found", "", 404);
-    }
-
-    // Update the avatarImg column with the base64 encoded image
-    supplier.avatarImg = base64Image;
-    await admin.save();
-    responseData(res, "Success", supplier, 200);
-  } catch (err) {
-    responseData(res, "Error ...", "", 500);
+  // Update the admin table with the image data
+  let supplier = await model.supplier.findOne({
+    where: { supplierID },
+  });
+  if (!supplier) {
+    responseData(res, "Supplier not found", "", 404);
   }
+
+  // Update the avatarImg column with the base64 encoded image
+  supplier.avatarImg = base64Image;
+  await supplier.save();
+  responseData(res, "Success", supplier, 200);
+  // } catch (err) {
+  //   responseData(res, "Error ...", "", 500);
+  // }
 };

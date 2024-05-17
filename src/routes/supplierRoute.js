@@ -15,13 +15,17 @@ import {
 const supplierRoute = express.Router();
 
 supplierRoute.get("/get-supplier/:supplierID", getProfile);
-supplierRoute.put("/update/:supplierID", updateProfile);
+
+supplierRoute.put("/update-info/:supplierID", updateProfile);
 supplierRoute.put("/order/:supplierID", orderProducts);
 supplierRoute.get("/search/:productName", searchProducts);
 supplierRoute.get("/get-all-product", getAllProduct);
 supplierRoute.get("/transaction/:supplierID", getTransaction);
-supplierRoute.get("/order-of-transaction/:transactionID", getDetailOfTransaction);
 supplierRoute.get("/product-detail/:inventoryProductID", getDetailOfProduct);
+supplierRoute.get(
+  "/order-of-transaction/:transactionID",
+  getDetailOfTransaction
+);
 supplierRoute.post("/complaint", postComplaint);
 
 // API upload avatar
