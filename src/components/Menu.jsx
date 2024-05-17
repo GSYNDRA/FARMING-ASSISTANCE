@@ -6,7 +6,6 @@ import { useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 //import { Link, useLocation, useParams } from "react-router-dom";
 
-
 // NavItem
 const AdminItem = [
   {
@@ -56,7 +55,6 @@ const SupplierItem = [
   {
     name: "Store",
     link: "/supplier/store",
-
   },
   {
     name: "Cart",
@@ -67,7 +65,6 @@ const SupplierItem = [
     link: "/supplier/transaction",
   },
   {
-
     name: "Complaint",
     link: "/supplier/complaint",
   },
@@ -97,12 +94,7 @@ const Menu = () => {
 
   return (
     <div className=" h-screen w-[18.75rem] p-4 fixed top-[100px]">
-<<<<<<< HEAD
       <div className="flex flex-col items-start justify-between bg-[#204E51] h-full rounded-2xl">
-=======
-
-      <div className="flex flex-col items-start justify-between bg-[#204E51] h-full rounded-md">
->>>>>>> c7b3ee54559a819f9fc69684ab109335ab5342ec
         <div className="w-full">
           {NavItem?.map((item, index) => (
             <Link
