@@ -7,6 +7,8 @@ export const userService = {
   },
 
   getInfor: (data, roleID) => {
+    console.log("roleID:", roleID);
+    console.log("data:", data);
     let roleName = "";
     switch (roleID) {
       case 1:
