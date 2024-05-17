@@ -1,5 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
+
 import { userInfor, userThunk, userTrans } from "./userThunk";
+
 import { userLocal } from "../../service/userLocal";
 
 const initialState = {
@@ -19,6 +21,7 @@ const userReducer = createSlice({
     },
     logOutAction: (state, action) => {
       state.inforUser = null;
+
       userLocal.delete();
       window.location.href = "/";
     },
@@ -29,6 +32,7 @@ const userReducer = createSlice({
         console.log("login success");
       })
       .addCase(userInfor.fulfilled, (state, action) => {
+
         console.log("infor success");
         state.inforUser = action.payload;
         userLocal.setInfor(action.payload);
@@ -38,6 +42,7 @@ const userReducer = createSlice({
 
         console.log(".addCase ~ action:", action.payload);
         console.log("check");
+
       });
   },
 });

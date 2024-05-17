@@ -36,6 +36,7 @@ export const userInfor = createAsyncThunk(
     }
   }
 );
+
 export const userTrans = createAsyncThunk(
   "userReducer/transaction",
   async (payload) => {
