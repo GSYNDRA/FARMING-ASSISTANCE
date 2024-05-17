@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+
 import { userLocal } from "../../../service/userLocal";
 import { userInfor } from "../../../redux/userReducer/userThunk";
 
@@ -8,9 +9,11 @@ const SProfile = () => {
   const dispatch = useDispatch();
   const { inforUser, roleName } = useSelector((state) => state.userReducer);
 
+
   useEffect(() => {
     const fetchUserInformation = async () => {
       dispatch(userInfor(userLocal.getUserId()));
+
     };
     fetchUserInformation();
   }, [dispatch]);
@@ -19,6 +22,7 @@ const SProfile = () => {
     if (inforUser) {
       setInformation(inforUser);
     }
+
   }, [inforUser]);
 
   const showPage = () => {
@@ -39,11 +43,13 @@ const SProfile = () => {
             <div className="flex justify-center">
               <div className="w-[30%]">
                 <div className="px-24">
+
                   <img
                     src={`${information.avatarImg}`}
                     className="rounded-full"
                     alt=""
                   />
+
                 </div>
                 <div className="text-center">
                   <div
@@ -110,6 +116,7 @@ const SProfile = () => {
                     </div>
 
                     {information.user && <div>{information.user.password}</div>}
+
                   </div>
 
                   {/* Item 3 */}
@@ -233,7 +240,9 @@ const SProfile = () => {
                   </div>
 
                   <button className="space-x-4 border border-black rounded-3xl p-2 px-4 text-[1rem] font-[400] text-center hover:bg-[#63B6BD] hover:text-white">
+
                     Change your payment
+
                   </button>
                 </div>
               </div>
@@ -244,7 +253,9 @@ const SProfile = () => {
     );
   };
 
+
   return <div>{showPage()}</div>;
+
 };
 
 export default SProfile;

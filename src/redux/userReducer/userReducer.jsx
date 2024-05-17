@@ -21,6 +21,7 @@ const userReducer = createSlice({
     },
     logOutAction: (state, action) => {
       state.inforUser = null;
+
       userLocal.delete();
       cartLocal.delete();
       window.location.href = "/";
