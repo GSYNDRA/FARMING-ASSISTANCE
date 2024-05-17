@@ -32,7 +32,6 @@ export const login = async (req, res) => {
     } else {
       // ko tồn tại => sai email hoặc pass
       responseData(res, "this account doesn't exist", "", 400);
-
     }
   } else {
     responseData(res, "Account doesn't exist", "", 400);
