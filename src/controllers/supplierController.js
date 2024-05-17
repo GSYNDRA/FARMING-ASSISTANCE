@@ -68,6 +68,7 @@ export const getAllProduct = async (req, res) => {
       where: {
         status: 1,
       },
+      include: ["farmer"],
     });
 
     responseData(res, "successfully", data, 200);
