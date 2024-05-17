@@ -1,16 +1,15 @@
-import express from 'express';
+import express from "express";
 // import express from "express";
-import{
-    getProfile,
-    updateProfile,
-    getTips,
-    getProduct,
-    editProduct,
-    removeProduct,
-    addProduct,
-    uploadAvatar,
-    getOrder,
-
+import {
+  getProfile,
+  updateProfile,
+  getTips,
+  getProduct,
+  editProduct,
+  removeProduct,
+  addProduct,
+  uploadAvatar,
+  getOrder,
 } from "../controllers/farmerController.js";
 
 const farmerRoute = express.Router();
@@ -25,7 +24,7 @@ farmerRoute.get("/inventory/:farmerID", getProduct);
 
 farmerRoute.put("/inventory/:inventoryProductID", editProduct);
 
-farmerRoute.put("/delete-inventory/:inventoryProductID", removeProduct);
+farmerRoute.put("/delete-product/:inventoryProductID", removeProduct);
 
 farmerRoute.post("/inventory/:farmerID", addProduct);
 

@@ -19,7 +19,7 @@ supplierRoute.get("/get-supplier/:supplierID", getProfile);
 supplierRoute.put("/update-info/:supplierID", updateProfile);
 supplierRoute.put("/order/:supplierID", orderProducts);
 supplierRoute.get("/search/:productName", searchProducts);
-supplierRoute.get("/get-all-product", getAllProduct);
+supplierRoute.get("/store", getAllProduct);
 supplierRoute.get("/transaction/:supplierID", getTransaction);
 supplierRoute.get("/product-detail/:inventoryProductID", getDetailOfProduct);
 supplierRoute.get(
