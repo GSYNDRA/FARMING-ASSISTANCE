@@ -59,7 +59,7 @@ const Edit = () => {
           paddingTop: '3px'
         }}
       >
-        Edit
+        Delete
       </div>
 
       {/* Disabled overlay (if disabled) */}
