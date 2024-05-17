@@ -14,6 +14,7 @@ const AComplaint = () => {
         marginLeft: "2rem",
         padding: "20px",
       }}
+
     >
       <div
         style={{
@@ -35,7 +36,6 @@ const AComplaint = () => {
               color: "#000",
               fontSize: "20px",
               fontWeight: "700",
-              opacity: "0.5",
             }}
           >
             From Minh to Tin
@@ -51,7 +51,7 @@ const AComplaint = () => {
           </div>
         </div>
         <div
-          className="w-[110px] ml-10 "
+          className="w-[110px] ml-[942px]"
           style={{ color: "#000", fontSize: "20px", fontWeight: "100" }}
         >
           See more
@@ -78,7 +78,6 @@ const AComplaint = () => {
               color: "#000",
               fontSize: "20px",
               fontWeight: "700",
-              opacity: "0.5",
             }}
           >
             From Minh to Tin
@@ -94,7 +93,7 @@ const AComplaint = () => {
           </div>
         </div>
         <div
-          className="w-[110px] ml-10 "
+          className="w-[110px] ml-[942px] "
           style={{ color: "#000", fontSize: "20px", fontWeight: "100" }}
         >
           See more
@@ -121,7 +120,6 @@ const AComplaint = () => {
               color: "#000",
               fontSize: "20px",
               fontWeight: "700",
-              opacity: "0.5",
             }}
           >
             From Minh to Tin
@@ -137,7 +135,7 @@ const AComplaint = () => {
           </div>
         </div>
         <div
-          className="w-[110px] ml-10 "
+          className="w-[110px] ml-[942px] "
           style={{ color: "#000", fontSize: "20px", fontWeight: "100" }}
         >
           See more
@@ -164,7 +162,6 @@ const AComplaint = () => {
               color: "#000",
               fontSize: "20px",
               fontWeight: "700",
-              opacity: "0.5",
             }}
           >
             From Minh to Tin
@@ -180,7 +177,7 @@ const AComplaint = () => {
           </div>
         </div>
         <div
-          className="w-[110px] ml-10 "
+          className="w-[110px] ml-[942px] "
           style={{ color: "#000", fontSize: "20px", fontWeight: "100" }}
         >
           See more
@@ -207,7 +204,6 @@ const AComplaint = () => {
               color: "#000",
               fontSize: "20px",
               fontWeight: "700",
-              opacity: "0.5",
             }}
           >
             From Minh to Tin
@@ -223,7 +219,7 @@ const AComplaint = () => {
           </div>
         </div>
         <div
-          className="w-[110px] ml-10 "
+          className="w-[110px] ml-[942px] "
           style={{ color: "#000", fontSize: "20px", fontWeight: "100" }}
         >
           See more

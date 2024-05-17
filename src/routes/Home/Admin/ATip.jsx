@@ -11,10 +11,11 @@ const ATip = () => {
         height: "fixed",
         backgroundColor: "#63B6BD",
         borderRadius: "20px 20px 0px 0px",
-        marginLeft: '2rem',
+        marginLeft: "2rem",
         padding: "20px",
       }}
     >
+
       <div
         style={{
           backgroundColor: "#FFF",
@@ -37,9 +38,9 @@ const ATip = () => {
             voluptas cumque impedit aliquam, odit quae voluptate dolorum
             corporis, unde quam delectus inventore architecto reiciendis libero
             maxime in atque corrupti obcaecati!
-          </div>
-          <div className="w-[110px]" style={{ color: "#000", fontSize: "20px", fontWeight: "100" }}>See more</div>
+          </div>          
         </div>
+        <div className="w-[110px] ml-[942px]" style={{ color: "#000", fontSize: "20px", fontWeight: "100" }}>See more</div>
       </div>
 
       <div
@@ -64,9 +65,9 @@ const ATip = () => {
             voluptas cumque impedit aliquam, odit quae voluptate dolorum
             corporis, unde quam delectus inventore architecto reiciendis libero
             maxime in atque corrupti obcaecati!
-          </div>
-          <div className="w-[110px]" style={{ color: "#000", fontSize: "20px", fontWeight: "100" }}>See more</div>
+          </div>          
         </div>
+        <div className="w-[110px] ml-[942px]" style={{ color: "#000", fontSize: "20px", fontWeight: "100" }}>See more</div>
       </div>
 
       <div
@@ -91,9 +92,9 @@ const ATip = () => {
             voluptas cumque impedit aliquam, odit quae voluptate dolorum
             corporis, unde quam delectus inventore architecto reiciendis libero
             maxime in atque corrupti obcaecati!
-          </div>
-          <div className="w-[110px]" style={{ color: "#000", fontSize: "20px", fontWeight: "100" }}>See more</div>
+          </div>          
         </div>
+        <div className="w-[110px] ml-[942px]" style={{ color: "#000", fontSize: "20px", fontWeight: "100" }}>See more</div>
       </div>
       
       <div
@@ -118,9 +119,9 @@ const ATip = () => {
             voluptas cumque impedit aliquam, odit quae voluptate dolorum
             corporis, unde quam delectus inventore architecto reiciendis libero
             maxime in atque corrupti obcaecati!
-          </div>
-          <div className="w-[110px]" style={{ color: "#000", fontSize: "20px", fontWeight: "100" }}>See more</div>
+          </div>          
         </div>
+        <div className="w-[110px] ml-[942px]" style={{ color: "#000", fontSize: "20px", fontWeight: "100" }}>See more</div>
       </div>
     </div>
   );

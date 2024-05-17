@@ -1,4 +1,5 @@
 import React from "react";
+import Post from "../../../components/Button/Post";
 
 const AAddTip = () => {
   return (
@@ -80,20 +81,9 @@ const AAddTip = () => {
           justifyContent: "center",
         }}
       >
-        <button
-          className="w-[230px] h-[58px] bg-blue-500 text-white font-semibold py-2 px-4 rounded"
-          style={{
-            borderRadius: "15px",
-            border: "0px solid #000",
-            background: "#63B6BD",
-            boxShadow: "0px 4px 4px 0px rgba(0, 0, 0, 0.25)",
-            color: "#204E51",
-            fontSize: "25px",
-            fontWeight: "700",
-          }}
-        >
-          Post
-        </button>
+        <div>
+          <Post/>
+        </div>
       </div>
     </div>
   );
