@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { userInfor, userThunk } from "./userThunk";
+import { userInfor, userThunk, userTrans } from "./userThunk";
 import { userLocal } from "../../service/userLocal";
 
 const initialState = {
@@ -29,9 +29,12 @@ const userReducer = createSlice({
         console.log("login success");
       })
       .addCase(userInfor.fulfilled, (state, action) => {
-        console.log(".addCase ~ action:", action.payload);
         state.inforUser = action.payload;
         userLocal.setInfor(action.payload);
+      })
+      .addCase(userTrans.fulfilled, (state, action) => {
+        console.log(".addCase ~ action:", action.payload);
+        console.log("check");
       });
   },
 });

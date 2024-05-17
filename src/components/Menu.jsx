@@ -93,7 +93,7 @@ const Menu = () => {
 
   return (
     <div className=" h-screen w-[18.75rem] p-4 fixed top-[100px]">
-      <div className="flex flex-col items-start justify-between bg-[#204E51] h-full rounded-md">
+      <div className="flex flex-col items-start justify-between bg-[#204E51] h-full rounded-2xl">
         <div className="w-full">
           {NavItem?.map((item, index) => (
             <Link
@@ -101,12 +101,12 @@ const Menu = () => {
               to={item.link}
               className={`block p-4 ${
                 location.pathname === item.link
-                  ? "no-hover text-white bg-green_light3"
+                  ? "no-hover text-[#204E51] bg-white rounded-2xl"
                   : "text-offwhite"
               } ${
                 location.pathname === item.link
                   ? ""
-                  : "hover:bg-green_light3 hover:text-green_dark1"
+                  : "hover:bg-white hover:text-green_dark1 rounded-2xl"
               }`}
               style={{ width: "100%", transition: "ease-in-out 0.3s" }}
             >

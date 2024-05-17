@@ -35,3 +35,17 @@ export const userInfor = createAsyncThunk(
     }
   }
 );
+export const userTrans = createAsyncThunk(
+  "userReducer/transaction",
+  async (payload) => {
+    try {
+      const trans = await userService.getTrans(
+        payload,
+        userLocal.getRoleName()
+      );
+      return trans.data.content;
+    } catch (error) {
+      console.log("error:", error);
+    }
+  }
+);
