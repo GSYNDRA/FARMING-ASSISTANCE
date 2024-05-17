@@ -52,13 +52,12 @@ export const getTips = async (req, res) => {
 };
 export const editProduct = async (req, res) => {
   try {
-    let { farmerID, productName } = req.params;
+    let { inventoryProductID } = req.params;
 
     let { quantity, price, image, description } = req.body;
     let getProduct = await model.inventoryproduct.findOne({
       where: {
-        farmerID: farmerID,
-        productName: productName,
+        inventoryProductID
       },
     });
 
@@ -77,20 +76,19 @@ export const editProduct = async (req, res) => {
     responseData(res, "Error...", "", 500);
   }
 };
+
+    // let getProductID = await model.inventoryproduct.findOne({
+    //   where: {
+    //     inventoryProductID,
+    //   },
+    // });
 export const removeProduct = async (req, res) => {
   try {
-    let { farmerID, productName } = req.params;
-
-    let getProductID = await model.inventoryproduct.findOne({
-      where: {
-        farmerID: farmerID,
-        productName: productName,
-      },
-    });
+    let { inventoryProductID } = req.params;
 
     await inventoryproduct.destroy({
       where: {
-        inventoryProductID: getProductID.inventoryProductID,
+        inventoryProductID: inventoryProductID,
       },
     });
 

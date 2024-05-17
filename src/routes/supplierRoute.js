@@ -20,8 +20,8 @@ supplierRoute.put("/order/:supplierID", orderProducts);
 supplierRoute.get("/search/:productName", searchProducts);
 supplierRoute.get("/get-page/:page", getProductPage);
 supplierRoute.get("/transaction/:supplierID", getTransaction);
-supplierRoute.get("/product-detail/:inventoryProductID", getDetailOfProduct);
 supplierRoute.get("/order-of-transaction/:transactionID", getDetailOfTransaction);
+supplierRoute.get("/product-detail/:inventoryProductID", getDetailOfProduct);
 supplierRoute.post("/complaint", postComplaint);
 
 // API upload avatar

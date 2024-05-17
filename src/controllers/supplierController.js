@@ -87,25 +87,24 @@ export const orderProducts = async (req, res) => {
     });
     let totalPrice = 0;
     for (const product of products) {
-      const { farmerID, productName, quantity } = product;
+      const { inventoryProductID, quantity } = product;
 
       const getProduct = await model.inventoryproduct.findOne({
         where: {
-          farmerID: farmerID,
-          productName: productName,
+          inventoryProductID: inventoryProductID
         },
       });
       await model.order.create({
-        inventoryProductID: getProduct.inventoryProductID,
+        inventoryProductID: inventoryProductID,
         transactionID: newTransaction.transactionID,
         price: getProduct.price * quantity,
         quantity: quantity,
-        farmerID: farmerID,
+        farmerID: getProduct.farmerID,
         supplierID: supplierID,
       });
       const data = await model.farmer.findOne({
         where: {
-          farmerID: farmerID,
+          farmerID: getProduct.farmerID,
         },
         include: ["payment"],
       });
@@ -131,7 +130,7 @@ export const orderProducts = async (req, res) => {
 
       await model.inventoryproduct.update(getProduct.dataValues, {
         where: {
-          inventoryProductID: getProduct.inventoryProductID,
+          inventoryProductID: inventoryProductID,
         },
       });
     }

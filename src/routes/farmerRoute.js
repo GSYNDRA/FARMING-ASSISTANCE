@@ -21,9 +21,9 @@ farmerRoute.get("/tips", getTips);
 
 farmerRoute.get("/inventory/:farmerID", getProduct);
 
-farmerRoute.put("/inventory/:farmerID/:productName", editProduct);
+farmerRoute.put("/inventory/:inventoryProductID", editProduct);
 
-farmerRoute.delete("/inventory/:farmerID/:productName", removeProduct);
+farmerRoute.delete("/inventory/:inventoryProductID", removeProduct);
 
 farmerRoute.post("/inventory/:farmerID", addProduct);
 
