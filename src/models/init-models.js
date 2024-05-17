@@ -37,6 +37,8 @@ export default function initModels(sequelize) {
   farmer.hasMany(inventoryproduct, { as: "inventoryproducts", foreignKey: "farmerID"});
   order.belongsTo(farmer, { as: "farmer", foreignKey: "farmerID"});
   farmer.hasMany(order, { as: "orders", foreignKey: "farmerID"});
+  complaints.belongsTo(inventoryproduct, { as: "inventoryproduct", foreignKey: "inventoryproductID"});
+  inventoryproduct.hasMany(complaints, { as: "complaints", foreignKey: "inventoryproductID"});
   order.belongsTo(inventoryproduct, { as: "inventoryProduct", foreignKey: "inventoryProductID"});
   inventoryproduct.hasMany(order, { as: "orders", foreignKey: "inventoryProductID"});
   farmer.belongsTo(payment, { as: "payment", foreignKey: "paymentID"});

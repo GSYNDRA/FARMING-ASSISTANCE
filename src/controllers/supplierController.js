@@ -12,10 +12,11 @@ export const getProfile = async (req, res) => {
     where: {
       supplierID: supplierID,
     },
-    include: ["user"],
+    include: ["user", "payment"],
   });
   responseData(res, "Success", data, 200);
 };
+
 export const updateProfile = async (req, res) => {
   try {
     let { supplierID } = req.params;
@@ -41,32 +42,52 @@ export const updateProfile = async (req, res) => {
   }
 };
 
-export const getProductPage = async (req, res) => {
+// export const getProductPage = async (req, res) => {
+//   try {
+//     let { page } = req.params;
+//     let pageSize = 6;
+//     let index = (page - 1) * pageSize;
+
+//     let dataCount = await model.inventoryproduct.count();
+//     let totalPage = Math.ceil(dataCount / pageSize);
+
+//     // SELECT * FROM video LIMIT index , pageSize
+//     let data = await model.inventoryproduct.findAll({
+//       offset: index,
+//       limit: pageSize,
+//     });
+
+//     responseData(res, "successfully", { data, totalPage }, 200);
+//   } catch {
+//     responseData(res, "Error...", "", 500);
+//   }
+// };
+
+export const getAllProduct = async (req, res) => {
   try {
-    let { page } = req.params;
-    let pageSize = 6;
-    let index = (page - 1) * pageSize;
-
-    let dataCount = await model.inventoryproduct.count();
-    let totalPage = Math.ceil(dataCount / pageSize);
-
     // SELECT * FROM video LIMIT index , pageSize
     let data = await model.inventoryproduct.findAll({
-      offset: index,
-      limit: pageSize,
+      where: {
+      status: 1,
+      }
     });
 
-    responseData(res, "successfully", { data, totalPage }, 200);
+    responseData(res, "successfully", data , 200);
   } catch {
     responseData(res, "Error...", "", 500);
   }
 };
+
+// SELECT * 
+// FROM inventoryproduct 
+// WHERE productName LIKE '%{productName}%';
 
 export const searchProducts = async (req, res) => {
   try {
     let { productName } = req.params;
     let data = await model.inventoryproduct.findAll({
       where: {
+        status: 1,
         productName: {
           [Op.like]: "%" + productName + "%",
         },
@@ -185,6 +206,13 @@ export const getTransaction = async (req, res) => {
     responseData(res, "Error...", "", 500);
   }
 };
+
+
+// SELECT o.*, f.*, ip.*
+// FROM `order` o
+// LEFT JOIN farmer f ON o.farmerID = f.farmerID
+// LEFT JOIN inventoryproduct ip ON o.inventoryProductID = ip.inventoryProductID
+// WHERE o.transactionID = {transactionID};
 
 export const getDetailOfTransaction = async(req, res) => {
   try{

@@ -23,7 +23,7 @@ farmerRoute.get("/inventory/:farmerID", getProduct);
 
 farmerRoute.put("/inventory/:inventoryProductID", editProduct);
 
-farmerRoute.delete("/inventory/:inventoryProductID", removeProduct);
+farmerRoute.put("/delete-inventory/:inventoryProductID", removeProduct);
 
 farmerRoute.post("/inventory/:farmerID", addProduct);
 

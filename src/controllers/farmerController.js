@@ -14,7 +14,7 @@ export const getProfile = async (req, res) => {
     where: {
       farmerID: farmerID,
     },
-    include: ["user"],
+    include: ["user", "payment"],
   });
   responseData(res, "Success", data, 200);
 };
@@ -82,21 +82,28 @@ export const editProduct = async (req, res) => {
     //     inventoryProductID,
     //   },
     // });
+
 export const removeProduct = async (req, res) => {
   try {
     let { inventoryProductID } = req.params;
-
-    await inventoryproduct.destroy({
+    let getProduct = await model.inventoryproduct.findOne({
       where: {
-        inventoryProductID: inventoryProductID,
+        inventoryProductID
       },
     });
-
+    getProduct.status = 0;
+    await model.inventoryproduct.update(getProduct.dataValues, {
+      where: {
+        inventoryProductID: getProduct.inventoryProductID,
+      },
+    });
+    
     responseData(res, "successfully", "", 200);
   } catch (exception) {
     responseData(res, "Error...", "", 500);
   }
 };
+
 export const addProduct = async (req, res) => {
   try {
     let { farmerID } = req.params;
@@ -108,6 +115,7 @@ export const addProduct = async (req, res) => {
       price,
       image,
       description,
+      status: 1,
     });
     // Sending a success response
     responseData(res, "Successfully", data, 200);
@@ -122,6 +130,7 @@ export const getProduct = async (req, res) => {
     let data = await model.inventoryproduct.findAll({
       where: {
         farmerID: farmerID,
+        status: 1,
       },
     });
     responseData(res, "successfully", data, 200);
