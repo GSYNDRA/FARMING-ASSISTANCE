@@ -153,7 +153,7 @@ export const uploadAvatar = async (req, res) => {
   // try {
   // Read the image file from the file system
   let { file } = req;
-  let { adminID } = req.params;
+  let { adminID } = req.body;
   let imageData = fs.readFileSync(
     process.cwd() + "/public/imgs/" + file.filename
   );

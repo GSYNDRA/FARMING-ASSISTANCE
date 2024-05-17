@@ -37,10 +37,6 @@ adminRoute.get("/order/:transactionID", getOrder);
 import upload from "../config/upload.js";
 
 // yarn add multer
-adminRoute.post(
-  "/upload-avatar/:adminID",
-  upload.single("avatarImg"),
-  uploadAvatar
-);
+adminRoute.post("/upload-avatar", upload.single("avatarImg"), uploadAvatar);
 
 export default adminRoute;

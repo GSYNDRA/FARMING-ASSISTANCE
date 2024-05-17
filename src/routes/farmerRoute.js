@@ -17,7 +17,7 @@ farmerRoute.get("/get-farmer/:farmerID", getProfile);
 
 farmerRoute.put("/update-info/:farmerID", updateProfile);
 
-farmerRoute.get("/tips", getTips);
+farmerRoute.get("/tip", getTips);
 
 farmerRoute.get("/inventory/:farmerID", getProduct);
 
@@ -33,10 +33,6 @@ farmerRoute.get("/order/:farmerID", getOrder);
 import upload from "../config/upload.js";
 
 // yarn add multer
-farmerRoute.post(
-  "/upload-avatar/:farmerID",
-  upload.single("avatarImg"),
-  uploadAvatar
-);
+farmerRoute.post("/upload-avatar", upload.single("avatarImg"), uploadAvatar);
 
 export default farmerRoute;

@@ -162,32 +162,32 @@ export const getOrder = async (req, res) => {
 import fs from "fs";
 
 export const uploadAvatar = async (req, res) => {
-  try {
-    // Read the image file from the file system
-    let { file } = req;
-    let { farmerID } = req.params;
-    let imageData = fs.readFileSync(
-      process.cwd() + "/public/imgs/" + file.filename
-    );
+  // try {
+  // Read the image file from the file system
+  let { file } = req;
+  let { farmerID } = req.body;
+  let imageData = fs.readFileSync(
+    process.cwd() + "/public/imgs/" + file.filename
+  );
 
-    // Convert image data to base64 encoding
-    let base64Image = `data:${file.mimetype}; base64, ${Buffer.from(
-      imageData
-    ).toString("base64")}`;
+  // Convert image data to base64 encoding
+  let base64Image = `data:${file.mimetype}; base64, ${Buffer.from(
+    imageData
+  ).toString("base64")}`;
 
-    // Update the admin table with the image data
-    let farmer = await model.farmer.findOne({
-      where: { farmerID },
-    });
-    if (!farmer) {
-      responseData(res, "Farmer not found", "", 404);
-    }
-
-    // Update the avatarImg column with the base64 encoded image
-    farmer.avatarImg = base64Image;
-    await admin.save();
-    responseData(res, "Success", farmer, 200);
-  } catch (err) {
-    responseData(res, "Error ...", "", 500);
+  // Update the admin table with the image data
+  let farmer = await model.farmer.findOne({
+    where: { farmerID },
+  });
+  if (!farmer) {
+    responseData(res, "Farmer not found", "", 404);
   }
+
+  // Update the avatarImg column with the base64 encoded image
+  farmer.avatarImg = base64Image;
+  await farmer.save();
+  responseData(res, "Success", farmer, 200);
+  // } catch (err) {
+  //   responseData(res, "Error ...", "", 500);
+  // }
 };
