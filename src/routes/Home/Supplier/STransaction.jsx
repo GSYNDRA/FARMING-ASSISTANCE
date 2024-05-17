@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { userService } from "../../../service/userService";
 import { userTrans } from "../../../redux/userReducer/userThunk";
 
 const data = [];
@@ -8,7 +7,7 @@ const data = [];
 const STransaction = () => {
   const [detail, setDetail] = useState(null);
   const dispatch = useDispatch();
-  const { roleName, userId } = useSelector((state) => state.userReducer);
+  const { userId } = useSelector((state) => state.userReducer);
 
   useEffect(() => {
     const fetchData = async () => {

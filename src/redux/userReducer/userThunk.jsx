@@ -24,7 +24,6 @@ export const userThunk = createAsyncThunk(
 export const userInfor = createAsyncThunk(
   "userReducer/userInfor",
   async (payload) => {
-    console.log("payload:", payload);
     try {
       const inforUser = await userService.getInfor(
         payload,
