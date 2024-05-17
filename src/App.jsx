@@ -16,7 +16,6 @@ import SCart from "./routes/Home/Supplier/SCart";
 import SComplaint from "./routes/Home/Supplier/SComplaint";
 import Stransaction from "./routes/Home/Supplier/STransaction";
 
-
 import AProfile from "./routes/Home/Admin/AProfile";
 import ATip from "./routes/Home/Admin/ATip";
 import AAddTip from "./routes/Home/Admin/AAddTip";
