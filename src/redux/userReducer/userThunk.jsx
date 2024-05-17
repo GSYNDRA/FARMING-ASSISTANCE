@@ -9,17 +9,29 @@ export const userThunk = createAsyncThunk(
     try {
       const data = await userService.postLogin(payload);
       const userID = data.data.content.userID;
-      console.log("userID:", userID);
-      const inforUser = await userService.getInfor(userID, payload.roleID);
-      console.log("inforUser:", inforUser);
+      userLocal.setId(userID);
 
-      userLocal.set(payload); //set on lstorage > not re-login after F5
       message.success("Login succes");
 
       return payload;
     } catch (error) {
       console.log("error:", error);
       message.success("Login fail");
+    }
+  }
+);
+export const userInfor = createAsyncThunk(
+  "userReducer/userInfor",
+  async (payload) => {
+    console.log("payload:", payload);
+    try {
+      const inforUser = await userService.getInfor(
+        payload,
+        userLocal.getRoleName()
+      );
+      return inforUser.data.content;
+    } catch (error) {
+      console.log("error:", error);
     }
   }
 );

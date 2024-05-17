@@ -1,10 +1,11 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
+import { userLocal } from "../service/userLocal";
 
 const AuthWrapper = ({ children }) => {
-  const inforUser = JSON.parse(localStorage.getItem("infoUser")); // or get it from a context or global state
+  const userId = JSON.parse(userLocal.getUserId()); // or get it from a context or global state
 
-  if (inforUser) {
+  if (!userId) {
     return <Navigate to="/auth/login" />;
   }
 

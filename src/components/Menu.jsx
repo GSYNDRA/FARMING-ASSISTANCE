@@ -82,11 +82,9 @@ const Menu = () => {
       case "admin":
         setNavItem(AdminItem);
         break;
-
       case "farmer":
         setNavItem(FarmerItem);
         break;
-
       default:
         setNavItem(SupplierItem);
         break;

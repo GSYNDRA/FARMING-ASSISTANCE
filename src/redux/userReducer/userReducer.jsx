@@ -1,10 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { userThunk } from "./userThunk";
+import { userInfor, userThunk } from "./userThunk";
 import { userLocal } from "../../service/userLocal";
 
 const initialState = {
-  roleName: "farmer",
+  roleName: userLocal.getRoleName(),
   inforUser: userLocal.get(),
+  userId: userLocal.getUserId(),
 };
 
 const userReducer = createSlice({
@@ -13,19 +14,25 @@ const userReducer = createSlice({
   reducers: {
     setRole: (state, action) => {
       state.roleName = action.payload;
+      userLocal.setRole(action.payload);
     },
     logOutAction: (state, action) => {
-      state.infoUser = null;
+      state.inforUser = null;
       localStorage.removeItem("token");
       userLocal.delete();
       window.location.href = "/";
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(userThunk.fulfilled, (state, action) => {
-      state.inforUser = action.payload;
-      userLocal.set(action.payload);
-    });
+    builder
+      .addCase(userThunk.fulfilled, (state, action) => {
+        console.log("login success");
+      })
+      .addCase(userInfor.fulfilled, (state, action) => {
+        console.log(".addCase ~ action:", action.payload);
+        state.inforUser = action.payload;
+        userLocal.setInfor(action.payload);
+      });
   },
 });
 
