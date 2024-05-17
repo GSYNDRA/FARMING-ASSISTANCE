@@ -29,6 +29,14 @@ export default class complaints extends Model {
         model: 'farmer',
         key: 'farmerID'
       }
+    },
+    inventoryproductID: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'inventoryproduct',
+        key: 'inventoryProductID'
+      }
     }
   }, {
     sequelize,
@@ -55,6 +63,13 @@ export default class complaints extends Model {
         using: "BTREE",
         fields: [
           { name: "farmerID" },
+        ]
+      },
+      {
+        name: "complaints_ibfk_3",
+        using: "BTREE",
+        fields: [
+          { name: "inventoryproductID" },
         ]
       },
     ]

@@ -13,10 +13,10 @@ import {
 const adminRoute = express.Router();
 
 // API get admin info
-adminRoute.get("/get-admin/:userID", getAdmin);
+adminRoute.get("/get-admin/:adminID", getAdmin);
 
 // API to update info admin
-adminRoute.put("/update-info/:userID", updateInfo);
+adminRoute.put("/update-info/:adminID", updateInfo);
 
 // API get all the tips
 adminRoute.get("/tip", getTips);
