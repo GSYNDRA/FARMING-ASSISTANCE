@@ -1,41 +1,24 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { userService } from "../../../service/userService";
+import { userTrans } from "../../../redux/userReducer/userThunk";
 
-const data = [
-  {
-    transactionID: 1,
-    supplierID: 1,
-    totalPrice: 220,
-    supplier: {
-      supplierID: 1,
-      userID: 8,
-      supplierName: "Davide Jones",
-      paymentID: 1,
-      phone: "0927730139",
-      email: "david_jones1@gmail.com",
-      address: "802 Spruce Lane, Greenfield",
-    },
-  },
-  {
-    transactionID: 8,
-    supplierID: 1,
-    totalPrice: 112,
-    supplier: {
-      supplierID: 1,
-      userID: 8,
-      supplierName: "Davide Jones",
-      paymentID: 1,
-      phone: "0927730139",
-      email: "david_jones1@gmail.com",
-      address: "802 Spruce Lane, Greenfield",
-    },
-  },
-];
+const data = [];
 
 const STransaction = () => {
   const [detail, setDetail] = useState(null);
+  const dispatch = useDispatch();
+  const { roleName, userId } = useSelector((state) => state.userReducer);
 
   useEffect(() => {
-    console.log("STransaction ~ detail:", detail);
+    const fetchData = async () => {
+      console.log(userId);
+      dispatch(userTrans(userId));
+    };
+    fetchData();
+  }, [dispatch]);
+
+  useEffect(() => {
     if (detail) {
       displayDetailTransaction(detail);
       fectchListOfProduct();

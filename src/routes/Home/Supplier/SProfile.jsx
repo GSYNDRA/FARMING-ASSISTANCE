@@ -1,20 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import avtImg from "../../../assets/GiangImg.png";
 import { userLocal } from "../../../service/userLocal";
-import { userInfor, userThunk } from "../../../redux/userReducer/userThunk";
+import { userInfor } from "../../../redux/userReducer/userThunk";
 
 const SProfile = () => {
   const [information, setInformation] = useState({});
-  const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
   const { inforUser, roleName } = useSelector((state) => state.userReducer);
-  console.log("SProfile ~ inforUser:", inforUser);
 
   useEffect(() => {
     const fetchUserInformation = async () => {
       dispatch(userInfor(userLocal.getUserId()));
-      setLoading(false);
     };
     fetchUserInformation();
   }, [dispatch]);
@@ -23,7 +19,6 @@ const SProfile = () => {
     if (inforUser) {
       setInformation(inforUser);
     }
-    console.log("useEffect ~ inforUser:", inforUser);
   }, [inforUser]);
 
   const showPage = () => {
@@ -44,7 +39,11 @@ const SProfile = () => {
             <div className="flex justify-center">
               <div className="w-[30%]">
                 <div className="px-24">
-                  <img src={avtImg} alt="" />
+                  <img
+                    src={`${information.avatarImg}`}
+                    className="rounded-full"
+                    alt=""
+                  />
                 </div>
                 <div className="text-center">
                   <div
@@ -110,7 +109,7 @@ const SProfile = () => {
                       </span>
                     </div>
 
-                    <div>{information.user.password}</div>
+                    {information.user && <div>{information.user.password}</div>}
                   </div>
 
                   {/* Item 3 */}
@@ -234,7 +233,7 @@ const SProfile = () => {
                   </div>
 
                   <button className="space-x-4 border border-black rounded-3xl p-2 px-4 text-[1rem] font-[400] text-center hover:bg-[#63B6BD] hover:text-white">
-                    <span>Change your payment</span>
+                    Change your payment
                   </button>
                 </div>
               </div>
@@ -245,8 +244,7 @@ const SProfile = () => {
     );
   };
 
-  return <div>{loading ? <div>Loading...</div> : showPage()}</div>;
-
+  return <div>{showPage()}</div>;
 };
 
 export default SProfile;
