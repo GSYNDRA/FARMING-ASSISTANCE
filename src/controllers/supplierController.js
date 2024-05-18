@@ -102,6 +102,13 @@ export const orderProducts = async (req, res) => {
   try {
     let { supplierID } = req.params;
     const products = req.body.products;
+
+    // If the cart is empty, send a response indicating that the cart is empty
+    if (products.length === 0) {
+      responseData(res, "Cart is empty", "", 400);
+      return; // Exit the function early
+    }
+
     let newTransaction = await model.transaction.create({
       supplierID: supplierID,
     });
