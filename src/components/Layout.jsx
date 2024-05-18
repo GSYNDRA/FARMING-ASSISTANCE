@@ -5,7 +5,6 @@ import Header from "../routes/AboutUs/Header";
 
 function Layout({ children }) {
   const location = useLocation();
-  console.log("Layout ~ location:", location);
 
   const isAboutUsPage = location.pathname === "/";
   const isLoginPage = location.pathname === "/auth/login";

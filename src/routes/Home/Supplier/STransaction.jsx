@@ -21,11 +21,11 @@ const STransaction = () => {
   useEffect(() => {
     if (detail) {
       displayDetailTransaction(detail);
-      fectchListOfProduct();
+      fetchListOfProduct();
     }
   });
 
-  const fectchListOfProduct = () => {
+  const fetchListOfProduct = () => {
     return (
       <div key={detail.productId}>
         <span>{detail.name}</span>
@@ -60,7 +60,7 @@ const STransaction = () => {
 
         <div className=" space-y-8 leading-8">
           <span className="text-[1.2rem] font-semibold">Product List</span>
-          <span>{fectchListOfProduct()}</span>
+          <span>{fetchListOfProduct()}</span>
         </div>
       </div>
     );
