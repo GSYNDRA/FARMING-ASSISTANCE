@@ -72,3 +72,17 @@ export const transDetail = createAsyncThunk(
     }
   }
 );
+export const updateInforUser = createAsyncThunk(
+  "userReducer/updateData",
+  async (payload) => {
+    try {
+      const data = await userService.changeData(
+        payload,
+        userLocal.get()?.supplierID
+      );
+      return data.data.content;
+    } catch (error) {
+      message.success("update infor fail");
+    }
+  }
+);

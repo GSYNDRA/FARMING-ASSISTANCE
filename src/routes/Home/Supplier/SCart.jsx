@@ -193,14 +193,18 @@ const SCart = () => {
             >
               Cancel
             </button>
-            <button
-              className="mx-auto bg-[#63B6BD] py-2 px-4 rounded-2xl"
-              onClick={() => {
-                orderProduct();
-              }}
-            >
-              Order
-            </button>
+            {list.length === 0 ? (
+              <p>Your cart is empty.</p>
+            ) : (
+              <button
+                className="mx-auto bg-[#63B6BD] py-2 px-4 rounded-2xl"
+                onClick={() => {
+                  orderProduct();
+                }}
+              >
+                Order
+              </button>
+            )}
           </div>
         </div>
       </div>

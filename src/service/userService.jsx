@@ -24,4 +24,9 @@ export const userService = {
     let url = `/${roleName}/order-of-transaction/${id}`;
     return http.get(url);
   },
+
+  changeData: (data, id) => {
+    let url = `/supplier/update-info/${id}`;
+    return http.put(url, data);
+  },
 };
