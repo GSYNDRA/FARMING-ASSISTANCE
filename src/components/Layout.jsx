@@ -5,7 +5,6 @@ import Header from "../routes/AboutUs/Header";
 
 function Layout({ children }) {
   const location = useLocation();
-  console.log("Layout ~ location:", location);
 
   const isAboutUsPage = location.pathname === "/";
   const isLoginPage = location.pathname === "/auth/login";
@@ -21,7 +20,6 @@ function Layout({ children }) {
           <Menu />
         </div>
         <div className="w-[80%] mt-[120px] mr-[2rem] ">{children}</div>
-
       </div>
     </div>
   ) : (

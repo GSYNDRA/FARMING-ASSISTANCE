@@ -1,10 +1,13 @@
-import React, { useState } from "react";
-
-import img from "../../../../assets/Rectangle 5.png";
+import React, { useEffect, useState } from "react";
 import { cartLocal } from "../../../../service/cartLocal";
+import { message } from "antd";
 
 const Item = ({ data }) => {
   const [quantity, setQuantity] = useState(1);
+  const [isDisabled, setDisabled] = useState(false);
+  useEffect(() => {
+    if (data.quantity <= 0) setDisabled(true);
+  }, []);
 
   const handleDecreaseQuantity = () => {
     if (quantity > 1) {
@@ -19,15 +22,21 @@ const Item = ({ data }) => {
   const moreDetail = () => {};
 
   const addToCart = () => {
+    const itemInStock = cartLocal.itemQanInCart(data.inventoryProductID);
     let product = {
       inventoryProductID: data.inventoryProductID,
       productName: data.productName,
       farmerName: data.farmer.farmerName,
+      farmerID: data.farmerID,
       quantity: quantity,
       price: data.price,
       image: data.image,
+      instockQuantity: data.quantity,
     };
-    cartLocal.addToCart(product);
+
+    if (quantity + itemInStock > data.quantity) {
+      message.error("Not enough instock");
+    } else cartLocal.addToCart(product);
   };
 
   return (
@@ -73,7 +82,7 @@ const Item = ({ data }) => {
             </div>
 
             <div>
-              <div class="rating rating-md">
+              <div className="rating rating-md">
                 <input
                   type="radio"
                   name="rating-6"
@@ -139,6 +148,7 @@ const Item = ({ data }) => {
             <button
               onClick={addToCart}
               className="px-4 py-2 border rounded-xl border-black hover:bg-[#63B6BD] hover:text-white hover:border-[transparent]"
+              disabled={isDisabled}
             >
               Add to cart
             </button>

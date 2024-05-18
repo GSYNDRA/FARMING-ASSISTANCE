@@ -2,16 +2,31 @@ import React, { useEffect, useState } from "react";
 import { cartLocal } from "../../../service/cartLocal";
 import img from "../../../assets/GiangImg.png";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { cartThunk } from "../../../redux/cartReducer/cartThunk";
+import { userLocal } from "../../../service/userLocal";
+import { message } from "antd";
 
 const SCart = () => {
   const [list, setList] = useState(cartLocal.get("cart"));
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { inforUser } = useSelector((state) => state.userReducer);
+
   useEffect(() => {
     cartLocal.get("cart");
   }, [list]);
 
-  const handleChangeQuantity = (id, quantityChange) => {
-    setList(cartLocal.changeQuantity(id, quantityChange));
+  const handleChangeQuantity = (id, instock, quantity, quantityChange) => {
+    if (quantityChange < 0) {
+      setList(cartLocal.changeQuantity(id, quantityChange));
+    } else {
+      if (quantity + quantityChange <= instock) {
+        setList(cartLocal.changeQuantity(id, quantityChange));
+      } else {
+        message.error("item instock is not enough");
+      }
+    }
   };
 
   const totalPrice = (item, quantity) => {
@@ -23,10 +38,30 @@ const SCart = () => {
       .reduce((acc, curr) => acc + curr, 0);
   };
   const cancelCart = () => {
+    cartLocal.delete();
     navigate("/supplier/store");
   };
   const orderProduct = () => {
-    console.log(list);
+    let orderList = [];
+    list.map((item) => {
+      orderList.push({
+        inventoryProductID: item.inventoryProductID,
+        quantity: item.quantity,
+      });
+    });
+
+    const data = {
+      orderList: {
+        products: orderList,
+      },
+      supplierID: inforUser.supplierID,
+      roleName: userLocal.getRoleName(),
+    };
+
+    dispatch(cartThunk(data));
+
+    navigate("/supplier/store");
+    cartLocal.delete();
   };
 
   const fetchCartList = () => {
@@ -47,7 +82,12 @@ const SCart = () => {
                   lineHeight: "0.5rem",
                 }}
                 onClick={() => {
-                  handleChangeQuantity(item.inventoryProductID, -1);
+                  handleChangeQuantity(
+                    item.inventoryProductID,
+                    item.instockQuantity,
+                    item.quantity,
+                    -1
+                  );
                 }}
               >
                 -
@@ -61,7 +101,12 @@ const SCart = () => {
                   lineHeight: "0.5rem",
                 }}
                 onClick={() => {
-                  handleChangeQuantity(item.inventoryProductID, 1);
+                  handleChangeQuantity(
+                    item.inventoryProductID,
+                    item.instockQuantity,
+                    item.quantity,
+                    1
+                  );
                 }}
               >
                 +
@@ -70,6 +115,21 @@ const SCart = () => {
           </td>
           <td>${item.price}</td>
           <td>${totalPrice(item.price, item.quantity)}</td>
+          <td>
+            <button
+              className="text-red-600 hover:text-red-900"
+              onClick={() => {
+                handleChangeQuantity(
+                  item.inventoryProductID,
+                  item.instockQuantity,
+                  item.quantity,
+                  -item.quantity
+                );
+              }}
+            >
+              Delete
+            </button>
+          </td>
         </tr>
       );
     });
@@ -102,6 +162,7 @@ const SCart = () => {
                   <th>Quantities</th>
                   <th>Price</th>
                   <th>Total</th>
+                  <th></th>
                 </tr>
               </thead>
               <tbody>{fetchCartList()}</tbody>
@@ -113,9 +174,9 @@ const SCart = () => {
       <div className="bg-[#204E51] flex mt-4 p-4 rounded-lg">
         <div className="w-[60%] text-[1.2rem] font-semibold text-white border-r-2">
           <div>
-            Name: <span>Tran Dang Phuong Nam</span>
-            Address: <span>123 Le Duc Tho, Go Vap</span>
-            Phone: <span>012358981</span>
+            Name: <span>{inforUser.supplierName}</span> <br />
+            Address: <span>{inforUser.address}</span> <br />
+            Phone: <span>{inforUser.phone}</span> <br />
           </div>
         </div>
 
