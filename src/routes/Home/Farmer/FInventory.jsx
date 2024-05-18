@@ -1,19 +1,21 @@
 import React, { useEffect, useState } from "react";
 import Edit from "../../../components/Edit.jsx";
-import Delete from "../../../components/Delete.jsx";
 import AddButton from "../../../components/AddButton.jsx";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { delProductThunk } from "../../../redux/productReducer/productThunk.jsx";
 
 const FInventory = () => {
   const [inventory, setInventory] = useState([]);
-  const [loading, setLoading] = useState(true)
-  const {inforUser} = useSelector((state) => state.userReducer)
-  console.log(inventory)
+  const [loading, setLoading] = useState(true);
+  const { inforUser } = useSelector((state) => state.userReducer);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchInventory = async () => {
       try {
-        const response = await fetch(`http://localhost:8080/farmer/inventory/${inforUser.farmerID}`);
+        const response = await fetch(
+          `http://localhost:8080/farmer/inventory/${inforUser.farmerID}`
+        );
         const data = await response.json();
         if (data.message === "successfully" && Array.isArray(data.content)) {
           setInventory(data.content);
@@ -28,7 +30,14 @@ const FInventory = () => {
     };
 
     fetchInventory();
-  }, []);
+  }, [inventory]); // <-- Added inventory as a dependency
+
+  const deleteProduct = (data) => {
+    const productID = data.inventoryProductID;
+    console.log("deleteProduct ~ productID:", productID);
+
+    dispatch(delProductThunk(productID));
+  };
 
   if (loading) {
     return <div>Loading...</div>;
@@ -83,40 +92,75 @@ const FInventory = () => {
           </thead>
           <tbody>
             {inventory.map((item) => (
-              <tr key={item.inventoryProductID} style={{ borderBottom: "none" }}>
-                <td style={{ fontSize: "20px", width: "10%", borderBottom: "none" }}>
+              <tr
+                key={item.inventoryProductID}
+                style={{ borderBottom: "none" }}
+              >
+                <td
+                  style={{
+                    fontSize: "20px",
+                    width: "10%",
+                    borderBottom: "none",
+                  }}
+                >
                   {item.inventoryProductID}
                 </td>
                 <td style={{ width: "40%", borderBottom: "none" }}>
                   <div className="flex items-center gap-3">
                     <div className="avatar">
                       <div className="w-[100px] h-[100px]">
-                        <img
-                          src={`${item.image}`} 
-                          alt=""
-                        />
+                        <img src={`${item.image}`} alt="" />
                       </div>
                     </div>
                     <div>
                       <div style={{ fontSize: "20px", color: "black" }}>
-                        {item.productName || "N/A"} {/* Fallback to "N/A" if productName is null */}
+                        {item.productName || "N/A"}{" "}
+                        {/* Fallback to "N/A" if productName is null */}
                       </div>
                     </div>
                   </div>
                 </td>
-                <td style={{ fontSize: "20px", color: "black", width: "5%", borderBottom: "none" }}>
+                <td
+                  style={{
+                    fontSize: "20px",
+                    color: "black",
+                    width: "5%",
+                    borderBottom: "none",
+                  }}
+                >
                   {item.quantity}
                 </td>
-                <td style={{ fontSize: "20px", color: "black", width: "10%", borderBottom: "none" }}>
+                <td
+                  style={{
+                    fontSize: "20px",
+                    color: "black",
+                    width: "10%",
+                    borderBottom: "none",
+                  }}
+                >
                   {item.price}
                 </td>
-                <td style={{ fontSize: "20px", color: "black", width: "40%", borderBottom: "none" }}>
+                <td
+                  style={{
+                    fontSize: "20px",
+                    color: "black",
+                    width: "40%",
+                    borderBottom: "none",
+                  }}
+                >
                   {item.description}
                 </td>
                 <td style={{ width: "5%", borderBottom: "none" }}>
                   <div className="flex gap-1">
                     <Edit />
-                    <Delete />
+                    {/* <Delete /> */}
+                    <button
+                      onClick={() => {
+                        deleteProduct(item);
+                      }}
+                    >
+                      Delete
+                    </button>
                   </div>
                 </td>
               </tr>
