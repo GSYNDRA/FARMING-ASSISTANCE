@@ -8,24 +8,27 @@ const FInventory = () => {
   const [inventory, setInventory] = useState([]);
   const [loading, setLoading] = useState(true);
   const { inforUser } = useSelector((state) => state.userReducer);
-
-  const fetchInventory = async () => {
-    try {
-      const response = await fetch(`http://localhost:8080/farmer/inventory/${inforUser.farmerID}`);
-      const data = await response.json();
-      if (data.message === "successfully" && Array.isArray(data.content)) {
-        setInventory(data.content);
-      } else {
-        console.error("Unexpected data format:", data);
-      }
-      setLoading(false);
-    } catch (error) {
-      console.error("Error fetching inventory:", error);
-      setLoading(false);
-    }
-  };
+  const dispatch = useDispatch();
 
   useEffect(() => {
+    const fetchInventory = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:8080/farmer/inventory/${inforUser.farmerID}`
+        );
+        const data = await response.json();
+        if (data.message === "successfully" && Array.isArray(data.content)) {
+          setInventory(data.content);
+        } else {
+          console.error("Unexpected data format:", data);
+        }
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching inventory:", error);
+        setLoading(false);
+      }
+    };
+
     fetchInventory();
   }, [inventory]); // <-- Added inventory as a dependency
 
@@ -81,8 +84,9 @@ const FInventory = () => {
               <th style={{ fontSize: "25px", color: "#204E51", width: "40%" }}>
                 Description
               </th>
-              <th style={{ fontSize: "25px", color: "#204E51", width: "10%" }}>
-              </th>
+              <th
+                style={{ fontSize: "25px", color: "#204E51", width: "10%" }}
+              ></th>
               <th></th>
             </tr>
           </thead>
@@ -149,6 +153,27 @@ const FInventory = () => {
                 <td style={{ width: "5%", borderBottom: "none" }}>
                   <div className="flex gap-1">
                     <Edit />
+                    {/* <Delete /> */}
+                    <button
+                      style={{
+                        borderRadius: "10px",
+                        width: '70px',
+                        height: '35px',
+                        backgroundColor: "#930000",
+                        color: "white",
+                        fontWeight: 700,
+                        fontSize: "14px",
+                        zIndex: 1,
+                        alignItems: "center",
+                        justifyItems: "center",
+                        paddingTop: "3px",
+                      }}
+                      onClick={() => {
+                        deleteProduct(item);
+                      }}
+                    >
+                      Delete
+                    </button>
                   </div>
                 </td>
               </tr>
