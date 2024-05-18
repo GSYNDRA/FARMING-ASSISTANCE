@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import Edit from "../../../components/Edit.jsx";
 import AddButton from "../../../components/AddButton.jsx";
+import EditButton from "../../../components/EditButton.jsx";
 import { useDispatch, useSelector } from "react-redux";
 import { delProductThunk } from "../../../redux/productReducer/productThunk.jsx";
 
@@ -30,13 +30,23 @@ const FInventory = () => {
     };
 
     fetchInventory();
-  }, [inventory]); // <-- Added inventory as a dependency
+  }, [inforUser.farmerID]);
 
   const deleteProduct = (data) => {
     const productID = data.inventoryProductID;
     console.log("deleteProduct ~ productID:", productID);
 
     dispatch(delProductThunk(productID));
+  };
+
+  const updateProduct = (updatedItem) => {
+    setInventory((prevInventory) =>
+      prevInventory.map((item) =>
+        item.inventoryProductID === updatedItem.inventoryProductID
+          ? updatedItem
+          : item
+      )
+    );
   };
 
   if (loading) {
@@ -151,14 +161,13 @@ const FInventory = () => {
                   {item.description}
                 </td>
                 <td style={{ width: "5%", borderBottom: "none" }}>
-                  <div className="flex gap-1">
-                    <Edit />
-                    {/* <Delete /> */}
+                  <div className="flex gap-2">
+                    <EditButton item={item} onUpdate={updateProduct} />
                     <button
                       style={{
                         borderRadius: "10px",
-                        width: '70px',
-                        height: '35px',
+                        width: "70px",
+                        height: "35px",
                         backgroundColor: "#930000",
                         color: "white",
                         fontWeight: 700,
@@ -167,6 +176,8 @@ const FInventory = () => {
                         alignItems: "center",
                         justifyItems: "center",
                         paddingTop: "3px",
+                        border: "none",
+                        cursor: "pointer",
                       }}
                       onClick={() => {
                         deleteProduct(item);
