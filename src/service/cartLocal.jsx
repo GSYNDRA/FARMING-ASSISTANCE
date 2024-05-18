@@ -1,3 +1,5 @@
+import { message } from "antd";
+
 export const cartLocal = {
   set: () => {
     localStorage.setItem("cart", JSON.stringify([]));
@@ -32,6 +34,20 @@ export const cartLocal = {
     }
 
     localStorage.setItem("cart", JSON.stringify(cart));
+    message.success("Add to cart");
+  },
+
+  itemQanInCart: (id) => {
+    let json = localStorage.getItem("cart");
+    let cart = json ? JSON.parse(json) : [];
+
+    const existingItem = cart.find((item) => item.inventoryProductID === id);
+
+    if (existingItem) {
+      return existingItem.quantity;
+    } else {
+      return -1;
+    }
   },
 
   changeQuantity: (id, change) => {

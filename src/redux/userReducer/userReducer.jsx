@@ -1,5 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { userInfor, userStore, userThunk, userTrans } from "./userThunk";
+import {
+  transDetail,
+  userInfor,
+  userStore,
+  userThunk,
+  userTrans,
+} from "./userThunk";
 import { userLocal } from "../../service/userLocal";
 import { cartLocal } from "../../service/cartLocal";
 
@@ -9,6 +15,8 @@ const initialState = {
   userId: userLocal.getUserId(),
   list: [],
   cart: cartLocal.get(),
+  transList: [],
+  detailTransList: [],
 };
 
 const userReducer = createSlice({
@@ -38,10 +46,15 @@ const userReducer = createSlice({
         userLocal.setInfor(action.payload);
       })
       .addCase(userTrans.fulfilled, (state, action) => {
+        state.transList = action.payload;
         console.log("userTran success");
       })
+      .addCase(transDetail.fulfilled, (state, action) => {
+        console.log(".addCase ~ action:", action.payload);
+        console.log("trans success");
+        state.detailTransList = action.payload;
+      })
       .addCase(userStore.fulfilled, (state, action) => {
-        console.log(".addCase ~ action:", action.payload.data.content);
         state.list = action.payload.data.content;
         console.log("store success");
       });

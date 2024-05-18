@@ -6,14 +6,13 @@ import { userInfor } from "../../../redux/userReducer/userThunk";
 
 const SProfile = () => {
   const [information, setInformation] = useState({});
+
   const dispatch = useDispatch();
   const { inforUser, roleName } = useSelector((state) => state.userReducer);
-
 
   useEffect(() => {
     const fetchUserInformation = async () => {
       dispatch(userInfor(userLocal.getUserId()));
-
     };
     fetchUserInformation();
   }, [dispatch]);
@@ -22,7 +21,6 @@ const SProfile = () => {
     if (inforUser) {
       setInformation(inforUser);
     }
-
   }, [inforUser]);
 
   const showPage = () => {
@@ -43,13 +41,11 @@ const SProfile = () => {
             <div className="flex justify-center">
               <div className="w-[30%]">
                 <div className="px-24">
-
                   <img
                     src={`${information.avatarImg}`}
                     className="rounded-full"
                     alt=""
                   />
-
                 </div>
                 <div className="text-center">
                   <div
@@ -116,7 +112,6 @@ const SProfile = () => {
                     </div>
 
                     {information.user && <div>{information.user.password}</div>}
-
                   </div>
 
                   {/* Item 3 */}
@@ -214,7 +209,7 @@ const SProfile = () => {
                   </div>
 
                   <div className="w-[100%] mx-auto text-center mt-4">
-                    <span>300.000.000 VND</span>
+                    <span>{inforUser?.payment.balance} $</span>
                   </div>
                 </div>
               </div>
@@ -236,13 +231,14 @@ const SProfile = () => {
 
                 <div className="flex justify-center flex-wrap space-y-4">
                   <div className="w-[100%] mx-auto text-center">
-                    <span>300.000.000 VND</span>
+                    <span>
+                      {inforUser?.payment.bankAccount} -{" "}
+                      {inforUser?.payment.bankName}
+                    </span>
                   </div>
 
                   <button className="space-x-4 border border-black rounded-3xl p-2 px-4 text-[1rem] font-[400] text-center hover:bg-[#63B6BD] hover:text-white">
-
                     Change your payment
-
                   </button>
                 </div>
               </div>
@@ -253,9 +249,7 @@ const SProfile = () => {
     );
   };
 
-
   return <div>{showPage()}</div>;
-
 };
 
 export default SProfile;

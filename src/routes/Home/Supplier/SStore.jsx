@@ -7,53 +7,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { userLocal } from "../../../service/userLocal";
 import { userStore } from "../../../redux/userReducer/userThunk";
 
-const data = [
-  {
-    productId: "1",
-    farmerId: "1",
-    farmerName: "Nam",
-    productName: "Orange",
-    quantity: "30",
-    price: "10000",
-    image: "../../../../assets/Rectangle 5.png",
-    desc: "Cavendish bananas are the fruits of one of a number of banana ...",
-  },
-  {
-    productId: "2",
-    farmerId: "1",
-    farmerName: "Minh",
-    productName: "Corn",
-    quantity: "18",
-    price: "200",
-    image: "../../../../assets/Rectangle 5.png",
-    desc: "Cavendish bananas are the fruits of one of a number of banana ...",
-  },
-  {
-    productId: "3",
-    farmerId: "1",
-    farmerName: "Duc",
-    productName: "Tomato",
-    quantity: "5",
-    price: "500",
-    image: "../../../../assets/Rectangle 5.png",
-    desc: "Cavendish bananas are the fruits of one of a number of banana ...",
-  },
-  {
-    productId: "4",
-    farmerId: "1",
-    farmerName: "Giang",
-    productName: "Chiles",
-    quantity: "25",
-    price: "700",
-    image: "../../../../assets/Rectangle 5.png",
-    desc: "Cavendish bananas are the fruits of one of a number of banana ...",
-  },
-];
-
 const SStore = () => {
   const dispatch = useDispatch();
   const { list } = useSelector((state) => state.userReducer);
-  console.log("SStore ~ list:", list);
 
   useEffect(() => {
     const fetchData = async () => {

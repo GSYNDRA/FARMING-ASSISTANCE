@@ -10,12 +10,10 @@ export const userThunk = createAsyncThunk(
       const data = await userService.postLogin(payload);
       const userID = data.data.content.userID;
       userLocal.setId(userID);
-
       message.success("Login succes");
 
       return payload;
     } catch (error) {
-      console.log("error:", error);
       message.success("Login fail");
     }
   }
@@ -30,11 +28,22 @@ export const userInfor = createAsyncThunk(
       );
       return inforUser.data.content;
     } catch (error) {
-      console.log("error:", error);
+      message.success("Infor fail");
     }
   }
 );
 
+export const userStore = createAsyncThunk(
+  "userReducer/store",
+  async (payload) => {
+    try {
+      const list = await userService.getProduct(payload);
+      return list;
+    } catch (error) {
+      message.success("get store fail");
+    }
+  }
+);
 export const userTrans = createAsyncThunk(
   "userReducer/transaction",
   async (payload) => {
@@ -45,19 +54,21 @@ export const userTrans = createAsyncThunk(
       );
       return trans.data.content;
     } catch (error) {
-      console.log("error:", error);
+      message.success("get transaction fail");
     }
   }
 );
-export const userStore = createAsyncThunk(
-  "userReducer/store",
+export const transDetail = createAsyncThunk(
+  "userReducer/transactionDetail",
   async (payload) => {
     try {
-      const list = await userService.getProduct(payload);
-      console.log("payload:", payload);
-      return list;
+      const transDetail = await userService.getTransDetail(
+        payload,
+        userLocal.getRoleName()
+      );
+      return transDetail.data.content;
     } catch (error) {
-      console.log("error:", error);
+      message.success("get transaction detail fail");
     }
   }
 );
