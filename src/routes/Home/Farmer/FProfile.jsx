@@ -9,7 +9,6 @@ const FProfile = () => {
   const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
   const { inforUser, roleName } = useSelector((state) => state.userReducer);
-  console.log("FProfile ~ inforUser:", inforUser);
 
   useEffect(() => {
     const fetchUserInformation = async () => {
@@ -44,8 +43,13 @@ const FProfile = () => {
             <div className="flex justify-center">
               <div className="w-[30%]">
                 <div className="px-24">
-                  <img src={avtImg} alt="" />
+                  <img
+                    src={information.avatarImg}
+                    alt=""
+                    style={{ borderRadius: "50%", width: "100%" }}
+                  />
                 </div>
+
                 <div className="text-center">
                   <div
                     style={{
@@ -110,7 +114,7 @@ const FProfile = () => {
                       </span>
                     </div>
 
-                    <div>{information.user.password}</div>
+                    {information.user && <div>{information.user.password}</div>}
                   </div>
 
                   {/* Item 3 */}
