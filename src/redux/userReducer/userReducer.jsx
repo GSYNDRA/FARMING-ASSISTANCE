@@ -17,7 +17,6 @@ const initialState = {
   list: [],
   cart: cartLocal.get(),
   transList: [],
-  detailTransList: [],
 };
 
 const userReducer = createSlice({

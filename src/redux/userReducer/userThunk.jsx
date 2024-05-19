@@ -74,7 +74,7 @@ export const transDetail = createAsyncThunk(
 );
 export const updateInforUser = createAsyncThunk(
   "userReducer/updateData",
-  async (payload) => {
+  async (payload, { rejectWithValue }) => {
     try {
       const data = await userService.changeData(
         payload,
@@ -83,6 +83,7 @@ export const updateInforUser = createAsyncThunk(
       return data.data.content;
     } catch (error) {
       message.success("update infor fail");
+      return rejectWithValue(error.response.data);
     }
   }
 );

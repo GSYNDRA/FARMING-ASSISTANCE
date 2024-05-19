@@ -13,6 +13,7 @@ const SProfile = () => {
 
   const [information, setInformation] = useState({});
   const [showForm, setShowForm] = useState(false);
+  const [update, setUpdate] = useState(false);
   const [name, setName] = useState(inforUser?.supplierName);
   const [phone, setPhone] = useState(inforUser?.phone);
   const [email, setEmail] = useState(inforUser?.email);
@@ -22,8 +23,11 @@ const SProfile = () => {
     const fetchUserInformation = async () => {
       dispatch(userInfor(userLocal.getUserId()));
     };
-    fetchUserInformation();
-  }, [dispatch]);
+    if (update) {
+      fetchUserInformation();
+      setUpdate(false);
+    } else fetchUserInformation();
+  }, [dispatch, update]);
 
   useEffect(() => {
     if (inforUser) {
@@ -38,8 +42,10 @@ const SProfile = () => {
       email: email,
       address: address,
     };
-    console.log("updateNewInforUser ~ data:", data);
-    dispatch(updateInforUser(data));
+    dispatch(updateInforUser(data)).then(() => {
+      setUpdate(!update);
+      setShowForm(false);
+    });
   };
 
   const showPage = () => {
@@ -281,7 +287,12 @@ const SProfile = () => {
             <div className="text-white text-[1.5rem] font-semibold">
               Change Information
             </div>
-            <button className="p-2 px-4 border rounded-full hover:bg-white hover:text-[#204E51] hover:font-semibold">
+            <button
+              className="p-2 px-4 border rounded-full hover:bg-white hover:text-[#204E51] hover:font-semibold"
+              onClick={() => {
+                setShowForm(false);
+              }}
+            >
               X
             </button>
           </div>
@@ -357,8 +368,8 @@ const SProfile = () => {
   return (
     <div>
       <div>
-        {showPage()}
-        {showForm ? displayForm : null}
+        {}
+        {showForm ? displayForm() : showPage()}
       </div>
     </div>
   );

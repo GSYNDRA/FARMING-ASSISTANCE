@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { cartLocal } from "../../../../service/cartLocal";
 import { message } from "antd";
+import { useNavigate } from "react-router-dom";
+import { userLocal } from "../../../../service/userLocal";
 
-const Item = ({ data }) => {
+const Item = ({ data, onClick }) => {
   const [quantity, setQuantity] = useState(1);
   const [isDisabled, setDisabled] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(null);
+
   useEffect(() => {
     if (data.quantity <= 0) setDisabled(true);
   }, []);
@@ -18,8 +22,6 @@ const Item = ({ data }) => {
   const handleIncreaseQuantity = () => {
     if (quantity < data.quantity) setQuantity(quantity + 1);
   };
-
-  const moreDetail = () => {};
 
   const addToCart = () => {
     const itemInStock = cartLocal.itemQanInCart(data.inventoryProductID);
@@ -46,7 +48,7 @@ const Item = ({ data }) => {
         boxShadow: "10px 10px 10px 0px rgba(0, 0, 0, 0.25)",
       }}
     >
-      <div className="space-y-8 w-full px-8" onClick={moreDetail}>
+      <div className="space-y-8 w-full px-8" onClick={() => onClick(data)}>
         <div className="text-[#204E51] text-center font-bold text-[1.5rem]">
           {data.productName}
         </div>
