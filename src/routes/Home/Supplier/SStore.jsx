@@ -56,13 +56,6 @@ const SStore = () => {
               Buy what You Like, Pay Less For It
             </span>
           </div>
-
-          <div className="search-bar text-black flex space-x-4">
-            <label class="input input-bordered flex items-center gap-2 bg-white">
-              <input type="text" class="grow" placeholder="Search" />
-              <i className="fa fa-search"></i>
-            </label>
-          </div>
         </div>
       </div>
 
