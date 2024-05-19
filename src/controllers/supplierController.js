@@ -36,10 +36,10 @@ export const updateProfile = async (req, res) => {
       },
     });
     let data = await model.supplier.findOne({
-      where:{
+      where: {
         supplierID: supplierID,
       },
-       include: ["user", "payment"],
+      include: ["user", "payment"],
     });
     responseData(res, "successfully", data, 200);
   } catch (exception) {
@@ -265,18 +265,19 @@ export const getDetailOfProduct = async (req, res) => {
 export const postComplaint = async (req, res) => {
   // try {
   // Assuming req.body contains the complaint data, adapt this to your actual request body
-  const { content, supplierID, farmerID } = req.body;
+  const { content, supplierID, farmerID, inventoryproductID } = req.body;
 
   // Create the complaint in your database
   const complaint = await model.complaints.create({
     content,
     supplierID,
     farmerID,
+    inventoryproductID,
     // Add other complaint data here as needed
   });
 
   // Send a success response
-  responseData(res, "Complaint created successfully", complaint, 201);
+  responseData(res, "Complaint created successfully", complaint, 200);
 
   // } catch (error) {
   //   // Handle errors
