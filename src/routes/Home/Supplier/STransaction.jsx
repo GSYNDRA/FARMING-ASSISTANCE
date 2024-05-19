@@ -5,11 +5,8 @@ import TransInfor from "./TransList/TransInfor";
 
 const STransaction = () => {
   const [detail, setDetail] = useState(null);
-  const [fetch, setFetch] = useState(1);
   const dispatch = useDispatch();
-  const { inforUser, transList, detailTransList } = useSelector(
-    (state) => state.userReducer
-  );
+  const { inforUser, transList } = useSelector((state) => state.userReducer);
 
   useEffect(() => {
     if (inforUser?.supplierID) {
@@ -64,7 +61,6 @@ const STransaction = () => {
             className="text-primary"
             onClick={() => {
               displayDetailTransaction(item);
-              setFetch(1);
             }}
           >
             See more
@@ -83,17 +79,6 @@ const STransaction = () => {
               Welcome to Srpout Farm
             </div>
             <span className="!w-[100%]">See your order</span>
-          </div>
-
-          <div className="search-bar text-black flex space-x-4">
-            <button>
-              <i className="fa fa-filter text-[2rem] opacity-70"></i>
-            </button>
-
-            <label className="input input-bordered flex items-center gap-2 bg-white">
-              <input type="text" className="grow" placeholder="Search" />
-              <i className="fa fa-search"></i>
-            </label>
           </div>
         </div>
       </div>

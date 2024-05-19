@@ -20,8 +20,17 @@ export const userService = {
     let url = `/${roleName}/store`;
     return http.get(url);
   },
+  getDetailProduct: (id) => {
+    let url = `/supplier/product-detail/${id}`;
+    return http.get(url);
+  },
   getTransDetail: (id, roleName) => {
     let url = `/${roleName}/order-of-transaction/${id}`;
     return http.get(url);
+  },
+
+  changeData: (data, id) => {
+    let url = `/supplier/update-info/${id}`;
+    return http.put(url, data);
   },
 };

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { cartLocal } from "../../../service/cartLocal";
-import img from "../../../assets/GiangImg.png";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { cartThunk } from "../../../redux/cartReducer/cartThunk";
@@ -174,9 +173,9 @@ const SCart = () => {
       <div className="bg-[#204E51] flex mt-4 p-4 rounded-lg">
         <div className="w-[60%] text-[1.2rem] font-semibold text-white border-r-2">
           <div>
-            Name: <span>{inforUser.supplierName}</span> <br />
-            Address: <span>{inforUser.address}</span> <br />
-            Phone: <span>{inforUser.phone}</span> <br />
+            Name: <span>{inforUser?.supplierName}</span> <br />
+            Address: <span>{inforUser?.address}</span> <br />
+            Phone: <span>{inforUser?.phone}</span> <br />
           </div>
         </div>
 
@@ -193,14 +192,18 @@ const SCart = () => {
             >
               Cancel
             </button>
-            <button
-              className="mx-auto bg-[#63B6BD] py-2 px-4 rounded-2xl"
-              onClick={() => {
-                orderProduct();
-              }}
-            >
-              Order
-            </button>
+            {list.length === 0 ? (
+              <p>Your cart is empty.</p>
+            ) : (
+              <button
+                className="mx-auto bg-[#63B6BD] py-2 px-4 rounded-2xl"
+                onClick={() => {
+                  orderProduct();
+                }}
+              >
+                Order
+              </button>
+            )}
           </div>
         </div>
       </div>
