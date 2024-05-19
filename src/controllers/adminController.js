@@ -46,6 +46,8 @@ export const updateInfo = async (req, res) => {
       },
     });
 
+
+
     responseData(res, "successfully", getUser, 200);
   } catch (err) {
     responseData(res, "Error", "", 500);

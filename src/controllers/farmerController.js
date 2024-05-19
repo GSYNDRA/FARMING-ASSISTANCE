@@ -37,7 +37,13 @@ export const updateProfile = async (req, res) => {
         farmerID: farmerID,
       },
     });
-    responseData(res, "successfully", getNewProfile, 200);
+    let data = await model.farmer.findOne({
+      where: {
+        userID: userID,
+      },
+      include: ["user", "payment"],
+    });
+    responseData(res, "successfully", data, 200);
   } catch (exception) {
     responseData(res, "Error", "", 500);
   }
@@ -71,6 +77,7 @@ export const editProduct = async (req, res) => {
         inventoryProductID: getProduct.inventoryProductID,
       },
     });
+    
     responseData(res, "successfully", getProduct, 200);
   } catch (exception) {
     responseData(res, "Error...", "", 500);
@@ -108,7 +115,7 @@ export const addProduct = async (req, res) => {
   try {
     let { farmerID } = req.params;
     let { productName, quantity, price, image, description } = req.body;
-    let data = await model.inventoryproduct.create({
+    let data1 = await model.inventoryproduct.create({
       farmerID: farmerID,
       productName,
       quantity,
@@ -117,8 +124,14 @@ export const addProduct = async (req, res) => {
       description,
       status: 1,
     });
+    let data = await model.inventoryproduct.findAll({
+      where: {
+        farmerID: farmerID,
+        status: 1,
+      },
+    });
     // Sending a success response
-    responseData(res, "Successfully", data, 200);
+    responseData(res, "Successfully", data , 200);
   } catch {
     responseData(res, "Error ...", "", 500);
   }

@@ -35,7 +35,13 @@ export const updateProfile = async (req, res) => {
         supplierID: supplierID,
       },
     });
-    responseData(res, "successfully", getNewProfile, 200);
+    let data = await model.supplier.findOne({
+      where:{
+        supplierID: supplierID,
+      },
+       include: ["user", "payment"],
+    });
+    responseData(res, "successfully", data, 200);
   } catch (exception) {
     responseData(res, "Error", "", 500);
   }
