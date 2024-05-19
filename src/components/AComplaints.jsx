@@ -1,6 +1,6 @@
 import React from "react";
 
-const AComplaints = ({ suppliersName, farmerName, content }) => {
+const AComplaints = ({ suppliersName, content }) => {
   const containerStyle = {
     width: "1079px",
     height: "141px",
@@ -32,7 +32,7 @@ const AComplaints = ({ suppliersName, farmerName, content }) => {
   return (
     <div style={containerStyle}>
       <div style={topSectionStyle}>
-        {`From ${suppliersName} to ${farmerName}`}
+        {`From ${suppliersName}`}
       </div>
       <div style={bottomSectionStyle}>{content}</div>
     </div>

@@ -1,18 +1,17 @@
 import React, { useState, useEffect } from "react";
-import ATips from "../../../components/ATips";
 import AComplaints from "../../../components/AComplaints";
 
 const AComplaint = () => {
   const [tips, setTips] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  console.log("tips", tips)
+  console.log("tips", tips);
 
   useEffect(() => {
-    // Fetch tips data from the API
     fetch("http://localhost:8080/admin/complaint")
       .then((response) => response.json())
       .then((data) => {
+        console.log("Fetched data:", data); // Debugging line to check fetched data
         if (Array.isArray(data.content)) {
           setTips(data.content);
         } else {
@@ -40,8 +39,12 @@ const AComplaint = () => {
 
   return (
     <div style={gridContainerStyle}>
-      {tips.map((content, index) => (
-        <AComplaints key={index} title={content.title} content={content.content} />
+      {tips.map((tip, index) => (
+        <AComplaints 
+          key={index} 
+          suppliersName={tip.supplier?.supplierName} 
+          content={tip.content} 
+        />
       ))}
     </div>
   );
