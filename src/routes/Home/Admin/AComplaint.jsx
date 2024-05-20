@@ -2,10 +2,10 @@ import React, { useState, useEffect } from "react";
 import AComplaints from "../../../components/AComplaints";
 
 const AComplaint = () => {
-  const [tips, setTips] = useState([]);
+  const [complaints, setComplaints] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  console.log("tips", tips);
+  console.log("complaints", complaints);
 
   useEffect(() => {
     fetch("http://localhost:8080/admin/complaint")
@@ -13,15 +13,15 @@ const AComplaint = () => {
       .then((data) => {
         console.log("Fetched data:", data); // Debugging line to check fetched data
         if (Array.isArray(data.content)) {
-          setTips(data.content);
+          setComplaints(data.content);
         } else {
           console.error("Expected array but got:", data);
-          setError("Failed to load tips.");
+          setError("Failed to load complaints.");
         }
       })
       .catch((error) => {
-        console.error("Error fetching tips:", error);
-        setError("Error fetching tips.");
+        console.error("Error fetching complaints:", error);
+        setError("Error fetching complaints.");
       })
       .finally(() => {
         setLoading(false);
@@ -39,11 +39,12 @@ const AComplaint = () => {
 
   return (
     <div style={gridContainerStyle}>
-      {tips.map((tip, index) => (
+      {complaints.map((complaint, index) => (
         <AComplaints 
           key={index} 
-          suppliersName={tip.supplier?.supplierName} 
-          content={tip.content} 
+          suppliersName={complaint.supplier?.supplierName} 
+          content={complaint.content} 
+          complaintID={complaint.complaintID} 
         />
       ))}
     </div>

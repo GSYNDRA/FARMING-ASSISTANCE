@@ -2,7 +2,6 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { userLocal } from "../../service/userLocal";
 import { message } from "antd";
 import { userService } from "../../service/userService";
-import { useNavigate } from "react-router-dom";
 
 export const userThunk = createAsyncThunk(
   "userReducer/loginThunk",
@@ -11,12 +10,10 @@ export const userThunk = createAsyncThunk(
       const data = await userService.postLogin(payload);
       const userID = data.data.content.userID;
       userLocal.setId(userID);
-
       message.success("Login succes");
 
       return payload;
     } catch (error) {
-      console.log("error:", error);
       message.success("Login fail");
     }
   }
@@ -24,7 +21,6 @@ export const userThunk = createAsyncThunk(
 export const userInfor = createAsyncThunk(
   "userReducer/userInfor",
   async (payload) => {
-    console.log("payload:", payload);
     try {
       const inforUser = await userService.getInfor(
         payload,
@@ -32,11 +28,22 @@ export const userInfor = createAsyncThunk(
       );
       return inforUser.data.content;
     } catch (error) {
-      console.log("error:", error);
+      message.success("Infor fail");
     }
   }
 );
 
+export const userStore = createAsyncThunk(
+  "userReducer/store",
+  async (payload) => {
+    try {
+      const list = await userService.getProduct(payload);
+      return list;
+    } catch (error) {
+      message.success("get store fail");
+    }
+  }
+);
 export const userTrans = createAsyncThunk(
   "userReducer/transaction",
   async (payload) => {
@@ -47,7 +54,36 @@ export const userTrans = createAsyncThunk(
       );
       return trans.data.content;
     } catch (error) {
-      console.log("error:", error);
+      message.success("get transaction fail");
+    }
+  }
+);
+export const transDetail = createAsyncThunk(
+  "userReducer/transactionDetail",
+  async (payload) => {
+    try {
+      const transDetail = await userService.getTransDetail(
+        payload,
+        userLocal.getRoleName()
+      );
+      return transDetail.data.content;
+    } catch (error) {
+      message.success("get transaction detail fail");
+    }
+  }
+);
+export const updateInforUser = createAsyncThunk(
+  "userReducer/updateData",
+  async (payload, { rejectWithValue }) => {
+    try {
+      const data = await userService.changeData(
+        payload,
+        userLocal.get()?.supplierID
+      );
+      return data.data.content;
+    } catch (error) {
+      message.success("update infor fail");
+      return rejectWithValue(error.response.data);
     }
   }
 );

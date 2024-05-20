@@ -1,6 +1,6 @@
 import React from "react";
 
-const ATips = ({ title, content }) => {
+const ATips = ({ title, content, tipID }) => {
   const containerStyle = {
     width: "1079px",
     height: "141px",
@@ -29,11 +29,19 @@ const ATips = ({ title, content }) => {
     marginLeft: "36px",
   };
 
+  const idStyle = {
+    fontSize: "18px",
+    color: "gray",
+    marginLeft: "950px",
+    marginTop: "10px"
+  };
+
   return (
     <div>
       <div style={containerStyle}>
         <div style={topSectionStyle}>{title}</div>
         <div style={bottomSectionStyle}>{content}</div>
+        <div style={idStyle}>No.{tipID}</div>
       </div>
     </div>
   );

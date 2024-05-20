@@ -5,7 +5,7 @@ const ATip = () => {
   const [tips, setTips] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  console.log("tips", tips)
+  console.log("tips", tips);
 
   useEffect(() => {
     // Fetch tips data from the API
@@ -40,7 +40,7 @@ const ATip = () => {
   return (
     <div style={gridContainerStyle}>
       {tips.map((content, index) => (
-        <ATips key={index} title={content.title} content={content.content} />
+        <ATips key={index} title={content.title} content={content.content} tipID={content.tipID} />
       ))}
     </div>
   );

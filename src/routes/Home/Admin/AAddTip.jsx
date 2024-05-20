@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Post from "../../../components/Button/Post";
+import Post from "../../../components/Post";
 
 const AAddTip = () => {
   const [title, setTitle] = useState("");

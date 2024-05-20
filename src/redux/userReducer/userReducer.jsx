@@ -1,14 +1,22 @@
 import { createSlice } from "@reduxjs/toolkit";
-
-import { userInfor, userThunk, userTrans } from "./userThunk";
-
+import {
+  transDetail,
+  updateInforUser,
+  userInfor,
+  userStore,
+  userThunk,
+  userTrans,
+} from "./userThunk";
 import { userLocal } from "../../service/userLocal";
+import { cartLocal } from "../../service/cartLocal";
 
 const initialState = {
   roleName: userLocal.getRoleName(),
   inforUser: userLocal.get(),
   userId: userLocal.getUserId(),
-
+  list: [],
+  cart: cartLocal.get(),
+  transList: [],
 };
 
 const userReducer = createSlice({
@@ -23,6 +31,7 @@ const userReducer = createSlice({
       state.inforUser = null;
 
       userLocal.delete();
+      cartLocal.delete();
       window.location.href = "/";
     },
   },
@@ -32,22 +41,27 @@ const userReducer = createSlice({
         console.log("login success");
       })
       .addCase(userInfor.fulfilled, (state, action) => {
-
         console.log("infor success");
         state.inforUser = action.payload;
         userLocal.setInfor(action.payload);
       })
       .addCase(userTrans.fulfilled, (state, action) => {
+        state.transList = action.payload;
         console.log("userTran success");
-
+      })
+      .addCase(transDetail.fulfilled, (state, action) => {
         console.log(".addCase ~ action:", action.payload);
-        console.log("check");
-
-      });
+        console.log("trans success");
+        state.detailTransList = action.payload;
+      })
+      .addCase(userStore.fulfilled, (state, action) => {
+        state.list = action.payload.data.content;
+        console.log("store success");
+      })
+      .addCase(updateInforUser.fulfilled, (state, action) => {});
   },
 });
 
 export const { setRole, logOutAction } = userReducer.actions;
-
 
 export default userReducer.reducer;
