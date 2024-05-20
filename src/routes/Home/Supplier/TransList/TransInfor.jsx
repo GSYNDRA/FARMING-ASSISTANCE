@@ -15,7 +15,11 @@ const TransInfor = ({ data }) => {
   }, [dispatch]);
 
   const fetchListProduct = () => {
-    return detailTransList.map((item, index) => {
+    if (detailTransList)
+      return (
+        <div className="text-[1.2rem]">Dont have any product in this list</div>
+      );
+    return detailTransList?.map((item, index) => {
       return (
         <tr key={index}>
           <td>{item.orderID}</td>
