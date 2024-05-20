@@ -15,10 +15,10 @@ const TransInfor = ({ data }) => {
   }, [dispatch]);
 
   const fetchListProduct = () => {
-    if (detailTransList)
-      return (
-        <div className="text-[1.2rem]">Dont have any product in this list</div>
-      );
+    // if (!detailTransList)
+    //   return (
+    //     <div className="text-[1.2rem]">Dont have any product in this list</div>
+    //   );
     return detailTransList?.map((item, index) => {
       return (
         <tr key={index}>
