@@ -1,7 +1,6 @@
-// eslint-disable-next-line no-unused-vars
 import React, { useState } from "react";
 
-const Edit = () => {
+const Edit = ({ onClick }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [isPressed, setIsPressed] = useState(false);
   const [isDisabled, setIsDisabled] = useState(false);
@@ -23,6 +22,9 @@ const Edit = () => {
       setTimeout(() => {
         setIsPressed(false);
       }, 200);
+      if (onClick) {
+        onClick();
+      }
     }
   };
 
@@ -32,11 +34,12 @@ const Edit = () => {
   };
 
   return (
-    <div
+    <button
       className="w-[70px] h-[35px] bg-emerald-300 rounded-[10px] shadow border-black"
       onClick={handleMouseDown}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
+      disabled={isDisabled}
       style={{
         borderRadius: "10px",
         overflow: "visible",
@@ -45,6 +48,7 @@ const Edit = () => {
           isPressed && !isDisabled
             ? "4px 4px 4px rgba(0, 0, 0, 0.3) inset"
             : "none",
+        cursor: isDisabled ? "not-allowed" : "pointer",
       }}
     >
       <div
@@ -52,11 +56,11 @@ const Edit = () => {
         style={{
           color: isHovered && !isDisabled ? "#FFFFFF" : "#FFFFFF",
           fontWeight: 700,
-          fontSize: "18px",
+          fontSize: "14px",
           zIndex: 1,
-          alignItems: "center", // Vertically center align content
+          alignItems: "center",
           justifyItems: "center",
-          paddingTop: '3px'
+          paddingTop: "3px",
         }}
       >
         Edit
@@ -69,7 +73,7 @@ const Edit = () => {
           style={{ pointerEvents: "none" }}
         />
       )}
-    </div>
+    </button>
   );
 };
 

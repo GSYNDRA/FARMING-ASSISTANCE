@@ -16,10 +16,20 @@ const STransaction = () => {
 
   useEffect(() => {
     if (detail) {
-      dispatch(transDetail(detail.transactionID));
+      displayDetailTransaction(detail);
+      fetchListOfProduct();
     }
-  }, [dispatch, detail]);
+  });
 
+  const fetchListOfProduct = () => {
+    return (
+      <div key={detail.productId}>
+        <span>{detail.name}</span>
+        <span>{detail.price}</span>
+        <span>{detail.quantity}</span>
+      </div>
+    );
+  };
   const displayDetailTransaction = (data) => {
     setDetail(data);
   };
@@ -44,7 +54,7 @@ const STransaction = () => {
 
         <div className=" space-y-8 leading-8">
           <span className="text-[1.2rem] font-semibold">Product List</span>
-          <span>{<TransInfor data={detail} />}</span>
+          <span>{fetchListOfProduct()}</span>
         </div>
       </div>
     );

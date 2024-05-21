@@ -16,7 +16,6 @@ const Login = () => {
     cartLocal.set();
   });
 
-
   const handleRoleChange = (role) => {
     setSelectedRole(role);
     console.log(role);
@@ -45,6 +44,8 @@ const Login = () => {
 
     dispatch(setRole(selectedRole));
     dispatch(userThunk(value));
+    console.log("handleLogin ~ selectedRole:", selectedRole);
+    console.log("check nagvigate");
   };
 
   return (
