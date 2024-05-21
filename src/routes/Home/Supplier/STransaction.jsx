@@ -16,20 +16,10 @@ const STransaction = () => {
 
   useEffect(() => {
     if (detail) {
-      displayDetailTransaction(detail);
-      fetchListOfProduct();
+      dispatch(transDetail(detail.transactionID));
     }
-  });
+  }, [dispatch, detail]);
 
-  const fetchListOfProduct = () => {
-    return (
-      <div key={detail.productId}>
-        <span>{detail.name}</span>
-        <span>{detail.price}</span>
-        <span>{detail.quantity}</span>
-      </div>
-    );
-  };
   const displayDetailTransaction = (data) => {
     setDetail(data);
   };
@@ -54,14 +44,21 @@ const STransaction = () => {
 
         <div className=" space-y-8 leading-8">
           <span className="text-[1.2rem] font-semibold">Product List</span>
-          <span>{fetchListOfProduct()}</span>
+          <span>{<TransInfor data={detail} />}</span>
         </div>
       </div>
     );
   };
 
   const fetchTransactionList = () => {
-    return transList?.map((item) => (
+    if (!transList || transList.length === 0) {
+      return (
+        <tr>
+          <td colSpan="3">No transactions found</td>
+        </tr>
+      );
+    }
+    return transList.map((item) => (
       <tr key={item.transactionID}>
         <td># {item.transactionID}</td>
         <td>$ {item.totalPrice}</td>
