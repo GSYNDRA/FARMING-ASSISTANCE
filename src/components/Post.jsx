@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const Post = () => {
+const Post = ({ onClick, isSubmitting }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [isPressed, setIsPressed] = useState(false);
   const [isDisabled, setIsDisabled] = useState(false);
@@ -25,14 +25,12 @@ const Post = () => {
     }
   };
 
-  const handleDisable = (disabled) => {
-    setIsDisabled(disabled);
-  };
-
   return (
     <div
-      className="w-[230px] h-[58px] bg-emerald-300 rounded-[10px] flex justify-center items-center"
-      onClick={handleMouseDown}
+      className={`w-[230px] h-[58px] rounded-[10px] flex justify-center items-center ${
+        isHovered && !isDisabled ? "bg-emerald-400" : "bg-emerald-300"
+      }`}
+      onClick={onClick}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       style={{
@@ -49,15 +47,14 @@ const Post = () => {
       <div
         className="text-white text-lg font-bold font-['Montserrat']"
         style={{
-          color: isHovered && !isDisabled ? "#FFFFFF" : "#FFFFFF",
+          color: "#204E51",
           fontWeight: 700,
           fontSize: "25px",
-          color: '#204E51',
           alignItems: "center",
           justifyItems: "center",
         }}
       >
-        Post
+        {isSubmitting ? "Submitting..." : "Post"}
       </div>
 
       {/* Disabled overlay (if disabled) */}

@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
+import avtImg from "../../../assets/GiangImg.png";
 import { userLocal } from "../../../service/userLocal";
-import {
-  updateInforUser,
-  userInfor,
-} from "../../../redux/userReducer/userThunk";
+import { userInfor, userThunk } from "../../../redux/userReducer/userThunk";
+// import {
+//   updateInforUser,
+//   userInfor,
+// } from "../../../redux/userReducer/userThunk";
 
 const SProfile = () => {
   const { inforUser, roleName } = useSelector((state) => state.userReducer);

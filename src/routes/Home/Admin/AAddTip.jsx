@@ -1,8 +1,51 @@
-import React from "react";
-
-import Post from "../../../components/Button/Post";
+import React, { useState } from "react";
+import Post from "../../../components/Post";
 
 const AAddTip = () => {
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleTitleChange = (e) => {
+    setTitle(e.target.value);
+  };
+
+  const handleContentChange = (e) => {
+    setContent(e.target.value);
+  };
+
+  const handleSubmit = async () => {
+    setIsSubmitting(true);
+    const tipData = {
+      title,
+      content,
+    };
+
+    try {
+      const response = await fetch("http://localhost:8080/admin/add-tip", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(tipData),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to post tip.");
+      }
+
+      // Handle successful post
+      alert("Tip posted successfully!");
+      setTitle("");
+      setContent("");
+    } catch (error) {
+      console.error("Error posting tip:", error);
+      alert("Error posting tip.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <div className="relative w-[1123px] h-[509px] mx-auto">
       <svg
@@ -28,22 +71,27 @@ const AAddTip = () => {
           display: "flex",
         }}
       >
-        <div className="ml-[30px]">
+        <div className="ml-[30px] w-full">
           <div
             className=" mb-[5px]"
             style={{ color: "#000", fontSize: "25px", fontWeight: "700" }}
           >
             Title
           </div>
-          <div
+          <input
+            type="text"
+            value={title}
+            onChange={handleTitleChange}
             className="absolute"
             style={{
               width: "1000px",
               height: "37px",
               borderRadius: "5px",
               border: "1px solid #000",
+              padding: "5px",
+              backgroundColor: "#FFF",
             }}
-          ></div>
+          />
         </div>
       </div>
       <div
@@ -56,22 +104,26 @@ const AAddTip = () => {
           display: "flex",
         }}
       >
-        <div className="ml-[30px]">
+        <div className="ml-[30px] w-full">
           <div
             className=" mb-[5px]"
             style={{ color: "#000", fontSize: "30px", fontWeight: "700" }}
           >
             Content
           </div>
-          <div
+          <textarea
+            value={content}
+            onChange={handleContentChange}
             className="absolute"
             style={{
               width: "1000px",
               height: "200px",
               borderRadius: "5px",
               border: "1px solid #000",
+              padding: "5px",
+              backgroundColor: "#FFF",
             }}
-          ></div>
+          />
         </div>
       </div>
       <div
@@ -83,7 +135,7 @@ const AAddTip = () => {
         }}
       >
         <div>
-          <Post/>
+          <Post onClick={handleSubmit} isSubmitting={isSubmitting} />
         </div>
       </div>
     </div>
