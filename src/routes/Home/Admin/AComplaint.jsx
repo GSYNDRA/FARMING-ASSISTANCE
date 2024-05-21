@@ -1,230 +1,52 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import AComplaints from "../../../components/AComplaints";
 
 const AComplaint = () => {
+  const [complaints, setComplaints] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  console.log("complaints", complaints);
+
+  useEffect(() => {
+    fetch("http://localhost:8080/admin/complaint")
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Fetched data:", data); // Debugging line to check fetched data
+        if (Array.isArray(data.content)) {
+          setComplaints(data.content);
+        } else {
+          console.error("Expected array but got:", data);
+          setError("Failed to load complaints.");
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching complaints:", error);
+        setError("Error fetching complaints.");
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, []);
+
+  const gridContainerStyle = {
+    display: "grid",
+    gridTemplateRows: "repeat(4, 1fr)",
+    gap: "15px",
+  };
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>{error}</div>;
+
   return (
-    <div
-      style={{
-        display: "grid",
-        gridTemplateRows: "repeat(5, minmax(0, 1fr))",
-        gap: "20px",
-        width: "1123px",
-        height: "fixed",
-        backgroundColor: "#63B6BD",
-        borderRadius: "20px 20px 0px 0px",
-        marginLeft: "2rem",
-        padding: "20px",
-      }}
-
-    >
-      <div
-        style={{
-          backgroundColor: "#FFF",
-          borderRadius: "15px",
-          boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
-        }}
-      >
-        <div className="ml-[36px] mt-[6px]">
-          <div
-            className="mb-[5px] h-[30px] w-fixed"
-            style={{ color: "#000", fontSize: "25px", fontWeight: "700" }}
-          >
-            Title
-          </div>
-          <div
-            className="mb-[17px] h-[24px] w-[250px]"
-            style={{
-              color: "#000",
-              fontSize: "20px",
-              fontWeight: "700",
-            }}
-          >
-            From Minh to Tin
-          </div>
-          <div
-            className="h-fixed w-[750px]"
-            style={{ color: "#000", fontSize: "20px", fontWeight: "400" }}
-          >
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Et
-            voluptas cumque impedit aliquam, odit quae voluptate dolorum
-            corporis, unde quam delectus inventore architecto reiciendis libero
-            maxime in atque corrupti obcaecati!
-          </div>
-        </div>
-        <div
-          className="w-[110px] ml-[942px]"
-          style={{ color: "#000", fontSize: "20px", fontWeight: "100" }}
-        >
-          See more
-        </div>
-      </div>
-
-      <div
-        style={{
-          backgroundColor: "#FFF",
-          borderRadius: "15px",
-          boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
-        }}
-      >
-        <div className="ml-[36px] mt-[6px]">
-          <div
-            className="mb-[5px] h-[30px] w-fixed"
-            style={{ color: "#000", fontSize: "25px", fontWeight: "700" }}
-          >
-            Title
-          </div>
-          <div
-            className="mb-[17px] h-[24px] w-[250px]"
-            style={{
-              color: "#000",
-              fontSize: "20px",
-              fontWeight: "700",
-            }}
-          >
-            From Minh to Tin
-          </div>
-          <div
-            className="h-fixed w-[750px]"
-            style={{ color: "#000", fontSize: "20px", fontWeight: "400" }}
-          >
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Et
-            voluptas cumque impedit aliquam, odit quae voluptate dolorum
-            corporis, unde quam delectus inventore architecto reiciendis libero
-            maxime in atque corrupti obcaecati!
-          </div>
-        </div>
-        <div
-          className="w-[110px] ml-[942px] "
-          style={{ color: "#000", fontSize: "20px", fontWeight: "100" }}
-        >
-          See more
-        </div>
-      </div>
-
-      <div
-        style={{
-          backgroundColor: "#FFF",
-          borderRadius: "15px",
-          boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
-        }}
-      >
-        <div className="ml-[36px] mt-[6px]">
-          <div
-            className="mb-[5px] h-[30px] w-fixed"
-            style={{ color: "#000", fontSize: "25px", fontWeight: "700" }}
-          >
-            Title
-          </div>
-          <div
-            className="mb-[17px] h-[24px] w-[250px]"
-            style={{
-              color: "#000",
-              fontSize: "20px",
-              fontWeight: "700",
-            }}
-          >
-            From Minh to Tin
-          </div>
-          <div
-            className="h-fixed w-[750px]"
-            style={{ color: "#000", fontSize: "20px", fontWeight: "400" }}
-          >
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Et
-            voluptas cumque impedit aliquam, odit quae voluptate dolorum
-            corporis, unde quam delectus inventore architecto reiciendis libero
-            maxime in atque corrupti obcaecati!
-          </div>
-        </div>
-        <div
-          className="w-[110px] ml-[942px] "
-          style={{ color: "#000", fontSize: "20px", fontWeight: "100" }}
-        >
-          See more
-        </div>
-      </div>
-
-      <div
-        style={{
-          backgroundColor: "#FFF",
-          borderRadius: "15px",
-          boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
-        }}
-      >
-        <div className="ml-[36px] mt-[6px]">
-          <div
-            className="mb-[5px] h-[30px] w-fixed"
-            style={{ color: "#000", fontSize: "25px", fontWeight: "700" }}
-          >
-            Title
-          </div>
-          <div
-            className="mb-[17px] h-[24px] w-[250px]"
-            style={{
-              color: "#000",
-              fontSize: "20px",
-              fontWeight: "700",
-            }}
-          >
-            From Minh to Tin
-          </div>
-          <div
-            className="h-fixed w-[750px]"
-            style={{ color: "#000", fontSize: "20px", fontWeight: "400" }}
-          >
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Et
-            voluptas cumque impedit aliquam, odit quae voluptate dolorum
-            corporis, unde quam delectus inventore architecto reiciendis libero
-            maxime in atque corrupti obcaecati!
-          </div>
-        </div>
-        <div
-          className="w-[110px] ml-[942px] "
-          style={{ color: "#000", fontSize: "20px", fontWeight: "100" }}
-        >
-          See more
-        </div>
-      </div>
-
-      <div
-        style={{
-          backgroundColor: "#FFF",
-          borderRadius: "15px",
-          boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
-        }}
-      >
-        <div className="ml-[36px] mt-[6px]">
-          <div
-            className="mb-[5px] h-[30px] w-fixed"
-            style={{ color: "#000", fontSize: "25px", fontWeight: "700" }}
-          >
-            Title
-          </div>
-          <div
-            className="mb-[17px] h-[24px] w-[250px]"
-            style={{
-              color: "#000",
-              fontSize: "20px",
-              fontWeight: "700",
-            }}
-          >
-            From Minh to Tin
-          </div>
-          <div
-            className="h-fixed w-[750px]"
-            style={{ color: "#000", fontSize: "20px", fontWeight: "400" }}
-          >
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Et
-            voluptas cumque impedit aliquam, odit quae voluptate dolorum
-            corporis, unde quam delectus inventore architecto reiciendis libero
-            maxime in atque corrupti obcaecati!
-          </div>
-        </div>
-        <div
-          className="w-[110px] ml-[942px] "
-          style={{ color: "#000", fontSize: "20px", fontWeight: "100" }}
-        >
-          See more
-        </div>
-      </div>
+    <div style={gridContainerStyle}>
+      {complaints.map((complaint, index) => (
+        <AComplaints 
+          key={index} 
+          suppliersName={complaint.supplier?.supplierName} 
+          content={complaint.content} 
+          complaintID={complaint.complaintID} 
+        />
+      ))}
     </div>
   );
 };

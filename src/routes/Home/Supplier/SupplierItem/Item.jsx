@@ -1,10 +1,17 @@
-import React, { useState } from "react";
-
-import img from "../../../../assets/Rectangle 5.png";
+import React, { useEffect, useState } from "react";
 import { cartLocal } from "../../../../service/cartLocal";
+import { message } from "antd";
+import { useNavigate } from "react-router-dom";
+import { userLocal } from "../../../../service/userLocal";
 
-const Item = ({ data }) => {
+const Item = ({ data, onClick }) => {
   const [quantity, setQuantity] = useState(1);
+  const [isDisabled, setDisabled] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(null);
+
+  useEffect(() => {
+    if (data.quantity <= 0) setDisabled(true);
+  }, []);
 
   const handleDecreaseQuantity = () => {
     if (quantity > 1) {
@@ -16,18 +23,22 @@ const Item = ({ data }) => {
     if (quantity < data.quantity) setQuantity(quantity + 1);
   };
 
-  const moreDetail = () => {
-    console.log("Item ~ moreDetail");
-  };
-
   const addToCart = () => {
+    const itemInStock = cartLocal.itemQanInCart(data.inventoryProductID);
     let product = {
-      id: data.productId,
-      name: data.productName,
-      price: data.price,
+      inventoryProductID: data.inventoryProductID,
+      productName: data.productName,
+      farmerName: data.farmer.farmerName,
+      farmerID: data.farmerID,
       quantity: quantity,
+      price: data.price,
+      image: data.image,
+      instockQuantity: data.quantity,
     };
-    cartLocal.addToCart(product);
+
+    if (quantity + itemInStock > data.quantity) {
+      message.error("Not enough instock");
+    } else cartLocal.addToCart(product);
   };
 
   return (
@@ -37,19 +48,23 @@ const Item = ({ data }) => {
         boxShadow: "10px 10px 10px 0px rgba(0, 0, 0, 0.25)",
       }}
     >
-      <div className="space-y-8 w-full px-8" onClick={moreDetail}>
+      <div className="space-y-8 w-full px-8" onClick={() => onClick(data)}>
         <div className="text-[#204E51] text-center font-bold text-[1.5rem]">
           {data.productName}
         </div>
 
         <div className="space-y-2 text-center text-[#204E51]">
           <div
-            className="mx-auto border rounded-2xl w-[80%] py-4"
+            className="mx-auto border rounded-2xl w-[100%] py-4"
             style={{
               boxShadow: "5px 5px 4px 0px rgba(0, 0, 0, 0.25)",
             }}
           >
-            <img src={img} alt="" className="mx-auto" />
+            <img
+              src={`${data.image}`}
+              alt=""
+              className="mx-auto h-[20rem] w-[15rem] rounded-2xl"
+            />
           </div>
           <div>
             <span className="text-[1.5rem] font-semibold">
@@ -57,17 +72,19 @@ const Item = ({ data }) => {
             </span>
           </div>
 
-          <div className="text-left">{data.desc}</div>
+          <div className="text-left">
+            {data.description.substring(0, 30)} . . .
+          </div>
         </div>
 
         <div>
           <div className="flex justify-between items-center">
-            <div className="text-[#204E51] text-[1.25rem] font-semibold">
-              {data.farmerName}
+            <div className="text-[#204E51] text-[1rem] font-semibold">
+              {data.farmer.farmerName}
             </div>
 
             <div>
-              <div class="rating rating-md">
+              <div className="rating rating-md">
                 <input
                   type="radio"
                   name="rating-6"
@@ -133,6 +150,7 @@ const Item = ({ data }) => {
             <button
               onClick={addToCart}
               className="px-4 py-2 border rounded-xl border-black hover:bg-[#63B6BD] hover:text-white hover:border-[transparent]"
+              disabled={isDisabled}
             >
               Add to cart
             </button>

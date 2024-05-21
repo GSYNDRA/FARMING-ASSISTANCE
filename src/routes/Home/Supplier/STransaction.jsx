@@ -1,22 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { userService } from "../../../service/userService";
-import { userTrans } from "../../../redux/userReducer/userThunk";
-
-const data = [];
+import { transDetail, userTrans } from "../../../redux/userReducer/userThunk";
+import TransInfor from "./TransList/TransInfor";
 
 const STransaction = () => {
   const [detail, setDetail] = useState(null);
   const dispatch = useDispatch();
-  const { roleName, userId } = useSelector((state) => state.userReducer);
+  const { inforUser, transList } = useSelector((state) => state.userReducer);
 
   useEffect(() => {
-    const fetchData = async () => {
-      console.log(userId);
-      dispatch(userTrans(userId));
-    };
-    fetchData();
-  }, [dispatch]);
+    if (inforUser?.supplierID) {
+      dispatch(userTrans(inforUser.supplierID));
+    }
+  }, [dispatch, inforUser?.supplierID]);
 
   useEffect(() => {
     if (detail) {
@@ -34,9 +30,7 @@ const STransaction = () => {
       </div>
     );
   };
-
   const displayDetailTransaction = (data) => {
-    console.log(data);
     setDetail(data);
   };
 
@@ -67,7 +61,7 @@ const STransaction = () => {
   };
 
   const fetchTransactionList = () => {
-    return data.map((item) => (
+    return transList?.map((item) => (
       <tr key={item.transactionID}>
         <td># {item.transactionID}</td>
         <td>$ {item.totalPrice}</td>
@@ -95,17 +89,6 @@ const STransaction = () => {
               Welcome to Srpout Farm
             </div>
             <span className="!w-[100%]">See your order</span>
-          </div>
-
-          <div className="search-bar text-black flex space-x-4">
-            <button>
-              <i className="fa fa-filter text-[2rem] opacity-70"></i>
-            </button>
-
-            <label className="input input-bordered flex items-center gap-2 bg-white">
-              <input type="text" className="grow" placeholder="Search" />
-              <i className="fa fa-search"></i>
-            </label>
           </div>
         </div>
       </div>

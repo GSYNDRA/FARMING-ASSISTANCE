@@ -20,7 +20,6 @@ function Layout({ children }) {
           <Menu />
         </div>
         <div className="w-[80%] mt-[120px] mr-[2rem] ">{children}</div>
-
       </div>
     </div>
   ) : (

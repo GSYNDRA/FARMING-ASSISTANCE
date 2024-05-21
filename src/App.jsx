@@ -13,7 +13,6 @@ import FInventory from "./routes/Home/Farmer/FInventory";
 import SProfile from "./routes/Home/Supplier/SProfile";
 import SStore from "./routes/Home/Supplier/SStore";
 import SCart from "./routes/Home/Supplier/SCart";
-import SComplaint from "./routes/Home/Supplier/SComplaint";
 import Stransaction from "./routes/Home/Supplier/STransaction";
 
 import AProfile from "./routes/Home/Admin/AProfile";
@@ -46,13 +45,11 @@ function App() {
           <Route path="transaction" element={<FTransaction />} />
         </Route>
 
-        <Route path="/supplier" element={<MainTemplate />}>
+        <Route path="supplier" element={<MainTemplate />}>
           <Route path="profile" element={<SProfile />} />
           <Route path="store" element={<SStore />} />
           <Route path="cart" element={<SCart />} />
           <Route path="transaction" element={<Stransaction />} />
-
-          <Route path="complaint" element={<SComplaint />} />
         </Route>
 
         {/* Auth */}

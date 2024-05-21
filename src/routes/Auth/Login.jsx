@@ -39,13 +39,12 @@ const Login = () => {
       userName: username,
       password: password,
     };
+    console.log("handleLogin ~ value:", value);
     userLocal.setRole(selectedRole);
 
     dispatch(setRole(selectedRole));
     dispatch(userThunk(value));
-
     console.log("handleLogin ~ selectedRole:", selectedRole);
-
     console.log("check nagvigate");
   };
 
