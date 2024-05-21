@@ -12,6 +12,10 @@ export const userLocal = {
     let json = JSON.stringify(inforUser);
     localStorage.setItem("userRole", json);
   },
+  setDetail: (data) => {
+    let json = JSON.stringify(data);
+    localStorage.setItem("detail", json);
+  },
 
   //get information from local storage
   get: () => {

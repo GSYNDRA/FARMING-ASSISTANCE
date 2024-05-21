@@ -1,3 +1,5 @@
+import { message } from "antd";
+
 export const cartLocal = {
   set: () => {
     localStorage.setItem("cart", JSON.stringify([]));
@@ -12,12 +14,18 @@ export const cartLocal = {
     }
   },
 
+  delete: () => {
+    localStorage.removeItem("cart");
+  },
+
   // Add an item to the cart in localStorage
   addToCart: (data) => {
     let json = localStorage.getItem("cart");
     let cart = json ? JSON.parse(json) : [];
 
-    const existingItemIndex = cart.findIndex((item) => item.id === data.id);
+    const existingItemIndex = cart.findIndex(
+      (item) => item.inventoryProductID === data.inventoryProductID
+    );
 
     if (existingItemIndex !== -1) {
       cart[existingItemIndex].quantity += data.quantity;
@@ -26,13 +34,27 @@ export const cartLocal = {
     }
 
     localStorage.setItem("cart", JSON.stringify(cart));
+    message.success("Add to cart");
+  },
+
+  itemQanInCart: (id) => {
+    let json = localStorage.getItem("cart");
+    let cart = json ? JSON.parse(json) : [];
+
+    const existingItem = cart.find((item) => item.inventoryProductID === id);
+
+    if (existingItem) {
+      return existingItem.quantity;
+    } else {
+      return -1;
+    }
   },
 
   changeQuantity: (id, change) => {
     let json = localStorage.getItem("cart");
     let cart = json ? JSON.parse(json) : [];
 
-    const itemIndex = cart.findIndex((item) => item.id === id);
+    const itemIndex = cart.findIndex((item) => item.inventoryProductID === id);
 
     if (itemIndex !== -1) {
       cart[itemIndex].quantity += change;
