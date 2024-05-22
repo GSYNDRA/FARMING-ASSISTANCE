@@ -76,7 +76,11 @@ export const updateInforUser = createAsyncThunk(
   "userReducer/updateData",
   async (payload, { rejectWithValue }) => {
     try {
-      const data = await userService.changeData(payload, userLocal.get());
+      const data = await userService.changeData(
+        payload,
+        userLocal.get()?.supplierID
+      );
+      
       return data.data.content;
     } catch (error) {
       console.log("error:", error);
