@@ -20,7 +20,6 @@ const initialState = {
   transList: [],
   detailTransList: [],
   transFarmerDetailProduct: [], 
-
 };
 
 const userReducer = createSlice({
