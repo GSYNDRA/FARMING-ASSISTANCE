@@ -78,7 +78,7 @@ export const updateInforUser = createAsyncThunk(
     try {
       const data = await userService.changeData(
         payload,
-        userLocal.get()?.supplierID
+        userLocal.get()
       );
       
       return data.data.content;

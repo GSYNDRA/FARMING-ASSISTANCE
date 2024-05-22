@@ -32,14 +32,17 @@ const FTransaction = () => {
 
     fetchTransactions();
   }, [inforUser.farmerID]);
+  
 
   const tableStyle = {
     width: '100%',
     borderCollapse: 'collapse',
+    margin: '15px', // Center the table itself
   };
 
   const thTdStyle = {
-    border: '1px solid #ddd',
+    color: 'black',
+    border: '1px solid black',
     padding: '8px',
   };
 
