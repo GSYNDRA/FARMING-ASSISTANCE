@@ -103,3 +103,15 @@ export const transFarmerDetail = createAsyncThunk(
     }
   }
 );
+export const transAdminDetail = createAsyncThunk(
+  "userReducer/transactionDetail",
+  async (payload, { rejectWithValue }) => {
+    try {
+      const transDetail = await userService.getTransDetail(payload, userLocal.getRoleName());
+      return transDetail.data.content;
+    } catch (error) {
+      message.error("Failed to fetch admin transaction details");
+      return rejectWithValue(error.response.data);
+    }
+  }
+);

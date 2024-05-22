@@ -12,35 +12,35 @@ const ATips = ({ title, content, tipID }) => {
   };
 
   const topSectionStyle = {
-    height: "30%",
+    //height: "30%",
     fontSize: "25px",
     color: "#000",
     fontWeight: 700,
     marginLeft: "36px",
-    marginBottom: "20px"
+    marginTop: "20px"
   };
 
   const bottomSectionStyle = {
-    height: "70%",
+    //height: "70%",
     fontWeight: 400,
     marginBottom: "10px",
     fontSize: "20px",
     color: "black",
     marginLeft: "36px",
+    marginTop: "10px"
   };
 
   const idStyle = {
     fontSize: "18px",
     color: "gray",
     marginLeft: "950px",
-    marginTop: "10px"
   };
 
   return (
     <div>
       <div style={containerStyle}>
-        <div style={topSectionStyle}>{title}</div>
-        <div style={bottomSectionStyle}>{content}</div>
+        <div style={topSectionStyle}>Title: {title}</div>
+        <div style={bottomSectionStyle}>Content: {content}</div>
         <div style={idStyle}>No.{tipID}</div>
       </div>
     </div>

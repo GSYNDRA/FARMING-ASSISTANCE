@@ -23,11 +23,11 @@ export const userService = {
     return http.get(url);
   },
   getDetailProduct: (id) => {
-    let url = `/supplier/product-detail/${id}`;
+    let url = `/admin/order/${id}`;
     return http.get(url);
   },
   getTransDetail: (id, roleName) => {
-    let url = `/${roleName}/order-of-transaction/${id}`;
+    let url = `/${roleName}/transaction/${id}`;
     return http.get(url);
   },
   getFarmerTranDetail: (id, roleName) => {
@@ -35,12 +35,21 @@ export const userService = {
     console.log(url);
     return http.get(url);
   },
+  getAdminTranDetail: (id, roleName) => {
+    let url = `/${roleName}/transaction/${id}`;
+    console.log(url);
+    return http.get(url);
+  },
 
   changeData: (data, userInfor) => {
     let roleName = userLocal.getRoleName();
-    let roleId = userInfor?.supplierID || userInfor?.farmerID;
+    let roleId = userInfor?.supplierID || userInfor?.farmerID || userInfor?.adminID;
     let url = `/${roleName}/update-info/${roleId}`;
     console.log("url:", url);
+    return http.put(url, data);
+  },
+  changeAdminData: (data, id) => {
+    let url = `/admin/update-info/${id}`;
     return http.put(url, data);
   },
   changeFarmerData: (data, id) => {

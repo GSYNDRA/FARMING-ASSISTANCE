@@ -43,6 +43,7 @@ const AComplaint = () => {
         <AComplaints 
           key={index} 
           suppliersName={complaint.supplier?.supplierName} 
+          farmerName={complaint.farmer?.farmerName} 
           content={complaint.content} 
           complaintID={complaint.complaintID} 
         />

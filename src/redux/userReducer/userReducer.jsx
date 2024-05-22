@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import {
   transDetail,
   transFarmerDetail,
+  transAdminDetail,
   updateInforUser,
   userInfor,
   userStore,

@@ -34,7 +34,7 @@ const AProfile = () => {
 
   const updateNewInforUser = () => {
     const data = {
-      supplierName: name,
+      adminName: name,
       phone: phone,
       email: email,
       address: address,
@@ -235,7 +235,7 @@ const AProfile = () => {
                 <div className="text-white">Name</div>
                 <input
                   type="text"
-                  placeholder={`${inforUser?.supplierName}`}
+                  placeholder={`${inforUser?.adminName}`}
                   class="input input-bordered input-md w-full max-w-xs bg-white"
                   onChange={(e) => {
                     setName(e.target.value);
