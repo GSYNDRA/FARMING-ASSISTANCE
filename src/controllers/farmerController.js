@@ -159,7 +159,7 @@ export const getOrder = async (req, res) => {
       where: {
         farmerID: farmerID,
       },
-      include: ["supplier"],
+      include: ["supplier", "inventoryProduct"],
     });
     responseData(res, "successfully", data, 200);
   } catch (exception) {
