@@ -81,8 +81,8 @@ const AddButton = () => {
             </label>
             <input
               type="text"
-              name="name"
-              value={formData.name}
+              name="productName"
+              value={formData.productName}
               onChange={handleInputChange}
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-white"
             />
@@ -129,8 +129,8 @@ const AddButton = () => {
             </label>
             <input
               type="text"
-              name="imageLink"
-              value={formData.imageLink}
+              name="image"
+              value={formData.image}
               onChange={handleInputChange}
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-white"
             />
