@@ -1,12 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import {
-  transDetail,
-  updateInforUser,
-  userInfor,
-  userStore,
-  userThunk,
-  userTrans,
-} from "./userThunk";
+import { transDetail, updateInforUser, userInfor, userStore, userThunk, userTrans} from "./userThunk";
 import { userLocal } from "../../service/userLocal";
 import { cartLocal } from "../../service/cartLocal";
 
@@ -17,6 +10,7 @@ const initialState = {
   list: [],
   cart: cartLocal.get(),
   transList: [],
+  detailTransList: [],
 };
 
 const userReducer = createSlice({

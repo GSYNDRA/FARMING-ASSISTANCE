@@ -69,22 +69,6 @@ export const transDetail = createAsyncThunk(
       return transDetail.data.content;
     } catch (error) {
       message.success("get transaction detail fail");
-// =======
-//     }
-//   }
-// );
-// export const updateInforUser = createAsyncThunk(
-//   "userReducer/updateData",
-//   async (payload, { rejectWithValue }) => {
-//     try {
-//       const data = await userService.changeData(
-//         payload,
-//         userLocal.get()?.supplierID
-//       );
-//       return data.data.content;
-//     } catch (error) {
-//       message.success("update infor fail");
-//       return rejectWithValue(error.response.data);
     }
   }
 );

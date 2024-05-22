@@ -21,16 +21,16 @@ export const userService = {
     return http.get(url);
   },
   getDetailProduct: (id) => {
-    let url = `/supplier/product-detail/${id}`;
+    let url = `/admin/order/${id}`;
     return http.get(url);
   },
   getTransDetail: (id, roleName) => {
-    let url = `/${roleName}/order-of-transaction/${id}`;
+    let url = `/${roleName}/transaction/${id}`;
     return http.get(url);
   },
 
   changeData: (data, id) => {
-    let url = `/supplier/update-info/${id}`;
+    let url = `/admin/update-info/${id}`;
     return http.put(url, data);
   },
 };
