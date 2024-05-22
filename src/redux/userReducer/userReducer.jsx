@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
   transDetail,
+  transFarmerDetail,
   updateInforUser,
   userInfor,
   userStore,
@@ -17,6 +18,8 @@ const initialState = {
   list: [],
   cart: cartLocal.get(),
   transList: [],
+  detailTransList: [],
+  transFarmerDetailProduct: [], 
 };
 
 const userReducer = createSlice({
@@ -58,7 +61,11 @@ const userReducer = createSlice({
         state.list = action.payload.data.content;
         console.log("store success");
       })
-      .addCase(updateInforUser.fulfilled, (state, action) => {});
+      .addCase(updateInforUser.fulfilled, (state, action) => {})
+      .addCase(transFarmerDetail.fulfilled, (state, action)=>{
+        console.log(action.payload)
+        state.transFarmerDetail = action.payload;
+      })
   },
 });
 

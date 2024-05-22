@@ -69,22 +69,6 @@ export const transDetail = createAsyncThunk(
       return transDetail.data.content;
     } catch (error) {
       message.success("get transaction detail fail");
-// =======
-//     }
-//   }
-// );
-// export const updateInforUser = createAsyncThunk(
-//   "userReducer/updateData",
-//   async (payload, { rejectWithValue }) => {
-//     try {
-//       const data = await userService.changeData(
-//         payload,
-//         userLocal.get()?.supplierID
-//       );
-//       return data.data.content;
-//     } catch (error) {
-//       message.success("update infor fail");
-//       return rejectWithValue(error.response.data);
     }
   }
 );
@@ -94,12 +78,28 @@ export const updateInforUser = createAsyncThunk(
     try {
       const data = await userService.changeData(
         payload,
-        userLocal.get()?.supplierID
+        userLocal.get()
       );
+      
       return data.data.content;
     } catch (error) {
+      console.log("error:", error);
       message.success("update infor fail");
       return rejectWithValue(error.response.data);
+    }
+  }
+);
+export const transFarmerDetail = createAsyncThunk(
+  "userReducer/transFarmerFetail",
+  async (payload) => {
+    try {
+      const transDetail = await userService.getFarmerTranDetail(
+        payload,
+        userLocal.getRoleName()
+      );
+      return transDetail.data;
+    } catch (error) {
+      message.success("get transaction detail fail");
     }
   }
 );

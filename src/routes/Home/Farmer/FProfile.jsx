@@ -1,29 +1,52 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import avtImg from "../../../assets/GiangImg.png";
+
 import { userLocal } from "../../../service/userLocal";
-import { userInfor, userThunk } from "../../../redux/userReducer/userThunk";
+import {
+  updateInforUser,
+  userInfor,
+} from "../../../redux/userReducer/userThunk";
 
 const FProfile = () => {
-  const [information, setInformation] = useState({});
-  const [loading, setLoading] = useState(true);
-  const dispatch = useDispatch();
   const { inforUser, roleName } = useSelector((state) => state.userReducer);
+  const dispatch = useDispatch();
+
+  const [information, setInformation] = useState({});
+  const [showForm, setShowForm] = useState(false);
+  const [update, setUpdate] = useState(false);
+  const [name, setName] = useState(inforUser?.farmerName);
+  const [phone, setPhone] = useState(inforUser?.phone);
+  const [email, setEmail] = useState(inforUser?.email);
+  const [address, setAddress] = useState(inforUser?.address);
 
   useEffect(() => {
     const fetchUserInformation = async () => {
       dispatch(userInfor(userLocal.getUserId()));
-      setLoading(false);
     };
-    fetchUserInformation();
-  }, [dispatch]);
+    if (update) {
+      fetchUserInformation();
+      setUpdate(false);
+    } else fetchUserInformation();
+  }, [dispatch, update]);
 
   useEffect(() => {
     if (inforUser) {
       setInformation(inforUser);
     }
-    console.log("useEffect ~ inforUser:", inforUser);
   }, [inforUser]);
+
+  const updateNewInforUser = () => {
+    const data = {
+      farmerName: name,
+      phone: phone,
+      email: email,
+      address: address,
+    };
+    dispatch(updateInforUser(data)).then(() => {
+      setUpdate(!update);
+      setShowForm(false);
+    });
+  };
 
   const showPage = () => {
     return (
@@ -44,12 +67,11 @@ const FProfile = () => {
               <div className="w-[30%]">
                 <div className="px-24">
                   <img
-                    src={information.avatarImg}
+                    src={`${information.avatarImg}`}
+                    className="rounded-full"
                     alt=""
-                    style={{ borderRadius: "50%", width: "100%" }}
                   />
                 </div>
-
                 <div className="text-center">
                   <div
                     style={{
@@ -170,9 +192,14 @@ const FProfile = () => {
                   </div>
 
                   <div className="flex justify-end mx-8 mb-2">
-                    <div className="py-2 px-4 bg-[#63B6BD] text-white border rounded-2xl w-fit cursor-pointer">
+                    <button
+                      className="py-2 px-4 bg-[#63B6BD] text-white border rounded-2xl w-fit cursor-pointer"
+                      onClick={() => {
+                        setShowForm(true);
+                      }}
+                    >
                       Edit
-                    </div>
+                    </button>
                   </div>
                 </div>
               </div>
@@ -212,7 +239,7 @@ const FProfile = () => {
                   </div>
 
                   <div className="w-[100%] mx-auto text-center mt-4">
-                    <span>300.000.000 VND</span>
+                    <span>{inforUser?.payment.balance} $</span>
                   </div>
                 </div>
               </div>
@@ -234,12 +261,15 @@ const FProfile = () => {
 
                 <div className="flex justify-center flex-wrap space-y-4">
                   <div className="w-[100%] mx-auto text-center">
-                    <span>300.000.000 VND</span>
+                    <span>
+                      {inforUser?.payment.bankAccount} -{" "}
+                      {inforUser?.payment.bankName}
+                    </span>
                   </div>
 
-                  <button className="space-x-4 border border-black rounded-3xl p-2 px-4 text-[1rem] font-[400] text-center hover:bg-[#63B6BD] hover:text-white">
-                    <span>Change your payment</span>
-                  </button>
+                  <div className="space-x-4 border border-black rounded-3xl p-2 px-4 text-[1rem] font-[400] text-center hover:bg-[#63B6BD] hover:text-white">
+                    Payment detail
+                  </div>
                 </div>
               </div>
             </div>
@@ -249,7 +279,100 @@ const FProfile = () => {
     );
   };
 
-  return <div>{loading ? <div>Loading...</div> : showPage()}</div>;
+  const displayForm = () => {
+    return (
+      <div className="fixed top-1/4 left-1/3 bg-[#204E51] rounded-2xl w-[50rem]">
+        <div className="m-8 space-y-4 mx-auto w-5/6">
+          <div className="flex justify-between">
+            <div className="text-white text-[1.5rem] font-semibold">
+              Change Information
+            </div>
+            <button
+              className="p-2 px-4 border rounded-full hover:bg-white hover:text-[#204E51] hover:font-semibold"
+              onClick={() => {
+                setShowForm(false);
+              }}
+            >
+              X
+            </button>
+          </div>
+          <div className="flex space-x-4 w-full">
+            <div className="w-1/2 space-y-4">
+              <div>
+                <div className="text-white">Name</div>
+                <input
+                  type="text"
+                  placeholder={`${inforUser?.farmerName}`}
+                  class="input input-bordered input-md w-full max-w-xs bg-white"
+                  onChange={(e) => {
+                    setName(e.target.value);
+                  }}
+                />
+              </div>
+
+              <div>
+                <div className="text-white">Phone</div>
+                <input
+                  type="text"
+                  placeholder={`${inforUser?.phone}`}
+                  class="input input-bordered input-md w-full max-w-xs bg-white"
+                  onChange={(e) => {
+                    setPhone(e.target.value);
+                  }}
+                />
+              </div>
+            </div>
+
+            <div className="w-1/2 space-y-4">
+              <div>
+                <div className="text-white">Email</div>
+                <input
+                  type="text"
+                  placeholder={`${inforUser?.email}`}
+                  class="input input-bordered input-md w-full max-w-xs bg-white"
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                  }}
+                />
+              </div>
+
+              <div>
+                <div className="text-white">Address</div>
+                <input
+                  type="text"
+                  placeholder={`${inforUser?.address}`}
+                  class="input input-bordered input-md w-full max-w-xs bg-white"
+                  onChange={(e) => {
+                    setAddress(e.target.value);
+                  }}
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="flex justify-end">
+            <button
+              className="border rounded-xl p-2 hover:bg-white hover:text-[#204E51]"
+              onClick={() => {
+                updateNewInforUser();
+              }}
+            >
+              Change
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  return (
+    <div>
+      <div>
+        {}
+        {showForm ? displayForm() : showPage()}
+      </div>
+    </div>
+  );
 };
 
 export default FProfile;
