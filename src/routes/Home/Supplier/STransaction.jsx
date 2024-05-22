@@ -51,7 +51,14 @@ const STransaction = () => {
   };
 
   const fetchTransactionList = () => {
-    return transList?.map((item) => (
+    if (!transList || transList.length === 0) {
+      return (
+        <tr>
+          <td colSpan="3">No transactions found</td>
+        </tr>
+      );
+    }
+    return transList.map((item) => (
       <tr key={item.transactionID}>
         <td># {item.transactionID}</td>
         <td>$ {item.totalPrice}</td>
