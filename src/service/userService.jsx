@@ -1,4 +1,5 @@
 import { http } from "./urlConfig";
+import { userLocal } from "./userLocal";
 
 export const userService = {
   postLogin: (data) => {
@@ -13,7 +14,7 @@ export const userService = {
 
   getTrans: (data, roleName) => {
     let url = `/${roleName}/transaction/${data}`;
-    console.log(url)
+    console.log(url);
     return http.get(url);
   },
 
@@ -31,12 +32,15 @@ export const userService = {
   },
   getFarmerTranDetail: (id, roleName) => {
     let url = `/${roleName}/transaction/${id}`;
-    console.log(url)
+    console.log(url);
     return http.get(url);
   },
 
-  changeData: (data, id) => {
-    let url = `/supplier/update-info/${id}`;
+  changeData: (data, userInfor) => {
+    let roleName = userLocal.getRoleName();
+    let roleId = userInfor?.supplierID || userInfor?.farmerID;
+    let url = `/${roleName}/update-info/${roleId}`;
+    console.log("url:", url);
     return http.put(url, data);
   },
   changeFarmerData: (data, id) => {
