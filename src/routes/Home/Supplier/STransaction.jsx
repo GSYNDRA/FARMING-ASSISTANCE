@@ -35,11 +35,11 @@ const STransaction = () => {
         <div>
           <span className="text-[1.2rem] font-semibold">Information</span>{" "}
           <br />
-          <span>Name: {detail.supplier.supplierName} </span> <br />
-          <span>Phone: {detail.supplier.phone} </span>
+          <span>Name: {detail?.supplier.supplierName} </span> <br />
+          <span>Phone: {detail?.supplier.phone} </span>
           <br />
-          <span>Email: {detail.supplier.email}</span> <br />
-          <span>Address: {detail.supplier.address}</span>
+          <span>Email: {detail?.supplier.email}</span> <br />
+          <span>Address: {detail?.supplier.address}</span>
         </div>
 
         <div className=" space-y-8 leading-8">

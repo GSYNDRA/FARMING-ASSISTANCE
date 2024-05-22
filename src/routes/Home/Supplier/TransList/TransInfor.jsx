@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { transDetail } from "../../../../redux/userReducer/userThunk";
 
 const TransInfor = ({ data }) => {
+  console.log("TransInfor ~ data:", data);
   const { detailTransList } = useSelector((state) => state.userReducer);
   console.log("TransInfor ~ detailTransList:", detailTransList);
   const dispatch = useDispatch();
@@ -15,14 +16,10 @@ const TransInfor = ({ data }) => {
   }, [dispatch]);
 
   const fetchListProduct = () => {
-    // if (!detailTransList)
-    //   return (
-    //     <div className="text-[1.2rem]">Dont have any product in this list</div>
-    //   );
     return detailTransList?.map((item, index) => {
       return (
         <tr key={index}>
-          <td>{item.orderID}</td>
+          <td>{item?.orderID}</td>
           <td>{item?.inventoryProduct.productName}</td>
           <td>{item?.farmer.farmerName}</td>
           <td>{item?.inventoryProduct.price}</td>
