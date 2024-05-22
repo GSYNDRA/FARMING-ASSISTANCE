@@ -1,21 +1,21 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { transDetail } from "../../../../redux/userReducer/userThunk";
+import { transDetail, transFarmerDetail } from "../../../../redux/userReducer/userThunk";
 
 const TransInfor = ({ data }) => {
-  const { detailTransList } = useSelector((state) => state.userReducer);
-  console.log("TransInfor ~ detailTransList:", detailTransList);
+  const { transFarmerDetailProduct } = useSelector((state) => state.userReducer);
   const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchData = async () => {
-      dispatch(transDetail(data.transactionID));
+      dispatch(transFarmerDetail(data.orderID));
     };
     fetchData();
   }, [dispatch]);
 
   const fetchListProduct = () => {
-    return detailTransList.map((item, index) => {
+    return transFarmerDetailProduct?.map((item, index) => {
+      console.log(item)
       return (
         <tr key={index}>
           <td>{item.orderID}</td>
