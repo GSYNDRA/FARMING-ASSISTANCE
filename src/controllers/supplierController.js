@@ -73,6 +73,9 @@ export const getAllProduct = async (req, res) => {
     let data = await model.inventoryproduct.findAll({
       where: {
         status: 1,
+        quantity: {
+          [Op.gt]: 0,
+        },
       },
       include: ["farmer"],
     });
