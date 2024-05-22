@@ -1,158 +1,114 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 
-const data = [
-  {
-    transactionID: 1,
-    supplierID: 1,
-    totalPrice: 220,
-    supplier: {
-      supplierID: 1,
-      userID: 8,
-      supplierName: "Davide Jones",
-      paymentID: 1,
-      phone: "0927730139",
-      email: "david_jones1@gmail.com",
-      address: "802 Spruce Lane, Greenfield",
-    },
-  },
-  {
-    transactionID: 8,
-    supplierID: 1,
-    totalPrice: 112,
-    supplier: {
-      supplierID: 1,
-      userID: 8,
-      supplierName: "Davide Jones",
-      paymentID: 1,
-      phone: "0927730139",
-      email: "david_jones1@gmail.com",
-      address: "802 Spruce Lane, Greenfield",
-    },
-  },
-];
-
-const STransaction = () => {
-  const [detail, setDetail] = useState(null);
+const FTransaction = () => {
+  const [transactions, setTransactions] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const { inforUser } = useSelector((state) => state.userReducer);
 
   useEffect(() => {
-    console.log("STransaction ~ detail:", detail);
-    if (detail) {
-      displayDetailTransaction(detail);
-      fectchListOfProduct();
-    }
-  });
+    const fetchTransactions = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:8080/farmer/transaction/${inforUser.farmerID}`
+        );
+        const data = await response.json();
+        console.log('Fetched data:', data); // Log the response data
 
-  const fectchListOfProduct = () => {
-    return (
-      <div key={detail.productId}>
-        <span>{detail.name}</span>
-        <span>{detail.price}</span>
-        <span>{detail.quantity}</span>
-      </div>
-    );
+        if (data.message === 'successfully' && Array.isArray(data.content)) {
+          setTransactions(data.content);
+        } else {
+          console.error('Unexpected data format:', data);
+          setTransactions([]);
+        }
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching transactions:', error);
+        setError(error);
+        setLoading(false);
+      }
+    };
+
+    fetchTransactions();
+  }, [inforUser.farmerID]);
+  
+
+  const tableStyle = {
+    width: '100%',
+    borderCollapse: 'collapse',
+    margin: '15px', // Center the table itself
   };
 
-  const displayDetailTransaction = (data) => {
-    console.log(data);
-    setDetail(data);
+  const thTdStyle = {
+    color: 'black',
+    border: '1px solid black',
+    padding: '8px',
   };
 
-  const fetchDetailCard = () => {
-    if (!detail) return <div>Select a transaction to see details</div>;
-
-    return (
-      <div>
-        <div className="text-[#204E51] font-semibold text-[1.5rem]">
-          Transaction Detail
-        </div>
-        <div>
-          <span className="text-[1.2rem] font-semibold">Information</span>{" "}
-          <br />
-          <span>Name: {detail.supplier.supplierName} </span> <br />
-          <span>Phone: {detail.supplier.phone} </span>
-          <br />
-          <span>Email: {detail.supplier.email}</span> <br />
-          <span>Address: {detail.supplier.address}</span>
-        </div>
-
-        <div className=" space-y-8 leading-8">
-          <span className="text-[1.2rem] font-semibold">Product List</span>
-          <span>{fectchListOfProduct()}</span>
-        </div>
-      </div>
-    );
+  const thStyle = {
+    ...thTdStyle,
+    backgroundColor: '#f2f2f2',
+    textAlign: 'left',
   };
 
-  const fetchTransactionList = () => {
-    return data.map((item) => (
-      <tr key={item.transactionID}>
-        <td># {item.transactionID}</td>
-        <td>$ {item.totalPrice}</td>
-
-        <td>
-          <button
-            className="text-primary"
-            onClick={() => {
-              displayDetailTransaction(item);
-            }}
-          >
-            See more
-          </button>
-        </td>
-      </tr>
-    ));
+  const imgStyle = {
+    width: '80px',
+    height: '80px'
   };
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
+
+  if (transactions.length === 0) {
+    return <div>No transactions found</div>;
+  }
 
   return (
-    <div className="ml-4">
-      <div>
-        <div className="flex items-center justify-between">
-          <div className="title-of-page w-[50%]">
-            <div className="text-[#204E51] font-bold text-[2rem] ">
-              Welcome to Srpout Farm
-            </div>
-            <span className="!w-[100%]">See your order</span>
-          </div>
+    <div>
+      <table style={tableStyle}>
+        <thead>
+          <tr>
+            <th style={thStyle}>Order ID</th>
+            <th style={thStyle}>Transaction ID</th>
+            <th style={thStyle}>Supplier Name</th>
+            <th style={thStyle}>Product Name</th>
+            <th style={thStyle}>Product Image</th>
+            <th style={thStyle}>Quantity</th>
+            <th style={thStyle}>Price</th>
+          </tr>
+        </thead>
+        <tbody>
+          {transactions.map((transaction, index) => {
+            console.log('Transaction:', transaction); // Log each transaction
 
-          <div className="search-bar text-black flex space-x-4">
-            <button>
-              <i className="fa fa-filter text-[2rem] opacity-70"></i>
-            </button>
-
-            <label className="input input-bordered flex items-center gap-2 bg-white">
-              <input type="text" className="grow" placeholder="Search" />
-              <i className="fa fa-search"></i>
-            </label>
-          </div>
-        </div>
-      </div>
-
-      <div className="flex space-x-4">
-        {/* Order history */}
-        <div className="bg-white w-[40%] p-2 rounded-sm text-black">
-          <div>
-            <div className="overflow-x-auto">
-              <table className="table">
-                {/* head */}
-                <thead className="bg-[#204E51]">
-                  <tr className="text-white">
-                    <th>TransactionID</th>
-                    <th>Total Price</th>
-                    <th></th>
-                  </tr>
-                </thead>
-                <tbody>{fetchTransactionList()}</tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-
-        <div className="border rounded-lg shadow-xl bg-white p-4 w-[70%] h-fit sticky text-black">
-          {fetchDetailCard()}
-        </div>
-      </div>
+            return (
+              <tr key={transaction.transactionID}>
+                <td style={thTdStyle}>{transaction.orderID}</td>
+                <td style={thTdStyle}>{transaction.transactionID}</td>
+                <td style={thTdStyle}>{transaction.supplier.supplierName}</td>
+                <td style={thTdStyle}>{transaction.inventoryProduct.productName}</td>
+                <td style={thTdStyle}>
+                  <img
+                    src={transaction.inventoryProduct.image}
+                    alt={transaction.inventoryProduct.productName}
+                    style={imgStyle}
+                  />
+                </td>
+                <td style={thTdStyle}>{transaction.quantity}</td>
+                <td style={thTdStyle}>{transaction.price}</td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
     </div>
   );
 };
 
-export default STransaction;
+export default FTransaction;
