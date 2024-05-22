@@ -28,7 +28,7 @@ farmerRoute.put("/delete-product/:inventoryProductID", removeProduct);
 
 farmerRoute.post("/inventory/:farmerID", addProduct);
 
-farmerRoute.get("/order/:farmerID", getOrder);
+farmerRoute.get("/transaction/:farmerID", getOrder);
 
 // API upload avatar
 import upload from "../config/upload.js";
