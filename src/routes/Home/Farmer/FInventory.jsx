@@ -32,11 +32,14 @@ const FInventory = () => {
     fetchInventory();
   }, [inforUser.farmerID]);
 
-  const deleteProduct = (data) => {
-    const productID = data.inventoryProductID;
+  const deleteProduct = (productID) => {
     console.log("deleteProduct ~ productID:", productID);
 
-    dispatch(delProductThunk(productID));
+    dispatch(delProductThunk(productID)).then(() => {
+      setInventory((prevInventory) =>
+        prevInventory.filter((item) => item.inventoryProductID !== productID)
+      );
+    });
   };
 
   const updateProduct = (updatedItem) => {
@@ -47,6 +50,10 @@ const FInventory = () => {
           : item
       )
     );
+  };
+
+  const addNewProduct = (newItem) => {
+    setInventory((prevInventory) => [...prevInventory, newItem]);
   };
 
   if (loading) {
@@ -68,7 +75,7 @@ const FInventory = () => {
           >
             Add
           </span>
-          <AddButton />
+          <AddButton onAddSuccess={addNewProduct} />
         </div>
       </div>
       <div className="overflow-x-auto">
@@ -180,7 +187,7 @@ const FInventory = () => {
                         cursor: "pointer",
                       }}
                       onClick={() => {
-                        deleteProduct(item);
+                        deleteProduct(item.inventoryProductID);
                       }}
                     >
                       Delete
