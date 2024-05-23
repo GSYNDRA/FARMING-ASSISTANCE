@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import Modal from "./Modal";
 
-const AddButton = () => {
+const AddButton = ({ onAddSuccess }) => {
   const [showModal, setShowModal] = useState(false);
   const [formData, setFormData] = useState({
-    name: '',
+    productName: '',
     quantity: '',
     price: '',
     description: '',
-    imageLink: ''
+    image: ''
   });
 
   const handleAddClick = () => {
@@ -39,6 +39,8 @@ const AddButton = () => {
       if (!response.ok) {
         throw new Error('Failed to submit data');
       }
+      const newItem = await response.json();
+      onAddSuccess(newItem.content);  // Assuming the new item is in `content`
       alert('Đã gửi dữ liệu thành công!');
       setShowModal(false);
     } catch (error) {
