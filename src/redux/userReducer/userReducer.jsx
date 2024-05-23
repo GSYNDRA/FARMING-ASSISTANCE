@@ -20,8 +20,7 @@ const initialState = {
   cart: cartLocal.get(),
   transList: [],
   detailTransList: [],
-  transFarmerDetailProduct: [], 
-
+  transFarmerDetailProduct: [],
 };
 
 const userReducer = createSlice({
@@ -56,7 +55,7 @@ const userReducer = createSlice({
       })
       .addCase(transDetail.fulfilled, (state, action) => {
         console.log(".addCase ~ action:", action.payload);
-        console.log("trans success");
+        console.log("trans detail success");
         state.detailTransList = action.payload;
       })
       .addCase(userStore.fulfilled, (state, action) => {
@@ -64,10 +63,10 @@ const userReducer = createSlice({
         console.log("store success");
       })
       .addCase(updateInforUser.fulfilled, (state, action) => {})
-      .addCase(transFarmerDetail.fulfilled, (state, action)=>{
-        console.log(action.payload)
+      .addCase(transFarmerDetail.fulfilled, (state, action) => {
+        console.log(action.payload);
         state.transFarmerDetail = action.payload;
-      })
+      });
   },
 });
 

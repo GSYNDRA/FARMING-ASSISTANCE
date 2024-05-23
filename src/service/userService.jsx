@@ -27,7 +27,7 @@ export const userService = {
     return http.get(url);
   },
   getTransDetail: (id, roleName) => {
-    let url = `/${roleName}/transaction/${id}`;
+    let url = `/${roleName}/order-of-transaction/${id}`;
     return http.get(url);
   },
   getFarmerTranDetail: (id, roleName) => {
@@ -43,7 +43,8 @@ export const userService = {
 
   changeData: (data, userInfor) => {
     let roleName = userLocal.getRoleName();
-    let roleId = userInfor?.supplierID || userInfor?.farmerID || userInfor?.adminID;
+    let roleId =
+      userInfor?.supplierID || userInfor?.farmerID || userInfor?.adminID;
     let url = `/${roleName}/update-info/${roleId}`;
     console.log("url:", url);
     return http.put(url, data);
