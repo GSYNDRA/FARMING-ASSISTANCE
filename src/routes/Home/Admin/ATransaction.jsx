@@ -1,119 +1,148 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { transDetail, userTrans } from "../../../redux/userReducer/userThunk";
-import ATransInfor from "./ATransList/ATransInfor";
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
 const ATransaction = () => {
-  const [detail, setDetail] = useState(null);
-  const dispatch = useDispatch();
-  const { inforUser, transList } = useSelector((state) => state.userReducer);
+  const [transactions, setTransactions] = useState([]);
+  const [selectedTransaction, setSelectedTransaction] = useState(null);
+  const [transactionDetails, setTransactionDetails] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [detailsVisible, setDetailsVisible] = useState(false);
 
   useEffect(() => {
-    if (inforUser?.supplierID) {
-      dispatch(userTrans(inforUser.supplierID));
-    }
-  }, [dispatch, inforUser?.supplierID]);
+    // Fetch transactions data
+    axios.get('http://localhost:8080/admin/transaction')
+      .then(response => {
+        if (response.data.message === "Success") {
+          setTransactions(response.data.content);
+        } else {
+          throw new Error('Failed to fetch transactions');
+        }
+      })
+      .catch(error => {
+        console.error('There was an error fetching the transactions!', error);
+        setError('Failed to fetch transactions.');
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, []);
 
-  useEffect(() => {
-    if (detail) {
-      dispatch(transDetail(detail.transactionID));
+  const handleSeeMore = (transactionId) => {
+    if (selectedTransaction === transactionId && detailsVisible) {
+      setDetailsVisible(false);
+      setTransactionDetails(null);
+      setSelectedTransaction(null);
+    } else {
+      // Fetch transaction details data
+      axios.get(`http://localhost:8080/admin/order/${transactionId}`)
+        .then(response => {
+          if (response.data.message === "Success") {
+            setSelectedTransaction(transactionId);
+            setTransactionDetails(response.data.content);
+            setDetailsVisible(true);
+          } else {
+            throw new Error('Failed to fetch transaction details');
+          }
+        })
+        .catch(error => {
+          console.error('There was an error fetching the transaction details!', error);
+          setError('Failed to fetch transaction details.');
+        });
     }
-  }, [dispatch, detail]);
-
-  const displayDetailTransaction = (data) => {
-    setDetail(data);
   };
 
-  const fetchDetailCard = () => {
-    if (!detail) return <div>Select a transaction to see details</div>;
+  if (loading) {
+    return <p>Loading...</p>;
+  }
 
-    return (
-      <div>
-        <div className="text-[#204E51] font-semibold text-[1.5rem]">
-          Transaction Detail
-        </div>
-        <div>
-          <span className="text-[1.2rem] font-semibold">Information</span>{" "}
-          <br />
-          <span>Name: {detail.supplier.supplierName} </span> <br />
-          <span>Phone: {detail.supplier.phone} </span>
-          <br />
-          <span>Email: {detail.supplier.email}</span> <br />
-          <span>Address: {detail.supplier.address}</span>
-        </div>
+  if (error) {
+    return <p>{error}</p>;
+  }
 
-        <div className=" space-y-8 leading-8">
-          <span className="text-[1.2rem] font-semibold">Product List</span>
-          <span>{<ATransInfor data={detail} />}</span>
-        </div>
-      </div>
-    );
-  };
+  const tableStyle = {
+    width: 'auto',
+    borderCollapse: 'collapse',
+  } 
 
-  const fetchTransactionList = () => {
-    if (!transList || transList.length === 0) {
-      return (
-        <tr>
-          <td colSpan="3">No transactions found</td>
-        </tr>
-      );
-    }
-    return transList.map((item) => (
-      <tr key={item.transactionID}>
-        <td># {item.transactionID}</td>
-        <td>$ {item.totalPrice}</td>
+  const thStyle = {
+    width: 'auto',
+    color: '#FFF',
+    textAlign: 'start',
+    background: '#63B6BD'
+  }
 
-        <td>
-          <button
-            className="text-primary"
-            onClick={() => {
-              displayDetailTransaction(item);
-            }}
-          >
-            See more
-          </button>
-        </td>
-      </tr>
-    ));
-  };
+    const tdStyle = {
+      color: '#000',
+  }
+
+  const innerBorderStyle = {
+    borderBottom: '1.5px solid #63B6BD',
+    //borderLeft: '1.5px solid #63B6BD',
+  }
 
   return (
-    <div className="ml-4">
+    <div className='ml-[20px]' style={{ display: 'flex' }}>
       <div>
-        <div className="flex items-center justify-between">
-          <div className="title-of-page w-[50%]">
-            <div className="text-[#204E51] font-bold text-[2rem] ">
-              Welcome to Sprout Farm
-            </div>
-            <span className="!w-[100%]">See your order</span>
-          </div>
-        </div>
+        <h3 style={{ fontSize: '25px', color: '#000'}}><strong>Welcome to Sprout Farming</strong></h3>
+        <p style={{ fontSize: '20px', color: '#000'}}>Order List</p>
+        <table style={tableStyle}>
+          <thead>
+            <tr>
+              <th style={{ ...thStyle }}>Transaction ID</th>
+              <th style={{ ...thStyle }}>Total Price</th>
+              <th style={{ ...thStyle }}></th>
+            </tr>
+          </thead>
+          <tbody>
+            {transactions.map(transaction => (
+              <tr key={transaction.transactionID}>
+                <td style={{ ...tdStyle, ...innerBorderStyle, width: '150px' }}>{transaction.transactionID}</td>
+                <td style={{ ...tdStyle, ...innerBorderStyle, width: '100px' }}>{transaction.totalPrice}</td>
+                <td style={{ ...tdStyle, ...innerBorderStyle, width: '120px' }}>
+                  <button onClick={() => handleSeeMore(transaction.transactionID)}>
+                    {selectedTransaction === transaction.transactionID && detailsVisible ? 'Hide Details' : 'See More'}
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
 
-      <div className="flex space-x-4">
-        {/* Order history */}
-        <div className="bg-white w-[40%] p-2 rounded-sm text-black">
-          <div>
-            <div className="overflow-x-auto">
-              <table className="table">
-                {/* head */}
-                <thead className="bg-[#204E51]">
-                  <tr className="text-white">
-                    <th>TransactionID</th>
-                    <th>Total Price</th>
-                    <th></th>
-                  </tr>
-                </thead>
-                <tbody>{fetchTransactionList()}</tbody>
-              </table>
-            </div>
-          </div>
+      {detailsVisible && transactionDetails && selectedTransaction && (
+        <div className='mt-[90px] ml-[20px]' style={{ flex: 2, }}>
+          <h2 style={{ fontSize: '20px', color: '#000'}}><strong>Transaction Details for ID: {selectedTransaction}</strong></h2>
+          <p style={{ color: '#000'}}><strong>Supplier Name:</strong> {transactions.find(t => t.transactionID === selectedTransaction).supplier.supplierName}</p>
+          <p style={{ color: '#000'}}><strong>Phone:</strong> {transactions.find(t => t.transactionID === selectedTransaction).supplier.phone}</p>
+          <p style={{ color: '#000'}}><strong>Email:</strong> {transactions.find(t => t.transactionID === selectedTransaction).supplier.email}</p>
+          <h3 style={{ fontSize: '25px', color: '#000'}}><strong>Product List</strong></h3>
+          <table border="1">
+            <thead>
+              <tr>
+                <th style={{ ...thStyle }}>Order ID</th>
+                <th style={{ ...thStyle }}>Product Name</th>
+                <th style={{ ...thStyle }}>Supplier Name</th>
+                <th style={{ ...thStyle }}>Farmer Name</th>
+                <th style={{ ...thStyle }}>Price</th>
+                <th style={{ ...thStyle }}>Quantity</th>
+              </tr>
+            </thead>
+            <tbody>
+              {transactionDetails.map(product => (
+                <tr key={product.orderID}>
+                  <td style={{ ...tdStyle, ...innerBorderStyle, width: '150px' }}>{product.orderID}</td>
+                  <td style={{ ...tdStyle, ...innerBorderStyle, width: '150px' }}>{product.inventoryProduct.productName}</td>
+                  <td style={{ ...tdStyle, ...innerBorderStyle, width: '150px' }}>{product.supplier.supplierName}</td>
+                  <td style={{ ...tdStyle, ...innerBorderStyle, width: '150px' }}>{product.farmer.farmerName}</td>
+                  <td style={{ ...tdStyle, ...innerBorderStyle, width: '100px' }}>{product.price}</td>
+                  <td style={{ ...tdStyle, ...innerBorderStyle, width: '100px' }}>{product.quantity}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
-
-        <div className="border rounded-lg shadow-xl bg-white p-4 w-[70%] h-fit sticky text-black">
-          {fetchDetailCard()}
-        </div>
-      </div>
+      )}
     </div>
   );
 };
