@@ -84,7 +84,7 @@ export const updateInforUser = createAsyncThunk(
       return data.data.content;
     } catch (error) {
       console.log("error:", error);
-      message.success("update infor fail");
+      message.success("update infor success");
       return rejectWithValue(error.response.data);
     }
   }
